@@ -1,0 +1,77 @@
+import express from 'express';
+import path from 'path';
+import { createServer as createViteServer } from 'vite';
+
+import { authRouter } from './server/routes/auth';
+import { doctorsRouter } from './server/routes/doctors';
+import { appointmentsRouter } from './server/routes/appointments';
+import { queueRouter } from './server/routes/queue';
+import { consultationsRouter } from './server/routes/consultations';
+import { patientsRouter } from './server/routes/patients';
+import { reportsRouter } from './server/routes/reports';
+import { adminRouter } from './server/routes/admin';
+import { notificationsRouter } from './server/routes/notifications';
+import { clinicalRouter } from './server/routes/clinical';
+import { billingRouter } from './server/routes/billing';
+import { displayRouter } from './server/routes/display';
+import { pharmacyRouter } from './server/routes/pharmacy';
+import { labtechRouter } from './server/routes/labtech';
+import { smsRouter } from './server/routes/sms';
+import { telemedRouter } from './server/routes/telemed';
+import { branchesRouter } from './server/routes/branches';
+
+async function startServer() {
+  const app = express();
+  const PORT = 3000;
+
+  // Middleware
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+
+  // Health check endpoint
+  app.get('/api/health', (_req, res) => {
+    res.json({ status: 'ok', app: 'MediQueue', timestamp: new Date().toISOString() });
+  });
+
+  // RESTful API Routes
+  app.use('/api/auth', authRouter);
+  app.use('/api/doctors', doctorsRouter);
+  app.use('/api/appointments', appointmentsRouter);
+  app.use('/api/queue', queueRouter);
+  app.use('/api/consultations', consultationsRouter);
+  app.use('/api/patients', patientsRouter);
+  app.use('/api/reports', reportsRouter);
+  app.use('/api/admin', adminRouter);
+  app.use('/api/notifications', notificationsRouter);
+  app.use('/api/clinical', clinicalRouter);
+  app.use('/api/billing', billingRouter);
+  app.use('/api/display', displayRouter);
+  app.use('/api/pharmacy', pharmacyRouter);
+  app.use('/api/labtech', labtechRouter);
+  app.use('/api/sms', smsRouter);
+  app.use('/api/telemed', telemedRouter);
+  app.use('/api/branches', branchesRouter);
+
+  // Vite integration
+  if (process.env.NODE_ENV !== 'production') {
+    const vite = await createViteServer({
+      server: { middlewareMode: true },
+      appType: 'spa',
+    });
+    app.use(vite.middlewares);
+  } else {
+    const distPath = path.join(process.cwd(), 'dist');
+    app.use(express.static(distPath));
+    app.get('*', (_req, res) => {
+      res.sendFile(path.join(distPath, 'index.html'));
+    });
+  }
+
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`[MediQueue] Server running at http://0.0.0.0:${PORT}`);
+  });
+}
+
+startServer().catch((err) => {
+  console.error('[MediQueue] Failed to start server:', err);
+});

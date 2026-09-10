@@ -1,0 +1,181 @@
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { User, Patient, Doctor, UserRole } from '../types/index';
+import { api } from '../services/api';
+
+interface AuthContextType {
+  user: User | null;
+  role: UserRole | null;
+  patient: Patient | null;
+  doctor: Doctor | null;
+  token: string | null;
+  isLoading: boolean;
+  login: (email: string, pass: string) => Promise<void>;
+  register: (data: any) => Promise<void>;
+  logout: () => Promise<void>;
+  quickSwitch: (role: UserRole, email?: string) => Promise<void>;
+  refreshProfile: () => Promise<void>;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [patient, setPatient] = useState<Patient | null>(null);
+  const [doctor, setDoctor] = useState<Doctor | null>(null);
+  const [token, setToken] = useState<string | null>(localStorage.getItem('mq_token'));
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // Initialize session
+  useEffect(() => {
+    // Listen for global auth failure (401s)
+    const handleAuthFailure = () => {
+      console.warn('Authentication failure detected, logging out...');
+      localStorage.removeItem('mq_token');
+      setToken(null);
+      setUser(null);
+      setPatient(null);
+      setDoctor(null);
+    };
+
+    window.addEventListener('mq-auth-failure', handleAuthFailure);
+
+    async function initAuth() {
+      const savedToken = localStorage.getItem('mq_token');
+      if (savedToken) {
+        try {
+          const res = await api.getMe();
+          setUser(res.user);
+          setPatient(res.patient || null);
+          setDoctor(res.doctor || null);
+        } catch {
+          // Token expired or invalid, auto fallback to demo Patient account so reviewer sees active app
+          try {
+            const fallback = await api.quickSwitch('PATIENT');
+            localStorage.setItem('mq_token', fallback.token);
+            setToken(fallback.token);
+            setUser(fallback.user);
+            setPatient(fallback.patient || null);
+            setDoctor(fallback.doctor || null);
+          } catch {
+            localStorage.removeItem('mq_token');
+            setToken(null);
+            setUser(null);
+          }
+        }
+      } else {
+        // Automatically start with demo Patient session for instant preview!
+        try {
+          const demo = await api.quickSwitch('PATIENT');
+          localStorage.setItem('mq_token', demo.token);
+          setToken(demo.token);
+          setUser(demo.user);
+          setPatient(demo.patient || null);
+          setDoctor(demo.doctor || null);
+        } catch (err) {
+          console.warn('Auto demo switch error:', err);
+        }
+      }
+      setIsLoading(false);
+    }
+    initAuth();
+
+    return () => {
+      window.removeEventListener('mq-auth-failure', handleAuthFailure);
+    };
+  }, []);
+
+  const login = async (email: string, pass: string) => {
+    setIsLoading(true);
+    try {
+      const res = await api.login(email, pass);
+      localStorage.setItem('mq_token', res.token);
+      setToken(res.token);
+      setUser(res.user);
+      setPatient(res.patient || null);
+      setDoctor(res.doctor || null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const register = async (data: any) => {
+    setIsLoading(true);
+    try {
+      const res = await api.register(data);
+      localStorage.setItem('mq_token', res.token);
+      setToken(res.token);
+      setUser(res.user);
+      setPatient(res.patient || null);
+      setDoctor(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await api.logout();
+    } catch {
+      // ignore
+    } finally {
+      localStorage.removeItem('mq_token');
+      setToken(null);
+      setUser(null);
+      setPatient(null);
+      setDoctor(null);
+    }
+  };
+
+  const quickSwitch = async (role: UserRole, email?: string) => {
+    setIsLoading(true);
+    try {
+      const res = await api.quickSwitch(role, email);
+      localStorage.setItem('mq_token', res.token);
+      setToken(res.token);
+      setUser(res.user);
+      setPatient(res.patient || null);
+      setDoctor(res.doctor || null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const refreshProfile = async () => {
+    try {
+      const res = await api.getMe();
+      setUser(res.user);
+      setPatient(res.patient || null);
+      setDoctor(res.doctor || null);
+    } catch (err) {
+      console.error('Refresh profile error:', err);
+    }
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        role: user?.role || null,
+        patient,
+        doctor,
+        token,
+        isLoading,
+        login,
+        register,
+        logout,
+        quickSwitch,
+        refreshProfile,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};

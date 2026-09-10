@@ -1,0 +1,6 @@
+{
+  "name": "MediQueue — Clinic Appointment and Queue Management System",
+  "description": "A centralized clinic appointment scheduling and daily patient queue management platform for patients, doctors, and clinic administrators.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
