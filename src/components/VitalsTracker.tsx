@@ -12,9 +12,23 @@ import {
   Calendar,
   Clock,
   UserCheck,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 import { VitalSignRecord } from '../types/index';
 import { api } from '../services/api';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+} from 'recharts';
 
 interface VitalsTrackerProps {
   patientId: string;
@@ -34,6 +48,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
   const [showAddModal, setShowAddModal] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [activeMetric, setActiveMetric] = useState<'bp' | 'weight' | 'pulse' | 'temp'>('bp');
 
   // Form state
   const [form, setForm] = useState({
@@ -114,115 +129,194 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
     return { label: 'Obese', color: 'text-rose-700 bg-rose-50 border-rose-200' };
   };
 
-  // SVG Chart rendering for Blood Pressure trend
-  const renderBpTrendChart = () => {
+  // Recharts Chart Rendering
+  const renderTrendChart = () => {
     if (vitals.length < 2) {
       return (
-        <div className="h-40 flex items-center justify-center text-sm text-slate-500 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+        <div className="h-64 flex flex-col items-center justify-center text-sm text-slate-500 bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
+          <Activity className="w-8 h-8 text-slate-300 mb-2" />
           At least 2 vital sign recordings needed to generate trend chart.
         </div>
       );
     }
 
-    const chronological = [...vitals].reverse();
-    const width = 500;
-    const height = 150;
-    const padX = 40;
-    const padY = 25;
+    const chartData = [...vitals]
+      .reverse()
+      .map((v) => ({
+        date: new Date(v.recorded_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        fullDate: new Date(v.recorded_at).toLocaleString(),
+        systolic: v.systolic_bp,
+        diastolic: v.diastolic_bp,
+        weight: v.weight_kg,
+        pulse: v.heart_rate,
+        temp: v.temperature_c,
+      }));
 
-    const minVal = 50;
-    const maxVal = 170;
-
-    const getX = (index: number) => padX + (index / (chronological.length - 1)) * (width - padX * 2);
-    const getY = (val: number) => height - padY - ((val - minVal) / (maxVal - minVal)) * (height - padY * 2);
-
-    const sysPoints = chronological.map((v, i) => `${getX(i)},${getY(v.systolic_bp)}`).join(' ');
-    const diaPoints = chronological.map((v, i) => `${getX(i)},${getY(v.diastolic_bp)}`).join(' ');
+    const CustomTooltip = ({ active, payload, label }: any) => {
+      if (active && payload && payload.length) {
+        return (
+          <div className="bg-white p-3 border border-slate-200 shadow-xl rounded-xl text-xs">
+            <p className="font-bold text-slate-900 mb-1.5">{payload[0].payload.fullDate}</p>
+            <div className="space-y-1">
+              {payload.map((entry: any, index: number) => (
+                <div key={index} className="flex items-center justify-between gap-4">
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
+                    <span className="text-slate-600">{entry.name}:</span>
+                  </span>
+                  <span className="font-mono font-bold text-slate-900">
+                    {entry.value} {entry.name.includes('Temp') ? '°C' : entry.name.includes('Weight') ? 'kg' : entry.name.includes('BP') ? 'mmHg' : 'bpm'}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+      return null;
+    };
 
     return (
-      <div className="w-full overflow-x-auto">
-        <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-44 select-none">
-          {/* Reference bands (120/80 reference line) */}
-          <line
-            x1={padX}
-            y1={getY(120)}
-            x2={width - padX}
-            y2={getY(120)}
-            stroke="#94a3b8"
-            strokeDasharray="4 4"
-            strokeWidth="1"
-          />
-          <text x={padX - 8} y={getY(120) + 4} textAnchor="end" className="text-[10px] fill-slate-400 font-mono">
-            120
-          </text>
-
-          <line
-            x1={padX}
-            y1={getY(80)}
-            x2={width - padX}
-            y2={getY(80)}
-            stroke="#94a3b8"
-            strokeDasharray="4 4"
-            strokeWidth="1"
-          />
-          <text x={padX - 8} y={getY(80) + 4} textAnchor="end" className="text-[10px] fill-slate-400 font-mono">
-            80
-          </text>
-
-          {/* Systolic Line */}
-          <polyline fill="none" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round" points={sysPoints} />
-          {/* Diastolic Line */}
-          <polyline fill="none" stroke="#3b82f6" strokeWidth="2.5" strokeLinecap="round" points={diaPoints} />
-
-          {/* Data Points */}
-          {chronological.map((v, i) => (
-            <g key={v.id}>
-              {/* Systolic Dot */}
-              <circle cx={getX(i)} cy={getY(v.systolic_bp)} r="4" fill="#ef4444" stroke="#ffffff" strokeWidth="2" />
-              <text
-                x={getX(i)}
-                y={getY(v.systolic_bp) - 8}
-                textAnchor="middle"
-                className="text-[11px] font-bold fill-rose-600 font-mono"
-              >
-                {v.systolic_bp}
-              </text>
-
-              {/* Diastolic Dot */}
-              <circle cx={getX(i)} cy={getY(v.diastolic_bp)} r="4" fill="#3b82f6" stroke="#ffffff" strokeWidth="2" />
-              <text
-                x={getX(i)}
-                y={getY(v.diastolic_bp) + 14}
-                textAnchor="middle"
-                className="text-[11px] font-bold fill-blue-600 font-mono"
-              >
-                {v.diastolic_bp}
-              </text>
-
-              {/* Date label at bottom */}
-              <text
-                x={getX(i)}
-                y={height - 5}
-                textAnchor="middle"
-                className="text-[9px] fill-slate-500 font-medium"
-              >
-                {new Date(v.recorded_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-              </text>
-            </g>
-          ))}
-        </svg>
-
-        {/* Legend */}
-        <div className="flex items-center justify-center gap-6 mt-1 text-xs text-slate-600">
-          <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-rose-500 inline-block" />
-            <span className="font-semibold text-slate-700">Systolic (Target &lt;120 mmHg)</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-blue-500 inline-block" />
-            <span className="font-semibold text-slate-700">Diastolic (Target &lt;80 mmHg)</span>
-          </div>
-        </div>
+      <div className="h-72 w-full mt-4">
+        <ResponsiveContainer width="100%" height="100%">
+          {activeMetric === 'bp' ? (
+            <LineChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+              <XAxis 
+                dataKey="date" 
+                axisLine={false} 
+                tickLine={false} 
+                tick={{ fontSize: 10, fill: '#94a3b8' }} 
+                dy={10}
+              />
+              <YAxis 
+                domain={[40, 200]} 
+                axisLine={false} 
+                tickLine={false} 
+                tick={{ fontSize: 10, fill: '#94a3b8' }} 
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend 
+                verticalAlign="top" 
+                align="right" 
+                iconType="circle"
+                wrapperStyle={{ fontSize: '11px', fontWeight: 600, paddingBottom: '20px' }}
+              />
+              <Line
+                name="Systolic BP"
+                type="monotone"
+                dataKey="systolic"
+                stroke="#ef4444"
+                strokeWidth={3}
+                dot={{ r: 4, strokeWidth: 2, fill: '#fff' }}
+                activeDot={{ r: 6, strokeWidth: 0 }}
+                animationDuration={1000}
+              />
+              <Line
+                name="Diastolic BP"
+                type="monotone"
+                dataKey="diastolic"
+                stroke="#3b82f6"
+                strokeWidth={3}
+                dot={{ r: 4, strokeWidth: 2, fill: '#fff' }}
+                activeDot={{ r: 6, strokeWidth: 0 }}
+                animationDuration={1000}
+              />
+            </LineChart>
+          ) : activeMetric === 'weight' ? (
+            <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <defs>
+                <linearGradient id="colorWeight" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.1}/>
+                  <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+              <XAxis 
+                dataKey="date" 
+                axisLine={false} 
+                tickLine={false} 
+                tick={{ fontSize: 10, fill: '#94a3b8' }} 
+                dy={10}
+              />
+              <YAxis 
+                domain={['dataMin - 5', 'dataMax + 5']} 
+                axisLine={false} 
+                tickLine={false} 
+                tick={{ fontSize: 10, fill: '#94a3b8' }} 
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Area
+                name="Weight"
+                type="monotone"
+                dataKey="weight"
+                stroke="#8b5cf6"
+                strokeWidth={3}
+                fillOpacity={1}
+                fill="url(#colorWeight)"
+                dot={{ r: 4, strokeWidth: 2, fill: '#fff' }}
+                activeDot={{ r: 6, strokeWidth: 0 }}
+                animationDuration={1000}
+              />
+            </AreaChart>
+          ) : activeMetric === 'pulse' ? (
+            <LineChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+              <XAxis 
+                dataKey="date" 
+                axisLine={false} 
+                tickLine={false} 
+                tick={{ fontSize: 10, fill: '#94a3b8' }} 
+                dy={10}
+              />
+              <YAxis 
+                domain={[40, 160]} 
+                axisLine={false} 
+                tickLine={false} 
+                tick={{ fontSize: 10, fill: '#94a3b8' }} 
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Line
+                name="Heart Rate"
+                type="monotone"
+                dataKey="pulse"
+                stroke="#f43f5e"
+                strokeWidth={3}
+                dot={{ r: 4, strokeWidth: 2, fill: '#fff' }}
+                activeDot={{ r: 6, strokeWidth: 0 }}
+                animationDuration={1000}
+              />
+            </LineChart>
+          ) : (
+            <LineChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+              <XAxis 
+                dataKey="date" 
+                axisLine={false} 
+                tickLine={false} 
+                tick={{ fontSize: 10, fill: '#94a3b8' }} 
+                dy={10}
+              />
+              <YAxis 
+                domain={[35, 41]} 
+                axisLine={false} 
+                tickLine={false} 
+                tick={{ fontSize: 10, fill: '#94a3b8' }} 
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Line
+                name="Temperature"
+                type="monotone"
+                dataKey="temp"
+                stroke="#f59e0b"
+                strokeWidth={3}
+                dot={{ r: 4, strokeWidth: 2, fill: '#fff' }}
+                activeDot={{ r: 6, strokeWidth: 0 }}
+                animationDuration={1000}
+              />
+            </LineChart>
+          )}
+        </ResponsiveContainer>
       </div>
     );
   };
@@ -397,18 +491,54 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
             </div>
           )}
 
-          {/* Blood Pressure Trend Graph */}
-          <div className="bg-slate-50/70 rounded-2xl p-5 border border-slate-100">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-bold text-slate-800 flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-teal-600" />
-                Blood Pressure Progression (Systolic / Diastolic)
-              </h3>
-              <span className="text-xs text-slate-500">
-                {vitals.length} historical records logged
-              </span>
+          {/* Longitudinal Trend Visualizer */}
+          <div className="bg-slate-50/70 rounded-3xl p-6 border border-slate-100">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+              <div>
+                <h3 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                  <TrendingUp className="w-4 h-4 text-teal-600" />
+                  Health Progression & Trends
+                </h3>
+                <p className="text-[10px] text-slate-500 font-medium">Visualizing {vitals.length} historical records</p>
+              </div>
+
+              <div className="flex items-center bg-white p-1 rounded-xl border border-slate-200 shadow-sm">
+                <button
+                  onClick={() => setActiveMetric('bp')}
+                  className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all ${
+                    activeMetric === 'bp' ? 'bg-teal-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'
+                  }`}
+                >
+                  BP
+                </button>
+                <button
+                  onClick={() => setActiveMetric('pulse')}
+                  className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all ${
+                    activeMetric === 'pulse' ? 'bg-rose-500 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'
+                  }`}
+                >
+                  Pulse
+                </button>
+                <button
+                  onClick={() => setActiveMetric('weight')}
+                  className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all ${
+                    activeMetric === 'weight' ? 'bg-purple-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'
+                  }`}
+                >
+                  Weight
+                </button>
+                <button
+                  onClick={() => setActiveMetric('temp')}
+                  className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all ${
+                    activeMetric === 'temp' ? 'bg-amber-500 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'
+                  }`}
+                >
+                  Temp
+                </button>
+              </div>
             </div>
-            {renderBpTrendChart()}
+
+            {renderTrendChart()}
           </div>
 
           {/* Historical Log Table */}
