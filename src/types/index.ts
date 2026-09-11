@@ -141,16 +141,37 @@ export interface Consultation {
   appointment_id?: string;
   patient_id: string;
   doctor_id: string;
+  
+  // Basic Info
   chief_complaint: string;
   symptoms: string;
+  
+  // SOAP Notes Structure
+  subjective?: string;     // Patient's history of present illness, symptoms, family history
+  objective?: string;      // Physical exam findings, vital signs observed
+  assessment?: string;     // Clinical diagnosis, differential diagnoses
+  plan?: string;           // Treatment plan, patient education, referrals
+  
+  // Professional Coding
   diagnosis: string;
+  icd10_code?: string;     // International Classification of Diseases code
+  
   clinical_notes: string;
   prescription: string;
   recommendations: string;
+  
+  // Clinical Operations
   follow_up_date?: string;
   consultation_date: string;
+  
+  // Accountability & Integrity
+  is_locked: boolean;      // Once locked/signed, records cannot be edited
+  signed_at?: string;
+  signature_hash?: string; // Digital fingerprint of the consultation record
+  
   created_at: string;
   updated_at: string;
+  
   // Joined fields
   patient?: Patient;
   doctor?: Doctor;

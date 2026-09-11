@@ -27,6 +27,7 @@ import {
   ChevronDown,
   ChevronUp,
   Tv,
+  AlertTriangle,
 } from 'lucide-react';
 
 interface PatientDashboardViewProps {
@@ -141,6 +142,22 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
           </div>
         </div>
       </div>
+      
+      {/* Clinical Alerts / Allergy Banner */}
+      {patient?.allergies && (
+        <div className="p-4 bg-rose-600 rounded-3xl flex items-center gap-4 text-white shadow-lg border border-rose-400">
+          <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center shrink-0">
+            <AlertTriangle className="w-7 h-7 text-white" />
+          </div>
+          <div className="flex-1">
+            <h3 className="text-[10px] font-black uppercase tracking-widest opacity-90">Critical Clinical Alert: Known Allergies</h3>
+            <p className="text-xl font-black">{patient.allergies}</p>
+          </div>
+          <div className="hidden sm:block px-3 py-1.5 bg-white/20 rounded-xl text-[10px] font-black uppercase tracking-tighter border border-white/30">
+            Vital Medical Information
+          </div>
+        </div>
+      )}
 
       {/* Pre-Consultation Triage Banner */}
       <div className="bg-white rounded-3xl border border-teal-100 p-5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">

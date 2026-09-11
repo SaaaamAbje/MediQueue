@@ -113,6 +113,48 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
 
   const latest = vitals[0];
 
+  // Helper for Clinical Range Alerts
+  const getVitalAlert = (metric: string, value: number) => {
+    switch (metric) {
+      case 'systolic':
+        if (value >= 160) return { level: 'critical', msg: 'Hypertensive Crisis' };
+        if (value >= 140) return { level: 'high', msg: 'High BP (Stage 2)' };
+        return null;
+      case 'diastolic':
+        if (value >= 100) return { level: 'critical', msg: 'Critical Diastolic' };
+        if (value >= 90) return { level: 'high', msg: 'High Diastolic' };
+        return null;
+      case 'heart_rate':
+        if (value > 120 || value < 50) return { level: 'critical', msg: 'Arrhythmia Risk' };
+        if (value > 100 || value < 60) return { level: 'high', msg: 'Abnormal Rate' };
+        return null;
+      case 'spo2':
+        if (value < 92) return { level: 'critical', msg: 'Critical Hypoxia' };
+        if (value < 95) return { level: 'high', msg: 'Low Saturation' };
+        return null;
+      case 'temp':
+        if (value >= 39) return { level: 'critical', msg: 'High Fever' };
+        if (value >= 37.8) return { level: 'high', msg: 'Febrile' };
+        return null;
+      default:
+        return null;
+    }
+  };
+
+  const renderAlertBadge = (metric: string, value: number) => {
+    const alert = getVitalAlert(metric, value);
+    if (!alert) return null;
+    
+    return (
+      <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-tight animate-pulse ${
+        alert.level === 'critical' ? 'bg-rose-600 text-white' : 'bg-amber-500 text-white'
+      }`}>
+        <AlertTriangle className="w-2.5 h-2.5" />
+        {alert.msg}
+      </div>
+    );
+  };
+
   // Helper for Blood Pressure classification
   const getBpStatus = (sys: number, dia: number) => {
     if (sys < 120 && dia < 80) return { label: 'Normal / Optimal', color: 'text-emerald-700 bg-emerald-50 border-emerald-200' };
@@ -381,11 +423,17 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
                   <span className="font-semibold">Blood Pressure</span>
                   <Heart className="w-4 h-4 text-rose-500" />
                 </div>
-                <div className="my-2">
-                  <span className="text-2xl font-black font-mono text-slate-900">
-                    {latest.systolic_bp}/{latest.diastolic_bp}
-                  </span>
-                  <span className="text-[11px] text-slate-500 block">mmHg</span>
+                <div className="my-2 flex flex-col gap-1">
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-2xl font-black font-mono text-slate-900">
+                      {latest.systolic_bp}/{latest.diastolic_bp}
+                    </span>
+                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wide">mmHg</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1">
+                    {renderAlertBadge('systolic', latest.systolic_bp)}
+                    {renderAlertBadge('diastolic', latest.diastolic_bp)}
+                  </div>
                 </div>
                 <div>
                   <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${getBpStatus(latest.systolic_bp, latest.diastolic_bp).color}`}>
@@ -400,11 +448,14 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
                   <span className="font-semibold">Pulse / HR</span>
                   <Activity className="w-4 h-4 text-red-500" />
                 </div>
-                <div className="my-2">
-                  <span className="text-2xl font-black font-mono text-slate-900">
-                    {latest.heart_rate}
-                  </span>
-                  <span className="text-[11px] text-slate-500 block">bpm</span>
+                <div className="my-2 flex flex-col gap-1">
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-2xl font-black font-mono text-slate-900">
+                      {latest.heart_rate}
+                    </span>
+                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wide">bpm</span>
+                  </div>
+                  {renderAlertBadge('heart_rate', latest.heart_rate)}
                 </div>
                 <div>
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
@@ -419,11 +470,14 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
                   <span className="font-semibold">Oxygen (SpO2)</span>
                   <Droplet className="w-4 h-4 text-sky-500" />
                 </div>
-                <div className="my-2">
-                  <span className="text-2xl font-black font-mono text-slate-900">
-                    {latest.spo2}%
-                  </span>
-                  <span className="text-[11px] text-slate-500 block">ambient room air</span>
+                <div className="my-2 flex flex-col gap-1">
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-2xl font-black font-mono text-slate-900">
+                      {latest.spo2}%
+                    </span>
+                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wide">saturation</span>
+                  </div>
+                  {renderAlertBadge('spo2', latest.spo2)}
                 </div>
                 <div>
                   <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${latest.spo2 >= 95 ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-rose-50 text-rose-700 border-rose-200'}`}>
@@ -438,11 +492,14 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
                   <span className="font-semibold">Body Temp</span>
                   <Thermometer className="w-4 h-4 text-amber-500" />
                 </div>
-                <div className="my-2">
-                  <span className="text-2xl font-black font-mono text-slate-900">
-                    {latest.temperature_c}°C
-                  </span>
-                  <span className="text-[11px] text-slate-500 block">axillary / oral</span>
+                <div className="my-2 flex flex-col gap-1">
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-2xl font-black font-mono text-slate-900">
+                      {latest.temperature_c}°C
+                    </span>
+                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wide">body temp</span>
+                  </div>
+                  {renderAlertBadge('temp', latest.temperature_c)}
                 </div>
                 <div>
                   <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${latest.temperature_c >= 37.8 ? 'bg-rose-50 text-rose-700 border-rose-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200'}`}>

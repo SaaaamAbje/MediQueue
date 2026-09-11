@@ -146,6 +146,28 @@ class DatabaseStore {
     return false;
   }
 
+  public getAuditLogs(filters?: { module?: string; userRole?: string; search?: string }): AuditLog[] {
+    let result = [...this.data.audit_logs];
+
+    if (filters?.module && filters.module !== 'all') {
+      result = result.filter((l) => l.module === filters.module);
+    }
+    if (filters?.userRole && filters.userRole !== 'all') {
+      result = result.filter((l) => l.user_role === filters.userRole || l.role === filters.userRole);
+    }
+    if (filters?.search) {
+      const q = filters.search.toLowerCase();
+      result = result.filter(
+        (l) =>
+          l.user_email.toLowerCase().includes(q) ||
+          l.action.toLowerCase().includes(q) ||
+          l.details.toLowerCase().includes(q)
+      );
+    }
+
+    return result;
+  }
+
   public markAllNotificationsRead(userId: string): void {
     this.data.notifications.forEach((n) => {
       if (n.user_id === userId) n.is_read = true;
@@ -1103,6 +1125,12 @@ class DatabaseStore {
       prescription: string;
       recommendations: string;
       follow_up_date?: string;
+      subjective?: string;
+      objective?: string;
+      assessment?: string;
+      plan?: string;
+      icd10_code?: string;
+      is_locked?: boolean;
     },
     user: { id: string; email: string; role: 'PATIENT' | 'DOCTOR' | 'ADMIN' }
   ): { success: boolean; consultation?: Consultation; error?: string } {
@@ -1135,6 +1163,13 @@ class DatabaseStore {
       prescription: consultationData.prescription,
       recommendations: consultationData.recommendations,
       follow_up_date: consultationData.follow_up_date,
+      subjective: consultationData.subjective,
+      objective: consultationData.objective,
+      assessment: consultationData.assessment,
+      plan: consultationData.plan,
+      icd10_code: consultationData.icd10_code,
+      is_locked: consultationData.is_locked || false,
+      signed_at: consultationData.is_locked ? new Date().toISOString() : undefined,
       consultation_date: today,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
@@ -1386,31 +1421,6 @@ class DatabaseStore {
       confirmed,
       inProgress,
     };
-  }
-
-  // ==========================================
-  // AUDIT LOGS
-  // ==========================================
-  public getAuditLogs(filters?: { module?: string; userRole?: string; search?: string }): AuditLog[] {
-    let list = [...this.data.audit_logs];
-
-    if (filters?.module && filters.module !== 'all') {
-      list = list.filter((l) => l.module.toLowerCase() === filters.module?.toLowerCase());
-    }
-    if (filters?.userRole && filters.userRole !== 'all') {
-      list = list.filter((l) => l.user_role === filters.userRole);
-    }
-    if (filters?.search) {
-      const q = filters.search.toLowerCase();
-      list = list.filter(
-        (l) =>
-          l.action.toLowerCase().includes(q) ||
-          l.user_email.toLowerCase().includes(q) ||
-          l.details.toLowerCase().includes(q)
-      );
-    }
-
-    return list.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
   }
 
   // ==========================================

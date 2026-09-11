@@ -389,6 +389,12 @@ export const api = {
       prescription: string;
       recommendations: string;
       follow_up_date?: string;
+      subjective?: string;
+      objective?: string;
+      assessment?: string;
+      plan?: string;
+      icd10_code?: string;
+      is_locked?: boolean;
     }
   ): Promise<{ message: string; consultation: Consultation }> {
     const res = await fetch(`${API_BASE}/queue/${queueId}/complete`, {

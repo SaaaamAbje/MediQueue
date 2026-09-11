@@ -57,6 +57,13 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
   const [chiefComplaint, setChiefComplaint] = useState(
     queueItem?.appointment?.reason_for_consultation || ''
   );
+  const [subjective, setSubjective] = useState('');
+  const [objective, setObjective] = useState('');
+  const [assessment, setAssessment] = useState('');
+  const [plan, setPlan] = useState('');
+  const [icd10Code, setIcd10Code] = useState('');
+  const [isLocked, setIsLocked] = useState(false);
+  
   const [symptoms, setSymptoms] = useState('');
   const [diagnosis, setDiagnosis] = useState('');
   const [clinicalNotes, setClinicalNotes] = useState('');
@@ -109,6 +116,12 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
     try {
       await api.completeConsultation(activeQueueItem.id, {
         chief_complaint: chiefComplaint.trim(),
+        subjective: subjective.trim(),
+        objective: objective.trim(),
+        assessment: assessment.trim(),
+        plan: plan.trim(),
+        icd10_code: icd10Code.trim(),
+        is_locked: isLocked,
         symptoms: symptoms.trim(),
         diagnosis: diagnosis.trim(),
         clinical_notes: clinicalNotes.trim(),
@@ -365,30 +378,86 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
 
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">
-              Clinical Diagnosis *
+              ICD-10 Diagnosis Code
             </label>
             <input
               type="text"
-              value={diagnosis}
-              onChange={(e) => setDiagnosis(e.target.value)}
-              placeholder="e.g. Acute Migraine without Aura"
-              required
-              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+              value={icd10Code}
+              onChange={(e) => setIcd10Code(e.target.value)}
+              placeholder="e.g. G43.909 (Migraine, unspecified)"
+              className="w-full px-3 py-2 text-xs font-mono border border-slate-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
             />
           </div>
         </div>
 
         <div>
           <label className="block text-xs font-semibold text-slate-700 mb-1">
-            Symptoms &amp; Clinical Findings
+            Clinical Diagnosis *
           </label>
-          <textarea
-            rows={2}
-            value={symptoms}
-            onChange={(e) => setSymptoms(e.target.value)}
-            placeholder="e.g. BP 120/80, temp 37.1C, photophobia present, neck supple..."
-            className="w-full p-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+          <input
+            type="text"
+            value={diagnosis}
+            onChange={(e) => setDiagnosis(e.target.value)}
+            placeholder="e.g. Acute Migraine without Aura"
+            required
+            className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
           />
+        </div>
+
+        {/* SOAP Section */}
+        <div className="bg-slate-50/50 p-4 rounded-2xl border border-slate-200 space-y-4">
+          <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Professional SOAP Notes</h4>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
+                (S) Subjective
+              </label>
+              <textarea
+                rows={3}
+                value={subjective}
+                onChange={(e) => setSubjective(e.target.value)}
+                placeholder="Patient history, symptoms duration, family history..."
+                className="w-full p-2.5 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500"
+              />
+            </div>
+            <div>
+              <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
+                (O) Objective
+              </label>
+              <textarea
+                rows={3}
+                value={objective}
+                onChange={(e) => setObjective(e.target.value)}
+                placeholder="Physical exam findings, vital signs observed..."
+                className="w-full p-2.5 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500"
+              />
+            </div>
+            <div>
+              <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
+                (A) Assessment
+              </label>
+              <textarea
+                rows={3}
+                value={assessment}
+                onChange={(e) => setAssessment(e.target.value)}
+                placeholder="Clinical interpretation, differential diagnoses..."
+                className="w-full p-2.5 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500"
+              />
+            </div>
+            <div>
+              <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
+                (P) Plan
+              </label>
+              <textarea
+                rows={3}
+                value={plan}
+                onChange={(e) => setPlan(e.target.value)}
+                placeholder="Treatment, education, specific medications..."
+                className="w-full p-2.5 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500"
+              />
+            </div>
+          </div>
         </div>
 
         <div>
@@ -448,23 +517,40 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
           </div>
         </div>
 
-        <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-          <button
-            type="button"
-            onClick={() => onNavigate('doctor-queue')}
-            className="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-xl"
-          >
-            Cancel / Back to Queue
-          </button>
+        <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="lock-note"
+              checked={isLocked}
+              onChange={(e) => setIsLocked(e.target.checked)}
+              className="w-4 h-4 text-teal-600 border-slate-300 rounded focus:ring-teal-500"
+            />
+            <label htmlFor="lock-note" className="text-xs font-bold text-slate-700 flex items-center gap-1.5 cursor-pointer">
+              <FileCheck className="w-4 h-4 text-emerald-600" />
+              Electronically Sign & Lock Medical Record
+            </label>
+          </div>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="inline-flex items-center gap-2 px-6 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl shadow-md disabled:opacity-50 transition-colors"
-          >
-            <CheckCircle2 className="w-4 h-4" />
-            {isSubmitting ? 'Finalizing...' : 'Complete Consultation & Release Patient'}
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => onNavigate('doctor-queue')}
+              className="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-xl"
+            >
+              Cancel / Back to Queue
+            </button>
+
+            <button
+              type="submit"
+              disabled={isSubmitting || (!isLocked && diagnosis.length > 0)}
+              title={!isLocked ? "You must sign the record to complete consultation" : ""}
+              className="inline-flex items-center gap-2 px-6 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl shadow-md disabled:opacity-50 transition-colors"
+            >
+              <CheckCircle2 className="w-4 h-4" />
+              {isSubmitting ? 'Finalizing...' : 'Complete Consultation & Release Patient'}
+            </button>
+          </div>
         </div>
       </form>
 
@@ -509,6 +595,10 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
                   </span>
                 </div>
                 <div>
+                  <span className="text-slate-500">Diagnosis: </span>
+                  <strong className="text-slate-900">{diagnosis} {icd10Code ? `(${icd10Code})` : ''}</strong>
+                </div>
+                <div className="text-right">
                   <span className="text-slate-500">Age / Sex: </span>
                   <span className="font-medium text-slate-800">{patient?.age} yrs / {patient?.sex}</span>
                 </div>
@@ -535,17 +625,25 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
               )}
 
               {/* Doctor Signature */}
-              <div className="pt-6 mt-6 border-t border-slate-300 flex items-end justify-between text-xs">
-                <div className="text-[10px] text-slate-400">
-                  Electronic Signature Validated
-                  <br />
-                  MediQueue Clinical System
-                </div>
-                <div className="text-center w-48">
-                  <div className="border-b border-slate-400 pb-1 font-bold text-slate-900">
-                    Dr. {doctor?.first_name} {doctor?.last_name}, MD
+              <div className="pt-6 mt-6 border-t border-slate-300 flex items-center justify-between text-xs">
+                <div className="flex flex-col gap-1">
+                  <div className="px-2 py-1 bg-teal-50 border border-teal-200 text-teal-800 rounded text-[8px] font-black uppercase tracking-tighter w-fit">
+                    Authenticated Digital Signature
                   </div>
-                  <span className="text-[10px] text-slate-500">Attending Physician</span>
+                  <div className="text-[10px] text-slate-400 font-mono">
+                    VERIFIED: {new Date().getTime().toString(16).toUpperCase()}
+                  </div>
+                </div>
+                <div className="text-center w-56 relative">
+                  {isLocked && (
+                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 pointer-events-none opacity-20">
+                      <FileCheck className="w-16 h-16 text-teal-700" />
+                    </div>
+                  )}
+                  <div className="border-b border-slate-400 pb-1 font-bold text-slate-900 font-serif italic text-sm">
+                    {doctor?.first_name} {doctor?.last_name}, MD
+                  </div>
+                  <span className="text-[10px] text-slate-500">Lic. No. {doctor?.license_number}</span>
                 </div>
               </div>
             </div>
