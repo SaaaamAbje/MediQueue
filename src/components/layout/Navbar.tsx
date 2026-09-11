@@ -37,14 +37,12 @@ interface NavbarProps {
   currentView: string;
   onNavigate: (view: string) => void;
   currentSystem: 'patient' | 'doctor' | 'admin';
-  onSwitchSystem: (system: 'patient' | 'doctor' | 'admin') => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   currentView,
   onNavigate,
   currentSystem,
-  onSwitchSystem,
 }) => {
   const { user, patient, doctor, logout } = useAuth();
   const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
@@ -143,48 +141,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="hidden sm:inline text-purple-300/70">• Central Reception &amp; Management</span>
             </>
           )}
-        </div>
-
-        {/* Dedicated System Isolation Tabs */}
-        <div className="flex items-center gap-1 bg-black/25 p-0.5 rounded-lg border border-white/10">
-          <button
-            type="button"
-            onClick={() => onSwitchSystem('patient')}
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold transition-all cursor-pointer ${
-              isPatient
-                ? 'bg-teal-500 text-white shadow-xs font-bold'
-                : 'text-white/80 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <Heart className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Patient</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => onSwitchSystem('doctor')}
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold transition-all cursor-pointer ${
-              isDoctor
-                ? 'bg-sky-500 text-white shadow-xs font-bold'
-                : 'text-white/80 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <Stethoscope className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Doctor</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => onSwitchSystem('admin')}
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold transition-all cursor-pointer ${
-              isAdmin
-                ? 'bg-purple-600 text-white shadow-xs font-bold'
-                : 'text-white/80 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <Shield className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Admin</span>
-          </button>
         </div>
       </div>
 
@@ -426,45 +382,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
 
           <div className="pt-3 mt-3 border-t border-slate-100 space-y-2">
-            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Isolated Systems:</div>
-            <div className="grid grid-cols-3 gap-1.5">
-              <button
-                type="button"
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  onSwitchSystem('patient');
-                }}
-                className={`py-1.5 px-2 rounded-lg text-xs font-semibold text-center ${
-                  isPatient ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-700'
-                }`}
-              >
-                Patient
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  onSwitchSystem('doctor');
-                }}
-                className={`py-1.5 px-2 rounded-lg text-xs font-semibold text-center ${
-                  isDoctor ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-700'
-                }`}
-              >
-                Doctor
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  onSwitchSystem('admin');
-                }}
-                className={`py-1.5 px-2 rounded-lg text-xs font-semibold text-center ${
-                  isAdmin ? 'bg-purple-600 text-white' : 'bg-slate-100 text-slate-700'
-                }`}
-              >
-                Admin
-              </button>
-            </div>
             <div className="pt-2 flex justify-end">
               <button
                 onClick={logout}

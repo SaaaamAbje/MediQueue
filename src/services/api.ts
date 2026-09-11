@@ -90,15 +90,6 @@ export const api = {
     return handleResponse<{ user: User; patient?: Patient; doctor?: Doctor }>(res);
   },
 
-  async quickSwitch(role: 'PATIENT' | 'DOCTOR' | 'ADMIN', email?: string) {
-    const res = await fetch(`${API_BASE}/auth/quick-switch`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ role, email }),
-    });
-    return handleResponse<{ token: string; user: User; patient?: Patient; doctor?: Doctor }>(res);
-  },
-
   async forgotPassword(email: string) {
     const res = await fetch(`${API_BASE}/auth/forgot-password`, {
       method: 'POST',

@@ -48,31 +48,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setPatient(res.patient || null);
           setDoctor(res.doctor || null);
         } catch {
-          // Token expired or invalid, auto fallback to demo Patient account so reviewer sees active app
-          try {
-            const fallback = await api.quickSwitch('PATIENT');
-            localStorage.setItem('mq_token', fallback.token);
-            setToken(fallback.token);
-            setUser(fallback.user);
-            setPatient(fallback.patient || null);
-            setDoctor(fallback.doctor || null);
-          } catch {
-            localStorage.removeItem('mq_token');
-            setToken(null);
-            setUser(null);
-          }
-        }
-      } else {
-        // Automatically start with demo Patient session for instant preview!
-        try {
-          const demo = await api.quickSwitch('PATIENT');
-          localStorage.setItem('mq_token', demo.token);
-          setToken(demo.token);
-          setUser(demo.user);
-          setPatient(demo.patient || null);
-          setDoctor(demo.doctor || null);
-        } catch (err) {
-          console.warn('Auto demo switch error:', err);
+          localStorage.removeItem('mq_token');
+          setToken(null);
+          setUser(null);
+          setPatient(null);
+          setDoctor(null);
         }
       }
       setIsLoading(false);
@@ -126,18 +106,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const quickSwitch = async (role: UserRole, email?: string) => {
-    setIsLoading(true);
-    try {
-      const res = await api.quickSwitch(role, email);
-      localStorage.setItem('mq_token', res.token);
-      setToken(res.token);
-      setUser(res.user);
-      setPatient(res.patient || null);
-      setDoctor(res.doctor || null);
-    } finally {
-      setIsLoading(false);
-    }
+  const quickSwitch = async () => {
+    // Disabled in production/realistic mode
+    console.warn('Quick switch is disabled for security.');
   };
 
   const refreshProfile = async () => {

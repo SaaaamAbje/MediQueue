@@ -17,13 +17,11 @@ import {
 interface LoginViewProps {
   onNavigate: (view: string) => void;
   targetSystem?: 'patient' | 'doctor' | 'admin';
-  onSelectSystem?: (system: 'patient' | 'doctor' | 'admin') => void;
 }
 
 export const LoginView: React.FC<LoginViewProps> = ({
   onNavigate,
   targetSystem = 'patient',
-  onSelectSystem,
 }) => {
   const { login, quickSwitch, isLoading } = useAuth();
   const { showToast } = useNotifications();
@@ -79,43 +77,11 @@ export const LoginView: React.FC<LoginViewProps> = ({
 
   return (
     <div className="min-h-[80vh] flex flex-col justify-center py-6 sm:px-6 lg:px-8">
-      {/* Isolated System Indicator */}
-      <div className="sm:mx-auto sm:w-full sm:max-w-md mb-4 flex items-center justify-between">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md mb-4 flex items-center justify-center">
         <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-white shadow-2xs text-slate-700 border border-slate-200 inline-flex items-center gap-1.5">
           <span className={`w-2 h-2 rounded-full ${isPatient ? 'bg-teal-500' : isDoctor ? 'bg-sky-500' : 'bg-purple-500'}`} />
-          <span>Isolated {isPatient ? 'Patient Portal' : isDoctor ? 'Doctor Workstation' : 'Admin Console'}</span>
+          <span>{isPatient ? 'Patient Portal' : isDoctor ? 'Doctor Workstation' : 'Admin Console'}</span>
         </span>
-        {onSelectSystem && (
-          <div className="flex items-center gap-1.5 text-xs">
-            {!isPatient && (
-              <button
-                type="button"
-                onClick={() => onSelectSystem('patient')}
-                className="text-teal-700 hover:text-teal-900 font-medium hover:underline text-[11px]"
-              >
-                Patient
-              </button>
-            )}
-            {!isDoctor && (
-              <button
-                type="button"
-                onClick={() => onSelectSystem('doctor')}
-                className="text-sky-700 hover:text-sky-900 font-medium hover:underline text-[11px]"
-              >
-                Doctor
-              </button>
-            )}
-            {!isAdmin && (
-              <button
-                type="button"
-                onClick={() => onSelectSystem('admin')}
-                className="text-purple-700 hover:text-purple-900 font-medium hover:underline text-[11px]"
-              >
-                Admin
-              </button>
-            )}
-          </div>
-        )}
       </div>
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
@@ -150,90 +116,12 @@ export const LoginView: React.FC<LoginViewProps> = ({
 
       <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-6 shadow-xl shadow-slate-200/50 rounded-2xl border border-slate-200 sm:px-10">
-          {/* Quick Demo Login Bar for this System */}
-          <div
-            className={`mb-6 p-3.5 rounded-xl border ${
-              isPatient
-                ? 'bg-teal-50/80 border-teal-200 text-teal-900'
-                : isDoctor
-                ? 'bg-sky-50/80 border-sky-200 text-sky-900'
-                : 'bg-purple-50/80 border-purple-200 text-purple-900'
-            }`}
-          >
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider">
-                1-Click Instant Demo Sign-In
-              </span>
-              <Sparkles className="w-3.5 h-3.5" />
-            </div>
-
-            {isPatient && (
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('PATIENT')}
-                disabled={isLoading}
-                className="w-full flex items-center justify-between p-2.5 rounded-lg bg-white border border-teal-200 text-teal-900 hover:bg-teal-100/70 hover:border-teal-300 transition-all text-xs font-semibold shadow-2xs"
-              >
-                <div className="flex items-center gap-2">
-                  <Heart className="w-4 h-4 text-teal-600 shrink-0" />
-                  <div className="text-left">
-                    <div>Enter as Maria Santos (Patient)</div>
-                    <div className="text-[10px] text-teal-700 font-normal">
-                      maria.santos@email.ph
-                    </div>
-                  </div>
-                </div>
-                <ArrowRight className="w-4 h-4 text-teal-700" />
-              </button>
-            )}
-
-            {isDoctor && (
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('DOCTOR')}
-                disabled={isLoading}
-                className="w-full flex items-center justify-between p-2.5 rounded-lg bg-white border border-sky-200 text-sky-900 hover:bg-sky-100/70 hover:border-sky-300 transition-all text-xs font-semibold shadow-2xs"
-              >
-                <div className="flex items-center gap-2">
-                  <Stethoscope className="w-4 h-4 text-sky-600 shrink-0" />
-                  <div className="text-left">
-                    <div>Enter as Dr. Sarah Ramos, MD (Cardiology)</div>
-                    <div className="text-[10px] text-sky-700 font-normal">
-                      dr.sarah.ramos@mediqueue.clinic • Room 102
-                    </div>
-                  </div>
-                </div>
-                <ArrowRight className="w-4 h-4 text-sky-700" />
-              </button>
-            )}
-
-            {isAdmin && (
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('ADMIN')}
-                disabled={isLoading}
-                className="w-full flex items-center justify-between p-2.5 rounded-lg bg-white border border-purple-200 text-purple-900 hover:bg-purple-100/70 hover:border-purple-300 transition-all text-xs font-semibold shadow-2xs"
-              >
-                <div className="flex items-center gap-2">
-                  <Shield className="w-4 h-4 text-purple-600 shrink-0" />
-                  <div className="text-left">
-                    <div>Enter as Clinic Operations Admin</div>
-                    <div className="text-[10px] text-purple-700 font-normal">
-                      admin@mediqueue.clinic • Full Access
-                    </div>
-                  </div>
-                </div>
-                <ArrowRight className="w-4 h-4 text-purple-700" />
-              </button>
-            )}
-          </div>
-
           <div className="relative mb-5">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-slate-200" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-white px-2 text-slate-500 font-medium">Or enter credentials</span>
+              <span className="bg-white px-2 text-slate-500 font-medium">Authentication</span>
             </div>
           </div>
 
@@ -324,41 +212,12 @@ export const LoginView: React.FC<LoginViewProps> = ({
             </div>
           )}
 
-          {/* Switch to other portals */}
-          {onSelectSystem && (
-            <div className="mt-5 pt-4 border-t border-slate-100 space-y-1.5 text-center">
-              <div className="text-[11px] text-slate-400 font-medium">Switch to a different isolated system:</div>
-              <div className="flex items-center justify-center gap-3 text-xs">
-                {!isPatient && (
-                  <button
-                    type="button"
-                    onClick={() => onSelectSystem('patient')}
-                    className="text-teal-600 hover:underline font-semibold"
-                  >
-                    Patient Portal
-                  </button>
-                )}
-                {!isDoctor && (
-                  <button
-                    type="button"
-                    onClick={() => onSelectSystem('doctor')}
-                    className="text-sky-600 hover:underline font-semibold"
-                  >
-                    Doctor Workstation
-                  </button>
-                )}
-                {!isAdmin && (
-                  <button
-                    type="button"
-                    onClick={() => onSelectSystem('admin')}
-                    className="text-purple-600 hover:underline font-semibold"
-                  >
-                    Admin Console
-                  </button>
-                )}
-              </div>
+          {/* Unified Login Label */}
+          <div className="mt-5 pt-4 border-t border-slate-100 space-y-1.5 text-center">
+            <div className="text-[11px] text-slate-400 font-medium italic">
+              Secure institutional access requires specific verified credentials.
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

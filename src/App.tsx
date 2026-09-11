@@ -50,20 +50,10 @@ import { Heart, Stethoscope, Shield, ArrowRight } from 'lucide-react';
 export type SystemType = 'patient' | 'doctor' | 'admin';
 
 const detectInitialSystem = (): SystemType => {
-  // 1. Inspect URL pathname or hash for direct deep links (/doctor, /admin, /patient)
   const path = window.location.pathname.toLowerCase();
   const hash = window.location.hash.toLowerCase();
   if (path.includes('doctor') || hash.includes('doctor')) return 'doctor';
   if (path.includes('admin') || hash.includes('admin')) return 'admin';
-  if (path.includes('patient') || hash.includes('patient')) return 'patient';
-
-  // 2. Inspect persisted system choice
-  const saved = localStorage.getItem('mq_active_system') as SystemType;
-  if (saved && ['patient', 'doctor', 'admin'].includes(saved)) {
-    return saved;
-  }
-
-  // 3. Direct default: Patient Portal (instant experience, no chooser screen)
   return 'patient';
 };
 
@@ -75,6 +65,28 @@ const AppContent: React.FC = () => {
 
   // Auth flow view
   const [authView, setAuthView] = useState<'login' | 'register' | 'forgot-password'>('login');
+
+  // Sync system based on user role when logged in
+  useEffect(() => {
+    if (user && role) {
+      if (role === 'PATIENT') {
+        setActiveSystem('patient');
+        if (currentView.startsWith('doctor') || currentView.startsWith('admin')) {
+          setCurrentView('patient-dashboard');
+        }
+      } else if (role === 'DOCTOR') {
+        setActiveSystem('doctor');
+        if (currentView.startsWith('patient') || currentView.startsWith('admin')) {
+          setCurrentView('doctor-dashboard');
+        }
+      } else if (role === 'ADMIN') {
+        setActiveSystem('admin');
+        if (currentView.startsWith('patient') || currentView.startsWith('doctor')) {
+          setCurrentView('admin-dashboard');
+        }
+      }
+    }
+  }, [user, role]);
 
   // Main application view inside the active system
   const [currentView, setCurrentView] = useState<string>(() => {
@@ -163,82 +175,29 @@ const AppContent: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
             {/* System Branding */}
             <div className="flex items-center gap-2.5">
-              <div
-                className={`w-9 h-9 rounded-xl flex items-center justify-center text-white font-bold text-base shadow-sm ${
-                  activeSystem === 'patient'
-                    ? 'bg-teal-600'
-                    : activeSystem === 'doctor'
-                    ? 'bg-sky-600'
-                    : 'bg-purple-700'
-                }`}
-              >
-                {activeSystem === 'patient' && <Heart className="w-5 h-5" />}
-                {activeSystem === 'doctor' && <Stethoscope className="w-5 h-5" />}
-                {activeSystem === 'admin' && <Shield className="w-5 h-5" />}
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center text-white font-bold text-base shadow-sm bg-teal-600">
+                <Heart className="w-5 h-5" />
               </div>
               <div>
                 <span className="font-bold text-base text-slate-900 tracking-tight">MediQueue</span>
                 <span className="text-[10px] text-slate-500 font-semibold block -mt-1 uppercase">
-                  {activeSystem === 'patient' && 'Patient Portal (Isolated)'}
-                  {activeSystem === 'doctor' && 'Doctor Workstation (Isolated)'}
-                  {activeSystem === 'admin' && 'Admin Console (Isolated)'}
+                  Clinical Management System
                 </span>
               </div>
             </div>
 
-            {/* Direct Switch to Other Systems Tabs */}
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <div className="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200">
-                <button
-                  type="button"
-                  onClick={() => handleSelectSystem('patient')}
-                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold transition-all ${
-                    activeSystem === 'patient'
-                      ? 'bg-teal-600 text-white shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  <Heart className="w-3 h-3" />
-                  <span className="hidden sm:inline">Patient</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleSelectSystem('doctor')}
-                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold transition-all ${
-                    activeSystem === 'doctor'
-                      ? 'bg-sky-600 text-white shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  <Stethoscope className="w-3 h-3" />
-                  <span className="hidden sm:inline">Doctor</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleSelectSystem('admin')}
-                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold transition-all ${
-                    activeSystem === 'admin'
-                      ? 'bg-purple-700 text-white shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  <Shield className="w-3 h-3" />
-                  <span className="hidden sm:inline">Admin</span>
-                </button>
-              </div>
-
-              {activeSystem === 'patient' && (
-                <button
-                  onClick={() => setAuthView(authView === 'register' ? 'login' : 'register')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
-                    authView === 'register'
-                      ? 'bg-teal-600 text-white shadow-xs'
-                      : 'text-slate-600 hover:bg-slate-100'
-                  }`}
-                >
-                  {authView === 'register' ? 'Sign In' : 'Register'}
-                </button>
-              )}
+            {/* Auth Buttons */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setAuthView(authView === 'register' ? 'login' : 'register')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+                  authView === 'register'
+                    ? 'bg-teal-600 text-white shadow-xs'
+                    : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                {authView === 'register' ? 'Sign In' : 'Patient Registration'}
+              </button>
             </div>
           </div>
         </header>
@@ -257,12 +216,10 @@ const AppContent: React.FC = () => {
 
         <footer className="border-t border-slate-200 bg-white py-4 text-center text-xs text-slate-500">
           <p className="font-semibold text-slate-700">
-            {activeSystem === 'patient' && 'MediQueue Patient Self-Service Portal'}
-            {activeSystem === 'doctor' && 'MediQueue Physician Clinical Workstation'}
-            {activeSystem === 'admin' && 'MediQueue Clinic Operations & Central Console'}
+            MediQueue Clinical Management System
           </p>
           <p className="text-[11px] text-slate-400 mt-0.5">
-            Isolated clinical system. Switch systems instantly via the top system bar.
+            Secured Healthcare Information System
           </p>
         </footer>
       </div>
@@ -419,35 +376,8 @@ const AppContent: React.FC = () => {
               {activeSystem === 'doctor' && 'MediQueue Physician Clinical Workstation Active'}
               {activeSystem === 'admin' && 'MediQueue Clinic Administration Console Active'}
             </span>
-            <span className="text-slate-400">• Outpatient Terminal</span>
           </div>
           <div className="flex items-center gap-3 text-[11px] text-slate-500">
-            <span>Switch to:</span>
-            {activeSystem !== 'patient' && (
-              <button
-                onClick={() => handleSelectSystem('patient')}
-                className="text-teal-700 hover:text-teal-900 font-semibold underline"
-              >
-                Patient Portal
-              </button>
-            )}
-            {activeSystem !== 'doctor' && (
-              <button
-                onClick={() => handleSelectSystem('doctor')}
-                className="text-sky-700 hover:text-sky-900 font-semibold underline"
-              >
-                Doctor Workstation
-              </button>
-            )}
-            {activeSystem !== 'admin' && (
-              <button
-                onClick={() => handleSelectSystem('admin')}
-                className="text-purple-700 hover:text-purple-900 font-semibold underline"
-              >
-                Admin Console
-              </button>
-            )}
-            <span>•</span>
             <span>Support: +63 917 999 8888</span>
           </div>
         </div>
