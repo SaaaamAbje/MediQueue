@@ -76,46 +76,48 @@ export const LoginView: React.FC<LoginViewProps> = ({
   const isAdmin = targetSystem === 'admin';
 
   return (
-    <div className="min-h-[80vh] flex flex-col justify-center py-6 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md mb-4 flex items-center justify-center">
-        <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-white shadow-2xs text-slate-700 border border-slate-200 inline-flex items-center gap-1.5">
-          <span className={`w-2 h-2 rounded-full ${isPatient ? 'bg-teal-500' : isDoctor ? 'bg-sky-500' : 'bg-purple-500'}`} />
-          <span>{isPatient ? 'Patient Portal' : isDoctor ? 'Doctor Workstation' : 'Admin Console'}</span>
-        </span>
+    <div className="min-h-screen flex flex-col justify-center relative overflow-hidden bg-slate-50">
+      {/* Light Professional Hospital Background */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="/src/assets/images/hospital_login_bg_1789109420944.jpg" 
+          alt="Hospital Background" 
+          className="w-full h-full object-cover opacity-60"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-white/20" />
       </div>
 
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        {/* System-specific Icon & Badge */}
-        {isPatient && (
-          <div className="mx-auto w-14 h-14 rounded-2xl bg-teal-600 flex items-center justify-center text-white shadow-lg shadow-teal-600/30 mb-3">
-            <Heart className="w-7 h-7" />
+      <div className="relative z-10 py-6 sm:px-6 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
+          {/* Hospital Logo Asset */}
+          <div className="mx-auto w-20 h-20 rounded-3xl bg-white p-3 shadow-xl mb-6 ring-1 ring-slate-100 overflow-hidden">
+            <img 
+              src="/src/assets/images/mediqueue_logo_1789109406002.jpg" 
+              alt="MediQueue Logo" 
+              className="w-full h-full object-contain"
+              referrerPolicy="no-referrer"
+            />
           </div>
-        )}
-        {isDoctor && (
-          <div className="mx-auto w-14 h-14 rounded-2xl bg-sky-600 flex items-center justify-center text-white shadow-lg shadow-sky-600/30 mb-3">
-            <Stethoscope className="w-7 h-7" />
-          </div>
-        )}
-        {isAdmin && (
-          <div className="mx-auto w-14 h-14 rounded-2xl bg-purple-600 flex items-center justify-center text-white shadow-lg shadow-purple-600/30 mb-3">
-            <Shield className="w-7 h-7" />
-          </div>
-        )}
-
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-          {isPatient && 'Patient Self-Service Portal'}
-          {isDoctor && 'Physician Clinical Workstation'}
-          {isAdmin && 'Clinic Operations & Admin Console'}
-        </h2>
-        <p className="mt-1 text-xs text-slate-600">
+          
+          <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
+            MediQueue
+          </h2>
+          <p className="mt-2 text-sm text-slate-600 font-medium">
+            {isPatient && 'Patient Self-Service Portal'}
+            {isDoctor && 'Physician Clinical Workstation'}
+            {isAdmin && 'Clinic Operations & Admin Console'}
+          </p>
+        </div>
+        <p className="mt-1 text-xs text-slate-500 text-center px-4">
           {isPatient && 'Book consultations, check live queue status, and access medical records'}
           {isDoctor && 'Room 102 outpatient queue, consultation room timer, and digital prescription builder'}
           {isAdmin && 'Central queue oversight, walk-in ticketing, doctor schedules, and audit trails'}
         </p>
       </div>
 
-      <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-6 shadow-xl shadow-slate-200/50 rounded-2xl border border-slate-200 sm:px-10">
+      <div className="mt-2 sm:mx-auto sm:w-full sm:max-w-md relative z-10 px-4 sm:px-0">
+        <div className="bg-white py-8 px-6 shadow-2xl shadow-slate-200/60 rounded-2xl border border-slate-100 sm:px-10">
           <div className="relative mb-5">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-slate-200" />
@@ -212,12 +214,6 @@ export const LoginView: React.FC<LoginViewProps> = ({
             </div>
           )}
 
-          {/* Unified Login Label */}
-          <div className="mt-5 pt-4 border-t border-slate-100 space-y-1.5 text-center">
-            <div className="text-[11px] text-slate-400 font-medium italic">
-              Secure institutional access requires specific verified credentials.
-            </div>
-          </div>
         </div>
       </div>
     </div>

@@ -157,27 +157,20 @@ export const Navbar: React.FC<NavbarProps> = ({
               }}
               className="flex items-center gap-2.5 text-left focus:outline-none"
             >
-              <div
-                className={`w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-md transition-all ${
-                  isPatient
-                    ? 'bg-teal-600 shadow-teal-600/20'
-                    : isDoctor
-                    ? 'bg-sky-600 shadow-sky-600/20'
-                    : 'bg-purple-700 shadow-purple-700/20'
-                }`}
-              >
-                {isPatient && <Heart className="w-6 h-6" />}
-                {isDoctor && <Stethoscope className="w-6 h-6" />}
-                {isAdmin && <Shield className="w-6 h-6" />}
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden bg-white shadow-sm ring-1 ring-slate-200">
+                <img 
+                  src="/src/assets/images/mediqueue_logo_1789109406002.jpg" 
+                  alt="MediQueue Logo" 
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
               </div>
               <div>
                 <span className="text-lg font-bold tracking-tight text-slate-900 block leading-tight">
-                  Medi<span className={isPatient ? 'text-teal-600' : isDoctor ? 'text-sky-600' : 'text-purple-600'}>Queue</span>
+                  MediQueue
                 </span>
                 <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider block">
-                  {isPatient && 'Patient Portal'}
-                  {isDoctor && 'Physician Suite'}
-                  {isAdmin && 'Admin Console'}
+                  Clinical Systems
                 </span>
               </div>
             </button>

@@ -175,8 +175,13 @@ const AppContent: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
             {/* System Branding */}
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center text-white font-bold text-base shadow-sm bg-teal-600">
-                <Heart className="w-5 h-5" />
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center overflow-hidden bg-white shadow-sm ring-1 ring-slate-200">
+                <img 
+                  src="/src/assets/images/mediqueue_logo_1789109406002.jpg" 
+                  alt="MediQueue Logo" 
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
               </div>
               <div>
                 <span className="font-bold text-base text-slate-900 tracking-tight">MediQueue</span>
@@ -213,15 +218,6 @@ const AppContent: React.FC = () => {
           {authView === 'register' && <RegisterView onNavigate={setAuthView} />}
           {authView === 'forgot-password' && <ForgotPasswordView onNavigate={setAuthView} />}
         </main>
-
-        <footer className="border-t border-slate-200 bg-white py-4 text-center text-xs text-slate-500">
-          <p className="font-semibold text-slate-700">
-            MediQueue Clinical Management System
-          </p>
-          <p className="text-[11px] text-slate-400 mt-0.5">
-            Secured Healthcare Information System
-          </p>
-        </footer>
       </div>
     );
   }
