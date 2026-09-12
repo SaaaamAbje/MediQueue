@@ -159,15 +159,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden bg-white shadow-sm ring-1 ring-slate-200">
                 <img 
-                  src="/src/assets/images/mediqueue_logo_1789109406002.jpg" 
-                  alt="MediQueue Logo" 
+                  src="/src/assets/images/mediqueue_clinica_logo_1789222232060.jpg" 
+                  alt="MediQueue Clinica Logo" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />
               </div>
               <div>
                 <span className="text-lg font-bold tracking-tight text-slate-900 block leading-tight">
-                  MediQueue
+                  MediQueue Clinica
                 </span>
                 <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider block">
                   Clinical Systems

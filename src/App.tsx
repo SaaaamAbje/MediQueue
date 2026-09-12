@@ -180,14 +180,14 @@ const AppContent: React.FC = () => {
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center overflow-hidden bg-white shadow-sm ring-1 ring-slate-200">
                 <img 
-                  src="/src/assets/images/mediqueue_logo_1789109406002.jpg" 
-                  alt="MediQueue Logo" 
+                  src="/src/assets/images/mediqueue_clinica_logo_1789222232060.jpg" 
+                  alt="MediQueue Clinica Logo" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />
               </div>
               <div>
-                <span className="font-bold text-base text-slate-900 tracking-tight">MediQueue</span>
+                <span className="font-bold text-base text-slate-900 tracking-tight">MediQueue Clinica</span>
                 <span className="text-[10px] text-slate-500 font-semibold block -mt-1 uppercase">
                   Clinical Management System
                 </span>
