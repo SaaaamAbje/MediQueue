@@ -30,6 +30,7 @@ async function startServer() {
   // Auto-seed check for Firestore
   try {
     const users = await db.getUsers();
+    console.log(`[MediQueue] Current users count: ${users.length}`);
     if (users.length === 0) {
       console.log('[MediQueue] Firestore empty. Seeding initial data...');
       const seed = getInitialSeedData();
@@ -71,7 +72,10 @@ async function startServer() {
   // Vite integration
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: { 
+        middlewareMode: true,
+        hmr: false 
+      },
       appType: 'spa',
     });
     app.use(vite.middlewares);
@@ -83,8 +87,16 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
+  const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`[MediQueue] Server running at http://0.0.0.0:${PORT}`);
+  });
+
+  server.on('error', (err: any) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`[MediQueue] Port ${PORT} is already in use. Please wait or kill the process.`);
+    } else {
+      console.error('[MediQueue] Server error:', err);
+    }
   });
 }
 

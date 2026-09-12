@@ -1198,7 +1198,7 @@ class FirestoreStore {
   }
 
   public async getSettings(): Promise<ClinicSettings> {
-    const doc = await this.db.collection('settings').doc('clinic').get();
+    const doc = await this.db.collection('clinic_settings').doc('clinic').get();
     if (doc.exists) return this.fromFirestore(doc.data()) as ClinicSettings;
     return {
       id: 'clinic',
@@ -1219,7 +1219,7 @@ class FirestoreStore {
 
   public async updateSettings(data: Partial<ClinicSettings>): Promise<ClinicSettings> {
     const updated = { ...data, updated_at: new Date().toISOString() };
-    await this.db.collection('settings').doc('clinic').set(updated, { merge: true });
+    await this.db.collection('clinic_settings').doc('clinic').set(updated, { merge: true });
     return this.getSettings();
   }
 

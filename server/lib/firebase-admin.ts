@@ -12,12 +12,13 @@ let databaseId = 'ai-studio-mediqueueclinica-a891fdad-9279-4a52-81b5-369f0b76eda
 
 if (fs.existsSync(configPath)) {
   const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+  projectId = config.projectId || projectId;
   databaseId = config.firestoreDatabaseId || databaseId;
 }
 
 if (getApps().length === 0) {
   app = initializeApp({
-    projectId: projectId
+    projectId: projectId,
   });
 } else {
   app = getApps()[0];
