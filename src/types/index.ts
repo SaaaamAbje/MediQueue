@@ -127,6 +127,7 @@ export interface QueueItem {
   consultation_start_time?: string;
   completion_time?: string;
   status: QueueStatus;
+  priority?: 'Routine' | 'Urgent' | 'Emergency' | string;
   remarks?: string;
   created_at: string;
   updated_at: string;
@@ -459,6 +460,7 @@ export interface LabTestResult {
 // -------------------------------------------------------------
 export interface SmsLog {
   id: string;
+  patient_id?: string;
   recipient_phone: string;
   recipient_name: string;
   message: string;

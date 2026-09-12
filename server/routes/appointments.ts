@@ -5,7 +5,7 @@ import { authenticateToken, requireRoles, AuthenticatedRequest } from '../auth';
 export const appointmentsRouter = Router();
 
 // GET /api/appointments
-appointmentsRouter.get('/', authenticateToken, (req: AuthenticatedRequest, res: Response): void => {
+appointmentsRouter.get('/', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   const user = req.user!;
   let { patientId, doctorId, date, status, search } = req.query as {
     patientId?: string;
@@ -17,7 +17,7 @@ appointmentsRouter.get('/', authenticateToken, (req: AuthenticatedRequest, res: 
 
   // If patient, restrict to their own appointments
   if (user.role === 'PATIENT') {
-    const patient = db.getPatientByUserId(user.id);
+    const patient = await db.getPatientByUserId(user.id);
     if (!patient) {
       res.json([]);
       return;
@@ -25,19 +25,19 @@ appointmentsRouter.get('/', authenticateToken, (req: AuthenticatedRequest, res: 
     patientId = patient.id;
   } else if (user.role === 'DOCTOR' && !doctorId) {
     // If doctor, default to their appointments
-    const doctor = db.getDoctorByUserId(user.id);
+    const doctor = await db.getDoctorByUserId(user.id);
     if (doctor) {
       doctorId = doctor.id;
     }
   }
 
-  const list = db.getAppointments({ patientId, doctorId, date, status, search });
+  const list = await db.getAppointments({ patientId, doctorId, date, status, search });
   res.json(list);
 });
 
 // GET /api/appointments/:id
-appointmentsRouter.get('/:id', authenticateToken, (req: AuthenticatedRequest, res: Response): void => {
-  const apt = db.getAppointmentById(req.params.id);
+appointmentsRouter.get('/:id', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  const apt = await db.getAppointmentById(req.params.id);
   if (!apt) {
     res.status(404).json({ error: 'Appointment not found.' });
     return;
@@ -45,7 +45,7 @@ appointmentsRouter.get('/:id', authenticateToken, (req: AuthenticatedRequest, re
 
   // Check ownership if patient
   if (req.user!.role === 'PATIENT') {
-    const patient = db.getPatientByUserId(req.user!.id);
+    const patient = await db.getPatientByUserId(req.user!.id);
     if (!patient || patient.id !== apt.patient_id) {
       res.status(403).json({ error: 'Unauthorized to view this appointment.' });
       return;
@@ -56,7 +56,7 @@ appointmentsRouter.get('/:id', authenticateToken, (req: AuthenticatedRequest, re
 });
 
 // POST /api/appointments/book
-appointmentsRouter.post('/book', authenticateToken, (req: AuthenticatedRequest, res: Response): void => {
+appointmentsRouter.post('/book', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   try {
     const user = req.user!;
     let { patient_id, doctor_id, appointment_date, time_slot, reason_for_consultation, schedule_id } = req.body;
@@ -68,7 +68,7 @@ appointmentsRouter.post('/book', authenticateToken, (req: AuthenticatedRequest, 
 
     // Determine patient ID
     if (user.role === 'PATIENT') {
-      const patient = db.getPatientByUserId(user.id);
+      const patient = await db.getPatientByUserId(user.id);
       if (!patient) {
         res.status(400).json({ error: 'Patient profile not found for current user.' });
         return;
@@ -79,7 +79,7 @@ appointmentsRouter.post('/book', authenticateToken, (req: AuthenticatedRequest, 
       return;
     }
 
-    const result = db.createAppointment({
+    const result = await db.createAppointment({
       patient_id,
       doctor_id,
       appointment_date,
@@ -104,9 +104,9 @@ appointmentsRouter.post('/book', authenticateToken, (req: AuthenticatedRequest, 
 });
 
 // POST /api/appointments/:id/cancel
-appointmentsRouter.post('/:id/cancel', authenticateToken, (req: AuthenticatedRequest, res: Response): void => {
+appointmentsRouter.post('/:id/cancel', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   const user = req.user!;
-  const apt = db.getAppointmentById(req.params.id);
+  const apt = await db.getAppointmentById(req.params.id);
   if (!apt) {
     res.status(404).json({ error: 'Appointment not found.' });
     return;
@@ -114,7 +114,7 @@ appointmentsRouter.post('/:id/cancel', authenticateToken, (req: AuthenticatedReq
 
   // If patient, make sure it's their appointment
   if (user.role === 'PATIENT') {
-    const patient = db.getPatientByUserId(user.id);
+    const patient = await db.getPatientByUserId(user.id);
     if (!patient || patient.id !== apt.patient_id) {
       res.status(403).json({ error: 'You do not have permission to cancel this appointment.' });
       return;
@@ -122,7 +122,7 @@ appointmentsRouter.post('/:id/cancel', authenticateToken, (req: AuthenticatedReq
   }
 
   const { reason } = req.body;
-  const result = db.cancelAppointment(apt.id, reason, {
+  const result = await db.cancelAppointment(apt.id, reason, {
     id: user.id,
     email: user.email,
     role: user.role,
@@ -137,14 +137,14 @@ appointmentsRouter.post('/:id/cancel', authenticateToken, (req: AuthenticatedReq
 });
 
 // PATCH /api/appointments/:id/status (Staff/Admin override)
-appointmentsRouter.patch('/:id/status', authenticateToken, requireRoles('ADMIN', 'DOCTOR'), (req: AuthenticatedRequest, res: Response): void => {
+appointmentsRouter.patch('/:id/status', authenticateToken, requireRoles('ADMIN', 'DOCTOR'), async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   const { status } = req.body;
   if (!status) {
     res.status(400).json({ error: 'Status is required.' });
     return;
   }
 
-  const result = db.updateAppointmentStatus(req.params.id, status, {
+  const result = await db.updateAppointmentStatus(req.params.id, status, {
     id: req.user!.id,
     email: req.user!.email,
     role: req.user!.role,
@@ -159,7 +159,7 @@ appointmentsRouter.patch('/:id/status', authenticateToken, requireRoles('ADMIN',
 });
 
 // POST /api/appointments/:id/reschedule
-appointmentsRouter.post('/:id/reschedule', authenticateToken, (req: AuthenticatedRequest, res: Response): void => {
+appointmentsRouter.post('/:id/reschedule', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   const user = req.user!;
   const { new_date, new_time_slot } = req.body;
 
@@ -168,21 +168,21 @@ appointmentsRouter.post('/:id/reschedule', authenticateToken, (req: Authenticate
     return;
   }
 
-  const apt = db.getAppointmentById(req.params.id);
+  const apt = await db.getAppointmentById(req.params.id);
   if (!apt) {
     res.status(404).json({ error: 'Appointment not found.' });
     return;
   }
 
   if (user.role === 'PATIENT') {
-    const patient = db.getPatientByUserId(user.id);
+    const patient = await db.getPatientByUserId(user.id);
     if (!patient || patient.id !== apt.patient_id) {
       res.status(403).json({ error: 'Unauthorized to reschedule this appointment.' });
       return;
     }
   }
 
-  const result = db.rescheduleAppointment(apt.id, new_date, new_time_slot, {
+  const result = await db.rescheduleAppointment(apt.id, new_date, new_time_slot, {
     id: user.id,
     email: user.email,
     role: user.role,

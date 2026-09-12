@@ -1,4 +1,5 @@
 import express from 'express';
+import 'express-async-errors';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
 
@@ -19,10 +20,25 @@ import { labtechRouter } from './server/routes/labtech';
 import { smsRouter } from './server/routes/sms';
 import { telemedRouter } from './server/routes/telemed';
 import { branchesRouter } from './server/routes/branches';
+import { db } from './server/db/store';
+import { getInitialSeedData } from './server/db/seed';
 
 async function startServer() {
   const app = express();
   const PORT = 3000;
+
+  // Auto-seed check for Firestore
+  try {
+    const users = await db.getUsers();
+    if (users.length === 0) {
+      console.log('[MediQueue] Firestore empty. Seeding initial data...');
+      const seed = getInitialSeedData();
+      await db.seedDatabase(seed);
+      console.log('[MediQueue] Firestore seeded successfully.');
+    }
+  } catch (err) {
+    console.error('[MediQueue] Firestore auto-seed check failed:', err);
+  }
 
   // Middleware
   app.use(express.json());

@@ -1,0 +1,102 @@
+{
+  "collections": {
+    "users": {
+      "documents": {
+        "admin_user": {
+          "email": "admin@mediqueue.ph",
+          "role": "ADMIN",
+          "is_active": true,
+          "created_at": "2026-09-11T20:28:00.000Z"
+        },
+        "doctor_user": {
+          "email": "dr.santos@mediqueue.ph",
+          "role": "DOCTOR",
+          "is_active": true,
+          "created_at": "2026-09-11T20:28:00.000Z"
+        },
+        "patient_user": {
+          "email": "juan.delacruz@example.ph",
+          "role": "PATIENT",
+          "is_active": true,
+          "created_at": "2026-09-11T20:28:00.000Z"
+        }
+      }
+    },
+    "patients": {
+      "documents": {
+        "patient_1": {
+          "user_id": "patient_user",
+          "patient_number": "P-2026-0001",
+          "first_name": "Juan",
+          "last_name": "Dela Cruz",
+          "email": "juan.delacruz@example.ph",
+          "contact_number": "+63 912 345 6789",
+          "date_of_birth": "1990-05-15",
+          "sex": "Male",
+          "address": "123 Mabini St, Quezon City, Metro Manila",
+          "blood_type": "O+",
+          "is_active": true,
+          "created_at": "2026-09-11T20:28:00.000Z"
+        }
+      }
+    },
+    "doctors": {
+      "documents": {
+        "doctor_1": {
+          "user_id": "doctor_user",
+          "doctor_code": "DOC-001",
+          "first_name": "Ricardo",
+          "last_name": "Santos",
+          "email": "dr.santos@mediqueue.ph",
+          "contact_number": "+63 917 888 1234",
+          "specialization_name": "Cardiology & Vascular Medicine",
+          "license_number": "PRC-1234567",
+          "room_number": "Room 302",
+          "status": "Active",
+          "is_active": true,
+          "created_at": "2026-09-11T20:28:00.000Z"
+        }
+      }
+    },
+    "appointments": {
+      "documents": {}
+    },
+    "queue": {
+      "documents": {}
+    },
+    "consultations": {
+      "documents": {}
+    },
+    "notifications": {
+      "documents": {}
+    },
+    "audit_logs": {
+      "documents": {}
+    },
+    "clinic_settings": {
+      "documents": {
+        "main_settings": {
+          "clinic_name": "MediQueue Outpatient Health Network",
+          "tagline": "Main Medical Tower, Medical City Corridor, Metro Manila",
+          "contact_number": "+63 (02) 8888-MEDQ",
+          "email": "support@mediqueue.ph",
+          "address": "Metro Manila, Philippines",
+          "operating_days": "Mon - Sat",
+          "opening_time": "08:00",
+          "closing_time": "18:00",
+          "daily_queue_prefix": "Q",
+          "avg_consultation_time_minutes": 20,
+          "updated_at": "2026-09-11T20:28:00.000Z"
+        }
+      }
+    },
+    "specializations": {
+      "documents": {
+        "spec_1": { "name": "Cardiology & Vascular Medicine" },
+        "spec_2": { "name": "Pulmonology & Respiratory Medicine" },
+        "spec_3": { "name": "Orthopedics & Sports Medicine" },
+        "spec_4": { "name": "Pediatrics & Adolescent Medicine" }
+      }
+    }
+  }
+}

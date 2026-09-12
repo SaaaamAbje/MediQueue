@@ -214,16 +214,6 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Right Action Icons & User Info */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Waiting Hall TV Mode Button */}
-            <button
-              onClick={() => onNavigate('tv-display')}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-teal-300 border border-slate-700 text-xs font-semibold shadow-xs transition-colors"
-              title="Open Public Waiting Hall TV Signage"
-            >
-              <Tv className="w-4 h-4 text-teal-400" />
-              <span className="hidden sm:inline">Lobby TV</span>
-            </button>
-
             {/* Notification Bell with Dropdown */}
             <div className="relative">
               <button

@@ -126,13 +126,6 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
 
           <div className="flex flex-wrap items-center gap-2">
             <button
-              onClick={() => onNavigate('tv-display')}
-              className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-slate-900/80 hover:bg-slate-900 text-teal-300 font-semibold text-xs border border-teal-500/30 transition-all"
-            >
-              <Tv className="w-4 h-4 text-teal-400" />
-              Lobby TV Display
-            </button>
-            <button
               onClick={() => onNavigate('patient-book')}
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-teal-900 font-semibold text-xs shadow-md hover:bg-teal-50 transition-all transform active:scale-95"
             >

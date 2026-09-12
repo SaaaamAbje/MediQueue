@@ -5,24 +5,24 @@ import { authenticateToken, requireRoles, AuthenticatedRequest } from '../auth';
 export const doctorsRouter = Router();
 
 // GET /api/doctors/specializations
-doctorsRouter.get('/specializations', (_req, res: Response): void => {
-  res.json(db.getSpecializations());
+doctorsRouter.get('/specializations', async (_req, res: Response): Promise<void> => {
+  res.json(await db.getSpecializations());
 });
 
 // GET /api/doctors
-doctorsRouter.get('/', (req, res: Response): void => {
+doctorsRouter.get('/', async (req, res: Response): Promise<void> => {
   const { specializationId, status, search } = req.query as {
     specializationId?: string;
     status?: string;
     search?: string;
   };
-  const doctors = db.getDoctors({ specializationId, status, search });
+  const doctors = await db.getDoctors({ specializationId, status, search });
   res.json(doctors);
 });
 
 // GET /api/doctors/:id
-doctorsRouter.get('/:id', (req, res: Response): void => {
-  const doctor = db.getDoctorById(req.params.id);
+doctorsRouter.get('/:id', async (req, res: Response): Promise<void> => {
+  const doctor = await db.getDoctorById(req.params.id);
   if (!doctor) {
     res.status(404).json({ error: 'Doctor not found.' });
     return;
@@ -31,13 +31,13 @@ doctorsRouter.get('/:id', (req, res: Response): void => {
 });
 
 // GET /api/doctors/:id/schedules
-doctorsRouter.get('/:id/schedules', (req, res: Response): void => {
-  const schedules = db.getDoctorSchedules(req.params.id);
+doctorsRouter.get('/:id/schedules', async (req, res: Response): Promise<void> => {
+  const schedules = await db.getDoctorSchedules(req.params.id);
   res.json(schedules);
 });
 
 // GET /api/doctors/:id/available-slots?date=YYYY-MM-DD
-doctorsRouter.get('/:id/available-slots', (req, res: Response): void => {
+doctorsRouter.get('/:id/available-slots', async (req, res: Response): Promise<void> => {
   const doctorId = req.params.id;
   const dateStr = req.query.date as string;
 
@@ -46,12 +46,12 @@ doctorsRouter.get('/:id/available-slots', (req, res: Response): void => {
     return;
   }
 
-  const result = db.getAvailableSlots(doctorId, dateStr);
+  const result = await db.getAvailableSlots(doctorId, dateStr);
   res.json(result);
 });
 
 // POST /api/doctors (Admin only)
-doctorsRouter.post('/', authenticateToken, requireRoles('ADMIN'), (req: AuthenticatedRequest, res: Response): void => {
+doctorsRouter.post('/', authenticateToken, requireRoles('ADMIN'), async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   try {
     const {
       first_name,
@@ -69,16 +69,17 @@ doctorsRouter.post('/', authenticateToken, requireRoles('ADMIN'), (req: Authenti
       return;
     }
 
-    const specialization = db.getSpecializations().find((s) => s.id === specialization_id);
+    const specializations = await db.getSpecializations();
+    const specialization = specializations.find((s) => s.id === specialization_id);
     if (!specialization) {
       res.status(400).json({ error: 'Invalid specialization selected.' });
       return;
     }
 
     // Check if user account already exists or create new user
-    let user = db.findUserByEmail(email);
+    let user = await db.findUserByEmail(email);
     if (!user) {
-      user = db.createUser({
+      user = await db.createUser({
         email,
         role: 'DOCTOR',
         password_hash: 'default',
@@ -86,7 +87,7 @@ doctorsRouter.post('/', authenticateToken, requireRoles('ADMIN'), (req: Authenti
       });
     }
 
-    const doctor = db.createDoctor({
+    const doctor = await db.createDoctor({
       user_id: user.id,
       first_name,
       last_name,
@@ -99,7 +100,7 @@ doctorsRouter.post('/', authenticateToken, requireRoles('ADMIN'), (req: Authenti
       status: status || 'Active',
     });
 
-    db.logAudit({
+    await db.logAudit({
       user_id: req.user!.id,
       user_email: req.user!.email,
       user_role: req.user!.role,
@@ -117,14 +118,14 @@ doctorsRouter.post('/', authenticateToken, requireRoles('ADMIN'), (req: Authenti
 });
 
 // PATCH /api/doctors/:id (Admin only)
-doctorsRouter.patch('/:id', authenticateToken, requireRoles('ADMIN'), (req: AuthenticatedRequest, res: Response): void => {
-  const updated = db.updateDoctor(req.params.id, req.body);
+doctorsRouter.patch('/:id', authenticateToken, requireRoles('ADMIN'), async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  const updated = await db.updateDoctor(req.params.id, req.body);
   if (!updated) {
     res.status(404).json({ error: 'Doctor not found.' });
     return;
   }
 
-  db.logAudit({
+  await db.logAudit({
     user_id: req.user!.id,
     user_email: req.user!.email,
     user_role: req.user!.role,
@@ -138,17 +139,17 @@ doctorsRouter.patch('/:id', authenticateToken, requireRoles('ADMIN'), (req: Auth
 });
 
 // POST /api/doctors/:id/toggle-status (Admin only)
-doctorsRouter.post('/:id/toggle-status', authenticateToken, requireRoles('ADMIN'), (req: AuthenticatedRequest, res: Response): void => {
-  const doctor = db.getDoctorById(req.params.id);
+doctorsRouter.post('/:id/toggle-status', authenticateToken, requireRoles('ADMIN'), async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  const doctor = await db.getDoctorById(req.params.id);
   if (!doctor) {
     res.status(404).json({ error: 'Doctor not found.' });
     return;
   }
 
   const nextStatus = doctor.status === 'Active' ? 'Inactive' : 'Active';
-  const updated = db.updateDoctor(doctor.id, { status: nextStatus });
+  const updated = await db.updateDoctor(doctor.id, { status: nextStatus });
 
-  db.logAudit({
+  await db.logAudit({
     user_id: req.user!.id,
     user_email: req.user!.email,
     user_role: req.user!.role,
@@ -162,12 +163,12 @@ doctorsRouter.post('/:id/toggle-status', authenticateToken, requireRoles('ADMIN'
 });
 
 // GET /api/schedules
-doctorsRouter.get('/schedules/all', authenticateToken, requireRoles('ADMIN', 'DOCTOR'), (_req, res: Response): void => {
-  res.json(db.getDoctorSchedules());
+doctorsRouter.get('/schedules/all', authenticateToken, requireRoles('ADMIN', 'DOCTOR'), async (_req, res: Response): Promise<void> => {
+  res.json(await db.getAllDoctorSchedules());
 });
 
 // POST /api/schedules (Admin only)
-doctorsRouter.post('/schedules/create', authenticateToken, requireRoles('ADMIN'), (req: AuthenticatedRequest, res: Response): void => {
+doctorsRouter.post('/schedules/create', authenticateToken, requireRoles('ADMIN'), async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   const { doctor_id, day_of_week, start_time, end_time, slot_duration_minutes, max_patients_per_slot } = req.body;
 
   if (!doctor_id || !day_of_week || !start_time || !end_time) {
@@ -175,7 +176,7 @@ doctorsRouter.post('/schedules/create', authenticateToken, requireRoles('ADMIN')
     return;
   }
 
-  const newSchedule = db.createDoctorSchedule({
+  const newSchedule = await db.createDoctorSchedule({
     doctor_id,
     day_of_week,
     start_time,
@@ -185,9 +186,9 @@ doctorsRouter.post('/schedules/create', authenticateToken, requireRoles('ADMIN')
     status: 'Active',
   });
 
-  const doctor = db.getDoctorById(doctor_id);
+  const doctor = await db.getDoctorById(doctor_id);
 
-  db.logAudit({
+  await db.logAudit({
     user_id: req.user!.id,
     user_email: req.user!.email,
     user_role: req.user!.role,
@@ -201,14 +202,14 @@ doctorsRouter.post('/schedules/create', authenticateToken, requireRoles('ADMIN')
 });
 
 // PATCH /api/schedules/:id
-doctorsRouter.patch('/schedules/:id', authenticateToken, requireRoles('ADMIN'), (req: AuthenticatedRequest, res: Response): void => {
-  const updated = db.updateDoctorSchedule(req.params.id, req.body);
+doctorsRouter.patch('/schedules/:id', authenticateToken, requireRoles('ADMIN'), async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  const updated = await db.updateDoctorSchedule(req.params.id, req.body);
   if (!updated) {
     res.status(404).json({ error: 'Schedule not found.' });
     return;
   }
 
-  db.logAudit({
+  await db.logAudit({
     user_id: req.user!.id,
     user_email: req.user!.email,
     user_role: req.user!.role,
@@ -222,14 +223,14 @@ doctorsRouter.patch('/schedules/:id', authenticateToken, requireRoles('ADMIN'), 
 });
 
 // DELETE /api/schedules/:id
-doctorsRouter.delete('/schedules/:id', authenticateToken, requireRoles('ADMIN'), (req: AuthenticatedRequest, res: Response): void => {
-  const success = db.deleteDoctorSchedule(req.params.id);
+doctorsRouter.delete('/schedules/:id', authenticateToken, requireRoles('ADMIN'), async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  const success = await db.deleteDoctorSchedule(req.params.id);
   if (!success) {
     res.status(404).json({ error: 'Schedule not found.' });
     return;
   }
 
-  db.logAudit({
+  await db.logAudit({
     user_id: req.user!.id,
     user_email: req.user!.email,
     user_role: req.user!.role,

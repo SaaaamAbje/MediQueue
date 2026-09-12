@@ -5,18 +5,18 @@ import { authenticateToken } from '../auth';
 export const billingRouter = Router();
 
 // Get all invoices with optional filtering
-billingRouter.get('/invoices', authenticateToken, (req: any, res) => {
+billingRouter.get('/invoices', authenticateToken, async (req: any, res) => {
   try {
     const { patientId, status } = req.query;
     // If patient role, force patientId to their own ID
-    let queryPatientId = patientId;
+    let queryPatientId = patientId as string;
     if (req.user?.role === 'PATIENT') {
-      const patient = db.getPatientByUserId(req.user.id);
+      const patient = await db.getPatientByUserId(req.user.id);
       if (patient) queryPatientId = patient.id;
     }
 
-    const invoices = db.getInvoices({
-      patientId: queryPatientId as string,
+    const invoices = await db.getInvoices({
+      patientId: queryPatientId,
       status: status as string,
     });
     res.json({ invoices });
@@ -26,9 +26,9 @@ billingRouter.get('/invoices', authenticateToken, (req: any, res) => {
 });
 
 // Get invoice by ID
-billingRouter.get('/invoices/:id', authenticateToken, (req, res) => {
+billingRouter.get('/invoices/:id', authenticateToken, async (req, res) => {
   try {
-    const inv = db.getInvoiceById(req.params.id);
+    const inv = await db.getInvoiceById(req.params.id);
     if (!inv) return res.status(404).json({ error: 'Invoice not found' });
     res.json({ invoice: inv });
   } catch (err: any) {
@@ -37,7 +37,7 @@ billingRouter.get('/invoices/:id', authenticateToken, (req, res) => {
 });
 
 // Create new invoice / billing statement
-billingRouter.post('/invoices', authenticateToken, (req: any, res) => {
+billingRouter.post('/invoices', authenticateToken, async (req: any, res) => {
   try {
     const {
       patient_id,
@@ -57,7 +57,7 @@ billingRouter.post('/invoices', authenticateToken, (req: any, res) => {
     const disc = Number(discount_amount) || 0;
     const total = Math.max(0, subtotal - disc);
 
-    const invoice = db.createInvoice(
+    const invoice = await db.createInvoice(
       {
         patient_id,
         doctor_id,
@@ -72,8 +72,7 @@ billingRouter.post('/invoices', authenticateToken, (req: any, res) => {
         amount_paid: 0,
         balance_due: total,
         remarks,
-      },
-      req.user
+      }
     );
 
     res.status(201).json({ invoice });
@@ -83,7 +82,7 @@ billingRouter.post('/invoices', authenticateToken, (req: any, res) => {
 });
 
 // Process Payment (Cash, Card, HMO / Insurance Letter of Guarantee)
-billingRouter.post('/invoices/:id/pay', authenticateToken, (req: any, res) => {
+billingRouter.post('/invoices/:id/pay', authenticateToken, async (req: any, res) => {
   try {
     const {
       payment_method,
@@ -104,7 +103,7 @@ billingRouter.post('/invoices/:id/pay', authenticateToken, (req: any, res) => {
       return res.status(400).json({ error: 'Payment method is required.' });
     }
 
-    const updated = db.payInvoice(
+    const updated = await db.payInvoice(
       req.params.id,
       {
         payment_method,
@@ -119,8 +118,7 @@ billingRouter.post('/invoices/:id/pay', authenticateToken, (req: any, res) => {
         patient_copay: patient_copay ? Number(patient_copay) : undefined,
         remarks,
         cashier_name: cashier_name || req.user?.email || 'Admin Cashier',
-      },
-      req.user
+      }
     );
 
     if (!updated) {

@@ -5,11 +5,11 @@ import { authenticateToken } from '../auth';
 export const telemedRouter = Router();
 
 // Get telemed sessions
-telemedRouter.get('/sessions', authenticateToken, (req, res) => {
+telemedRouter.get('/sessions', authenticateToken, async (req, res) => {
   try {
     const patientId = req.query.patientId as string;
     const doctorId = req.query.doctorId as string;
-    const sessions = db.getTelemedSessions({ patientId, doctorId });
+    const sessions = await db.getTelemedSessions({ patientId, doctorId });
     res.json({ sessions });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
@@ -17,9 +17,9 @@ telemedRouter.get('/sessions', authenticateToken, (req, res) => {
 });
 
 // Create telemed session
-telemedRouter.post('/sessions', authenticateToken, (req, res) => {
+telemedRouter.post('/sessions', authenticateToken, async (req, res) => {
   try {
-    const session = db.createTelemedSession(req.body);
+    const session = await db.createTelemedSession(req.body);
     res.status(201).json({ session });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
@@ -27,12 +27,11 @@ telemedRouter.post('/sessions', authenticateToken, (req, res) => {
 });
 
 // Update telemed session status (active, ended)
-telemedRouter.patch('/sessions/:id', authenticateToken, (req, res) => {
+telemedRouter.patch('/sessions/:id', authenticateToken, async (req, res) => {
   try {
-    const { status, doctor_notes } = req.body;
-    const updated = db.updateTelemedSession(req.params.id, status, doctor_notes);
-    if (!updated) return res.status(404).json({ error: 'Session not found' });
-    res.json({ session: updated });
+    const success = await db.updateTelemedSession(req.params.id, req.body);
+    if (!success) return res.status(404).json({ error: 'Session not found' });
+    res.json({ success: true });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }

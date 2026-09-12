@@ -90,6 +90,9 @@ const AppContent: React.FC = () => {
 
   // Main application view inside the active system
   const [currentView, setCurrentView] = useState<string>(() => {
+    const hash = window.location.hash.toLowerCase();
+    if (hash.includes('tv')) return 'tv-display';
+    
     const sys = detectInitialSystem();
     if (sys === 'patient') return 'patient-dashboard';
     if (sys === 'doctor') return 'doctor-dashboard';

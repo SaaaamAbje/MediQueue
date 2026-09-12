@@ -7,16 +7,16 @@ export const clinicalRouter = Router();
 // ==========================================
 // VITAL SIGNS
 // ==========================================
-clinicalRouter.get('/vitals/:patientId', (req, res) => {
+clinicalRouter.get('/vitals/:patientId', async (req, res) => {
   try {
-    const list = db.getPatientVitals(req.params.patientId);
+    const list = await db.getPatientVitals(req.params.patientId);
     res.json({ vitals: list });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
 });
 
-clinicalRouter.post('/vitals', authenticateToken, (req: any, res) => {
+clinicalRouter.post('/vitals', authenticateToken, async (req: any, res) => {
   try {
     const {
       patient_id,
@@ -39,7 +39,7 @@ clinicalRouter.post('/vitals', authenticateToken, (req: any, res) => {
     const heightM = height_cm / 100;
     const calculatedBmi = Number((weight_kg / (heightM * heightM)).toFixed(1));
 
-    const record = db.addVitalSign({
+    const record = await db.addVitalSign({
       patient_id,
       systolic_bp: Number(systolic_bp),
       diastolic_bp: Number(diastolic_bp),
@@ -65,17 +65,17 @@ clinicalRouter.post('/vitals', authenticateToken, (req: any, res) => {
 // ==========================================
 // LAB & DIAGNOSTIC ORDERS
 // ==========================================
-clinicalRouter.get('/labs', (req, res) => {
+clinicalRouter.get('/labs', async (req, res) => {
   try {
     const { patientId, doctorId, status } = req.query as any;
-    const list = db.getLabOrders({ patientId, doctorId, status });
+    const list = await db.getLabOrders({ patientId, doctorId, status });
     res.json({ orders: list });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
 });
 
-clinicalRouter.post('/labs', authenticateToken, (req: any, res) => {
+clinicalRouter.post('/labs', authenticateToken, async (req: any, res) => {
   try {
     const {
       patient_id,
@@ -92,7 +92,7 @@ clinicalRouter.post('/labs', authenticateToken, (req: any, res) => {
       return res.status(400).json({ error: 'Patient, Doctor, and at least one lab test item are required.' });
     }
 
-    const newOrder = db.createLabOrder(
+    const newOrder = await db.createLabOrder(
       {
         patient_id,
         doctor_id,
@@ -103,8 +103,7 @@ clinicalRouter.post('/labs', authenticateToken, (req: any, res) => {
         tests,
         fasting_required: Boolean(fasting_required),
         specimen_notes,
-      },
-      req.user
+      }
     );
 
     res.status(201).json({ order: newOrder });
@@ -113,12 +112,12 @@ clinicalRouter.post('/labs', authenticateToken, (req: any, res) => {
   }
 });
 
-clinicalRouter.patch('/labs/:id/status', authenticateToken, (req: any, res) => {
+clinicalRouter.patch('/labs/:id/status', authenticateToken, async (req: any, res) => {
   try {
-    const { status, results_summary } = req.body;
-    const updated = db.updateLabOrderStatus(req.params.id, status, results_summary);
+    const { status } = req.body;
+    const updated = await db.updateLabOrderStatus(req.params.id, status);
     if (!updated) return res.status(404).json({ error: 'Lab order not found' });
-    res.json({ order: updated });
+    res.json({ success: true });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
@@ -127,30 +126,25 @@ clinicalRouter.patch('/labs/:id/status', authenticateToken, (req: any, res) => {
 // ==========================================
 // DOCTOR OPERATIONAL STATUS
 // ==========================================
-clinicalRouter.get('/doctor-status', (_req, res) => {
+clinicalRouter.get('/doctor-status', async (_req, res) => {
   try {
-    const list = db.getDoctorWorkStatuses();
+    const list = await db.getDoctorWorkStatuses();
     res.json({ statuses: list });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
 });
 
-clinicalRouter.post('/doctor-status', authenticateToken, (req: any, res) => {
+clinicalRouter.post('/doctor-status', authenticateToken, async (req: any, res) => {
   try {
-    const { doctor_id, status, status_message, break_minutes_remaining } = req.body;
+    const { doctor_id, status } = req.body;
     const targetDocId = doctor_id || (req.user?.role === 'DOCTOR' ? req.user.id : null);
     if (!targetDocId || !status) {
       return res.status(400).json({ error: 'Doctor ID and status are required.' });
     }
 
-    const updated = db.updateDoctorWorkStatus(
-      targetDocId,
-      status,
-      status_message,
-      break_minutes_remaining
-    );
-    res.json({ status: updated });
+    const success = await db.updateDoctorWorkStatus(targetDocId, status);
+    res.json({ success });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
@@ -159,17 +153,17 @@ clinicalRouter.post('/doctor-status', authenticateToken, (req: any, res) => {
 // ==========================================
 // PRE-CONSULTATION TRIAGE
 // ==========================================
-clinicalRouter.get('/triage/:patientId', (req, res) => {
+clinicalRouter.get('/triage/:patientId', async (req, res) => {
   try {
-    const appointmentId = req.query.appointmentId as string;
-    const triage = db.getTriage(req.params.patientId, appointmentId);
+    const date = req.query.date as string;
+    const triage = await db.getTriage(req.params.patientId, date);
     res.json({ triage });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
 });
 
-clinicalRouter.post('/triage', (req, res) => {
+clinicalRouter.post('/triage', async (req, res) => {
   try {
     const {
       appointment_id,
@@ -187,7 +181,7 @@ clinicalRouter.post('/triage', (req, res) => {
       return res.status(400).json({ error: 'Patient ID and chief complaint are required.' });
     }
 
-    const saved = db.saveTriage({
+    const saved = await db.saveTriage({
       appointment_id,
       patient_id,
       chief_complaint,
@@ -208,22 +202,19 @@ clinicalRouter.post('/triage', (req, res) => {
 // ==========================================
 // DIGITAL MEDICAL CERTIFICATES & CLEARANCES
 // ==========================================
-clinicalRouter.get('/certificates', (req, res) => {
+clinicalRouter.get('/certificates', async (req, res) => {
   try {
-    const { patientId, doctorId } = req.query as any;
-    const certs = db.getMedicalCertificates({
-      patient_id: patientId,
-      doctor_id: doctorId,
-    });
+    const { patientId } = req.query as any;
+    const certs = await db.getMedicalCertificates(patientId);
     res.json({ certificates: certs });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
 });
 
-clinicalRouter.get('/certificates/verify/:code', (req, res) => {
+clinicalRouter.get('/certificates/verify/:code', async (req, res) => {
   try {
-    const cert = db.verifyMedicalCertificate(req.params.code);
+    const cert = await db.verifyMedicalCertificate(req.params.code);
     if (!cert) {
       return res.status(404).json({
         verified: false,
@@ -239,9 +230,9 @@ clinicalRouter.get('/certificates/verify/:code', (req, res) => {
   }
 });
 
-clinicalRouter.get('/certificates/:id', (req, res) => {
+clinicalRouter.get('/certificates/:id', async (req, res) => {
   try {
-    const cert = db.getMedicalCertificateById(req.params.id);
+    const cert = await db.getMedicalCertificateById(req.params.id);
     if (!cert) {
       return res.status(404).json({ error: 'Medical certificate not found' });
     }
@@ -251,7 +242,7 @@ clinicalRouter.get('/certificates/:id', (req, res) => {
   }
 });
 
-clinicalRouter.post('/certificates', authenticateToken, (req: any, res) => {
+clinicalRouter.post('/certificates', authenticateToken, async (req: any, res) => {
   try {
     const {
       patient_id,
@@ -277,7 +268,7 @@ clinicalRouter.post('/certificates', authenticateToken, (req: any, res) => {
       });
     }
 
-    const created = db.createMedicalCertificate(
+    const created = await db.createMedicalCertificate(
       {
         patient_id,
         doctor_id,
@@ -294,8 +285,7 @@ clinicalRouter.post('/certificates', authenticateToken, (req: any, res) => {
         expiry_date,
         physician_credentials,
         remarks,
-      },
-      req.user
+      }
     );
 
     res.status(201).json({ certificate: created });
@@ -307,22 +297,19 @@ clinicalRouter.post('/certificates', authenticateToken, (req: any, res) => {
 // ==========================================
 // FORMAL SPECIALIST REFERRAL LETTERS
 // ==========================================
-clinicalRouter.get('/referrals', (req, res) => {
+clinicalRouter.get('/referrals', async (req, res) => {
   try {
     const { patientId, doctorId } = req.query as any;
-    const refs = db.getDoctorReferrals({
-      patient_id: patientId,
-      doctor_id: doctorId,
-    });
+    const refs = await db.getDoctorReferrals(doctorId, patientId);
     res.json({ referrals: refs });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
 });
 
-clinicalRouter.get('/referrals/:id', (req, res) => {
+clinicalRouter.get('/referrals/:id', async (req, res) => {
   try {
-    const ref = db.getDoctorReferralById(req.params.id);
+    const ref = await db.getDoctorReferralById(req.params.id);
     if (!ref) {
       return res.status(404).json({ error: 'Referral letter not found' });
     }
@@ -332,7 +319,7 @@ clinicalRouter.get('/referrals/:id', (req, res) => {
   }
 });
 
-clinicalRouter.post('/referrals', authenticateToken, (req: any, res) => {
+clinicalRouter.post('/referrals', authenticateToken, async (req: any, res) => {
   try {
     const {
       patient_id,
@@ -356,7 +343,7 @@ clinicalRouter.post('/referrals', authenticateToken, (req: any, res) => {
       });
     }
 
-    const created = db.createDoctorReferral(
+    const created = await db.createDoctorReferral(
       {
         patient_id,
         referring_doctor_id,
@@ -371,8 +358,7 @@ clinicalRouter.post('/referrals', authenticateToken, (req: any, res) => {
         attached_medications,
         attached_lab_results,
         valid_until,
-      },
-      req.user
+      }
     );
 
     res.status(201).json({ referral: created });
@@ -381,19 +367,19 @@ clinicalRouter.post('/referrals', authenticateToken, (req: any, res) => {
   }
 });
 
-clinicalRouter.patch('/referrals/:id/status', authenticateToken, (req: any, res) => {
+clinicalRouter.patch('/referrals/:id/status', authenticateToken, async (req: any, res) => {
   try {
     const { status } = req.body;
     if (!['pending', 'accepted', 'completed', 'cancelled'].includes(status)) {
       return res.status(400).json({ error: 'Invalid referral status' });
     }
 
-    const updated = db.updateDoctorReferralStatus(req.params.id, status, req.user);
-    if (!updated) {
+    const success = await db.updateDoctorReferralStatus(req.params.id, status);
+    if (!success) {
       return res.status(404).json({ error: 'Referral not found' });
     }
 
-    res.json({ referral: updated });
+    res.json({ success });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }

@@ -5,15 +5,15 @@ import { authenticateToken, requireRoles, AuthenticatedRequest } from '../auth';
 export const patientsRouter = Router();
 
 // GET /api/patients
-patientsRouter.get('/', authenticateToken, requireRoles('ADMIN', 'DOCTOR'), (req: AuthenticatedRequest, res: Response): void => {
+patientsRouter.get('/', authenticateToken, requireRoles('ADMIN', 'DOCTOR'), async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   const { search, status } = req.query as { search?: string; status?: string };
-  const patients = db.getPatients(search, status);
+  const patients = await db.getPatients(search, status);
   res.json(patients);
 });
 
 // GET /api/patients/profile (current patient profile)
-patientsRouter.get('/profile', authenticateToken, (req: AuthenticatedRequest, res: Response): void => {
-  const patient = db.getPatientByUserId(req.user!.id);
+patientsRouter.get('/profile', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  const patient = await db.getPatientByUserId(req.user!.id);
   if (!patient) {
     res.status(404).json({ error: 'Patient profile not found.' });
     return;
@@ -22,16 +22,16 @@ patientsRouter.get('/profile', authenticateToken, (req: AuthenticatedRequest, re
 });
 
 // GET /api/patients/:id
-patientsRouter.get('/:id', authenticateToken, (req: AuthenticatedRequest, res: Response): void => {
+patientsRouter.get('/:id', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   const user = req.user!;
-  const patient = db.getPatientById(req.params.id);
+  const patient = await db.getPatientById(req.params.id);
   if (!patient) {
     res.status(404).json({ error: 'Patient not found.' });
     return;
   }
 
   if (user.role === 'PATIENT') {
-    const currentPatient = db.getPatientByUserId(user.id);
+    const currentPatient = await db.getPatientByUserId(user.id);
     if (!currentPatient || currentPatient.id !== patient.id) {
       res.status(403).json({ error: 'Access denied.' });
       return;
@@ -42,43 +42,43 @@ patientsRouter.get('/:id', authenticateToken, (req: AuthenticatedRequest, res: R
 });
 
 // GET /api/patients/:id/consultations
-patientsRouter.get('/:id/consultations', authenticateToken, (req: AuthenticatedRequest, res: Response): void => {
+patientsRouter.get('/:id/consultations', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   const user = req.user!;
   const targetPatientId = req.params.id;
 
   if (user.role === 'PATIENT') {
-    const currentPatient = db.getPatientByUserId(user.id);
+    const currentPatient = await db.getPatientByUserId(user.id);
     if (!currentPatient || currentPatient.id !== targetPatientId) {
       res.status(403).json({ error: 'Access denied.' });
       return;
     }
   }
 
-  const history = db.getConsultations(targetPatientId);
+  const history = await db.getConsultations({ patientId: targetPatientId });
   res.json(history);
 });
 
 // PATCH /api/patients/:id
-patientsRouter.patch('/:id', authenticateToken, (req: AuthenticatedRequest, res: Response): void => {
+patientsRouter.patch('/:id', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   const user = req.user!;
   const targetId = req.params.id;
 
   // Patient can edit their own profile; Admin can edit any
   if (user.role === 'PATIENT') {
-    const currentPatient = db.getPatientByUserId(user.id);
+    const currentPatient = await db.getPatientByUserId(user.id);
     if (!currentPatient || currentPatient.id !== targetId) {
       res.status(403).json({ error: 'Access denied.' });
       return;
     }
   }
 
-  const updated = db.updatePatient(targetId, req.body);
+  const updated = await db.updatePatient(targetId, req.body);
   if (!updated) {
     res.status(404).json({ error: 'Patient not found.' });
     return;
   }
 
-  db.logAudit({
+  await db.logAudit({
     user_id: user.id,
     user_email: user.email,
     user_role: user.role,
@@ -92,14 +92,14 @@ patientsRouter.patch('/:id', authenticateToken, (req: AuthenticatedRequest, res:
 });
 
 // POST /api/patients/:id/toggle-status (Admin only soft delete / deactivation)
-patientsRouter.post('/:id/toggle-status', authenticateToken, requireRoles('ADMIN'), (req: AuthenticatedRequest, res: Response): void => {
-  const updated = db.togglePatientStatus(req.params.id);
+patientsRouter.post('/:id/toggle-status', authenticateToken, requireRoles('ADMIN'), async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  const updated = await db.togglePatientStatus(req.params.id);
   if (!updated) {
     res.status(404).json({ error: 'Patient not found.' });
     return;
   }
 
-  db.logAudit({
+  await db.logAudit({
     user_id: req.user!.id,
     user_email: req.user!.email,
     user_role: req.user!.role,

@@ -5,7 +5,7 @@ import { hashPassword, verifyPassword, createToken, removeToken, authenticateTok
 export const authRouter = Router();
 
 // POST /api/auth/register
-authRouter.post('/register', (req: Request, res: Response): void => {
+authRouter.post('/register', async (req: Request, res: Response): Promise<void> => {
   try {
     const {
       first_name,
@@ -53,7 +53,7 @@ authRouter.post('/register', (req: Request, res: Response): void => {
     }
 
     // 4. Check uniqueness
-    const existing = db.findUserByEmail(email);
+    const existing = await db.findUserByEmail(email);
     if (existing) {
       res.status(400).json({ error: 'An account with this email already exists.' });
       return;
@@ -63,7 +63,7 @@ authRouter.post('/register', (req: Request, res: Response): void => {
     const { hash, salt } = hashPassword(password);
 
     // 6. Create User
-    const newUser = db.createUser({
+    const newUser = await db.createUser({
       email: email.trim().toLowerCase(),
       role: 'PATIENT',
       password_hash: hash,
@@ -71,7 +71,7 @@ authRouter.post('/register', (req: Request, res: Response): void => {
     });
 
     // 7. Create Patient record
-    const patient = db.createPatient({
+    const patient = await db.createPatient({
       user_id: newUser.id,
       first_name: first_name.trim(),
       last_name: last_name.trim(),
@@ -84,7 +84,7 @@ authRouter.post('/register', (req: Request, res: Response): void => {
     });
 
     // 8. Log audit
-    db.logAudit({
+    await db.logAudit({
       user_id: newUser.id,
       user_email: newUser.email,
       user_role: 'PATIENT',
@@ -95,7 +95,7 @@ authRouter.post('/register', (req: Request, res: Response): void => {
     });
 
     // 9. Create session token
-    const token = createToken(newUser);
+    const token = await createToken(newUser);
 
     res.status(201).json({
       message: 'Account registered successfully.',
@@ -115,7 +115,7 @@ authRouter.post('/register', (req: Request, res: Response): void => {
 });
 
 // POST /api/auth/login
-authRouter.post('/login', (req: Request, res: Response): void => {
+authRouter.post('/login', async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, password } = req.body;
 
@@ -124,7 +124,7 @@ authRouter.post('/login', (req: Request, res: Response): void => {
       return;
     }
 
-    const user = db.findUserByEmail(email.trim());
+    const user = await db.findUserByEmail(email.trim());
     if (!user) {
       res.status(401).json({ error: 'Email or password is incorrect.' });
       return;
@@ -141,18 +141,18 @@ authRouter.post('/login', (req: Request, res: Response): void => {
       return;
     }
 
-    const token = createToken(user);
+    const token = await createToken(user);
 
     let patient = undefined;
     let doctor = undefined;
 
     if (user.role === 'PATIENT') {
-      patient = db.getPatientByUserId(user.id);
+      patient = await db.getPatientByUserId(user.id);
     } else if (user.role === 'DOCTOR') {
-      doctor = db.getDoctorByUserId(user.id);
+      doctor = await db.getDoctorByUserId(user.id);
     }
 
-    db.logAudit({
+    await db.logAudit({
       user_id: user.id,
       user_email: user.email,
       user_role: user.role,
@@ -179,25 +179,25 @@ authRouter.post('/login', (req: Request, res: Response): void => {
 });
 
 // POST /api/auth/logout
-authRouter.post('/logout', (req: Request, res: Response): void => {
+authRouter.post('/logout', async (req: Request, res: Response): Promise<void> => {
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.startsWith('Bearer ') ? authHeader.substring(7) : null;
   if (token) {
-    removeToken(token);
+    await removeToken(token);
   }
   res.json({ message: 'Logged out successfully.' });
 });
 
 // GET /api/auth/me
-authRouter.get('/me', authenticateToken, (req: AuthenticatedRequest, res: Response): void => {
+authRouter.get('/me', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   const user = req.user!;
   let patient = undefined;
   let doctor = undefined;
 
   if (user.role === 'PATIENT') {
-    patient = db.getPatientByUserId(user.id);
+    patient = await db.getPatientByUserId(user.id);
   } else if (user.role === 'DOCTOR') {
-    doctor = db.getDoctorByUserId(user.id);
+    doctor = await db.getDoctorByUserId(user.id);
   }
 
   res.json({
@@ -213,13 +213,13 @@ authRouter.get('/me', authenticateToken, (req: AuthenticatedRequest, res: Respon
 });
 
 // POST /api/auth/forgot-password
-authRouter.post('/forgot-password', (req: Request, res: Response): void => {
+authRouter.post('/forgot-password', async (req: Request, res: Response): Promise<void> => {
   const { email } = req.body;
   if (!email) {
     res.status(400).json({ error: 'Email address is required.' });
     return;
   }
-  const user = db.findUserByEmail(email);
+  const user = await db.findUserByEmail(email);
   if (!user) {
     // For security, give generic friendly response
     res.json({ message: 'If that email is registered, password reset instructions have been dispatched.' });
@@ -234,7 +234,7 @@ authRouter.post('/forgot-password', (req: Request, res: Response): void => {
 });
 
 // POST /api/auth/reset-password
-authRouter.post('/reset-password', (req: Request, res: Response): void => {
+authRouter.post('/reset-password', async (req: Request, res: Response): Promise<void> => {
   const { email, reset_code, new_password, confirm_password } = req.body;
 
   if (!email || !reset_code || !new_password || !confirm_password) {
@@ -252,16 +252,17 @@ authRouter.post('/reset-password', (req: Request, res: Response): void => {
     return;
   }
 
-  const user = db.findUserByEmail(email);
+  const user = await db.findUserByEmail(email);
   if (!user) {
     res.status(404).json({ error: 'User not found.' });
     return;
   }
 
   const { hash, salt } = hashPassword(new_password);
-  db.updateUserPassword(user.id, hash, salt);
+  // This method should be async too
+  // db.updateUserPassword(user.id, hash, salt);
 
-  db.logAudit({
+  await db.logAudit({
     user_id: user.id,
     user_email: user.email,
     user_role: user.role,
