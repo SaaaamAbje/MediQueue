@@ -17,32 +17,20 @@ import {
 interface LoginViewProps {
   onNavigate: (view: string) => void;
   targetSystem?: 'patient' | 'doctor' | 'admin';
+  onSelectSystem?: (system: 'patient' | 'doctor' | 'admin') => void;
 }
 
 export const LoginView: React.FC<LoginViewProps> = ({
   onNavigate,
   targetSystem = 'patient',
+  onSelectSystem,
 }) => {
   const { login, quickSwitch, isLoading } = useAuth();
   const { showToast } = useNotifications();
 
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('password123');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
-
-  // Set default credentials based on targetSystem
-  useEffect(() => {
-    if (targetSystem === 'patient') {
-      setEmail('maria.santos@email.ph');
-      setPassword('password123');
-    } else if (targetSystem === 'doctor') {
-      setEmail('dr.sarah.ramos@mediqueue.clinic');
-      setPassword('password123');
-    } else if (targetSystem === 'admin') {
-      setEmail('admin@mediqueue.clinic');
-      setPassword('password123');
-    }
-  }, [targetSystem]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
