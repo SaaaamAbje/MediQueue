@@ -47,7 +47,7 @@ async function startServer() {
 
   // Health check endpoint
   app.get('/api/health', (_req, res) => {
-    res.json({ status: 'ok', app: 'MediQueue', timestamp: new Date().toISOString() });
+    res.json({ status: 'ok', app: 'Makati Medical Center', hospital: 'Makati Med', timestamp: new Date().toISOString() });
   });
 
   // RESTful API Routes

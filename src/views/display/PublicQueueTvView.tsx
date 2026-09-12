@@ -144,18 +144,18 @@ export const PublicQueueTvView: React.FC<PublicQueueTvViewProps> = ({ onClose })
           )}
 
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-teal-600 flex items-center justify-center text-white font-bold text-2xl shadow-lg shadow-teal-500/20">
+            <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white font-bold text-2xl shadow-lg shadow-blue-500/20">
               <Hospital className="w-7 h-7" />
             </div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-3">
-                {data?.clinic_name || 'MediQueue Medical Clinic'}
-                <span className="text-xs px-2.5 py-0.5 rounded-full font-semibold uppercase tracking-wider bg-teal-500/20 text-teal-300 border border-teal-500/30">
+                {data?.clinic_name || 'Makati Medical Center'}
+                <span className="text-xs px-2.5 py-0.5 rounded-full font-semibold uppercase tracking-wider bg-blue-500/20 text-blue-300 border border-blue-500/30">
                   Lobby Signage
                 </span>
               </h1>
               <p className="text-sm text-slate-400 font-medium">
-                {data?.tagline || 'Outpatient Consultation & Diagnostic Queue'}
+                {data?.tagline || 'Makati Med Outpatient Consultation & Diagnostic Queue'}
               </p>
             </div>
           </div>
@@ -171,12 +171,12 @@ export const PublicQueueTvView: React.FC<PublicQueueTvViewProps> = ({ onClose })
             }}
             className={`px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border transition-all ${
               soundEnabled
-                ? 'bg-teal-500/20 text-teal-300 border-teal-500/40 hover:bg-teal-500/30'
+                ? 'bg-blue-500/20 text-blue-300 border-blue-500/40 hover:bg-blue-500/30'
                 : 'bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700'
             }`}
           >
             {soundEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
-            <span className="hidden md:inline">{soundEnabled ? 'Voice & Chime: ON' : 'Audio: Muted'}</span>
+            <span className="hidden md:inline">{soundEnabled ? 'MMC Voice Alert: ON' : 'Audio: Muted'}</span>
           </button>
 
           {/* Test Sound Button */}
@@ -199,7 +199,7 @@ export const PublicQueueTvView: React.FC<PublicQueueTvViewProps> = ({ onClose })
 
           {/* Live Digital Clock */}
           <div className="text-right border-l border-slate-800 pl-6">
-            <div className="text-2xl font-mono font-bold tracking-wider text-teal-400">
+            <div className="text-2xl font-mono font-bold tracking-wider text-blue-400">
               {currentTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
             </div>
             <div className="text-xs text-slate-400 font-medium">
@@ -213,7 +213,7 @@ export const PublicQueueTvView: React.FC<PublicQueueTvViewProps> = ({ onClose })
       <main className="flex-1 p-6 md:p-8 overflow-y-auto">
         {loading ? (
           <div className="h-full flex items-center justify-center">
-            <RefreshCw className="w-10 h-10 text-teal-400 animate-spin" />
+            <RefreshCw className="w-10 h-10 text-blue-400 animate-spin" />
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
@@ -231,7 +231,7 @@ export const PublicQueueTvView: React.FC<PublicQueueTvViewProps> = ({ onClose })
                       : isEmergency
                       ? 'bg-rose-950/20 border-rose-500/40'
                       : isServing
-                      ? 'bg-slate-900 border-teal-500/50 shadow-2xl shadow-teal-500/10'
+                      ? 'bg-slate-900 border-blue-500/50 shadow-2xl shadow-blue-500/10'
                       : 'bg-slate-900/60 border-slate-800 opacity-90'
                   }`}
                 >
@@ -251,7 +251,7 @@ export const PublicQueueTvView: React.FC<PublicQueueTvViewProps> = ({ onClose })
                           </span>
                         )}
                       </div>
-                      <div className="text-sm font-semibold text-teal-400 mt-0.5">{room.doctor_name}</div>
+                      <div className="text-sm font-semibold text-blue-400 mt-0.5">{room.doctor_name}</div>
                       <div className="text-xs text-slate-400">{room.specialization}</div>
                     </div>
 
@@ -279,7 +279,7 @@ export const PublicQueueTvView: React.FC<PublicQueueTvViewProps> = ({ onClose })
                       </div>
                     ) : isServing ? (
                       <div>
-                        <div className="text-6xl md:text-7xl font-mono font-black tracking-tight text-teal-300 drop-shadow-[0_0_20px_rgba(45,212,191,0.4)]">
+                        <div className="text-6xl md:text-7xl font-mono font-black tracking-tight text-blue-300 drop-shadow-[0_0_20px_rgba(59,130,246,0.4)]">
                           {room.current_ticket}
                         </div>
                         <div className="text-base font-semibold text-slate-300 mt-2">
@@ -323,9 +323,9 @@ export const PublicQueueTvView: React.FC<PublicQueueTvViewProps> = ({ onClose })
       <footer className="bg-slate-900 border-t border-slate-800 px-8 py-3.5 flex items-center justify-between text-sm shadow-inner">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2 text-slate-300">
-            <span className="w-2.5 h-2.5 rounded-full bg-teal-400 animate-ping" />
-            <span className="font-semibold text-xs uppercase tracking-wider text-slate-400">Clinic Status:</span>
-            <span className="font-medium text-teal-300">Live & Operating</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-blue-400 animate-ping" />
+            <span className="font-semibold text-xs uppercase tracking-wider text-slate-400">Hospital Status:</span>
+            <span className="font-medium text-blue-300">Live & Operating</span>
           </div>
 
           <div className="hidden md:flex items-center gap-5 text-xs text-slate-400 font-medium border-l border-slate-800 pl-6">
@@ -333,7 +333,7 @@ export const PublicQueueTvView: React.FC<PublicQueueTvViewProps> = ({ onClose })
               Total In Queue: <strong className="text-slate-200 font-mono">{data?.total_waiting || 0}</strong>
             </span>
             <span>
-              Now Serving: <strong className="text-teal-400 font-mono">{data?.total_serving || 0}</strong>
+              Now Serving: <strong className="text-blue-400 font-mono">{data?.total_serving || 0}</strong>
             </span>
             <span>
               Completed Today: <strong className="text-emerald-400 font-mono">{data?.total_completed || 0}</strong>

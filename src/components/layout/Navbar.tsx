@@ -111,33 +111,33 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div
         className={`text-white text-xs px-4 py-1.5 flex items-center justify-between transition-colors ${
           isPatient
-            ? 'bg-teal-900 border-b border-teal-800'
+            ? 'bg-blue-900 border-b border-blue-800'
             : isDoctor
-            ? 'bg-slate-900 border-b border-slate-800'
-            : 'bg-purple-950 border-b border-purple-900'
+            ? 'bg-indigo-900 border-b border-indigo-800'
+            : 'bg-slate-900 border-b border-slate-800'
         }`}
       >
         <div className="flex items-center gap-2">
           {isPatient && (
             <>
-              <Heart className="w-3.5 h-3.5 text-teal-400" />
-              <span className="font-semibold text-teal-100">PATIENT SELF-SERVICE SYSTEM</span>
-              <span className="hidden sm:inline text-teal-300/70">• Online Appointments &amp; Live Queue</span>
+              <Heart className="w-3.5 h-3.5 text-blue-300" />
+              <span className="font-semibold text-blue-100">MMC PATIENT SELF-SERVICE SYSTEM</span>
+              <span className="hidden sm:inline text-blue-200/70">• Online Appointments &amp; Live Queue</span>
             </>
           )}
           {isDoctor && (
             <>
               <Stethoscope className="w-3.5 h-3.5 text-sky-400" />
-              <span className="font-semibold text-sky-100">PHYSICIAN CLINICAL WORKSTATION</span>
+              <span className="font-semibold text-sky-100">MMC PHYSICIAN CLINICAL WORKSTATION</span>
               <span className="hidden sm:inline text-sky-300/70">
-                • {doctor ? `Room ${doctor.room_number}` : 'Room 102'} • Outpatient Terminal
+                • {doctor ? `Room ${doctor.room_number}` : 'Room 102'} • MMC Outpatient Terminal
               </span>
             </>
           )}
           {isAdmin && (
             <>
               <Shield className="w-3.5 h-3.5 text-purple-400" />
-              <span className="font-semibold text-purple-100">CLINIC OPERATIONS &amp; ADMIN CONSOLE</span>
+              <span className="font-semibold text-purple-100">MMC HOSPITAL OPERATIONS &amp; ADMIN CONSOLE</span>
               <span className="hidden sm:inline text-purple-300/70">• Central Reception &amp; Management</span>
             </>
           )}
@@ -159,18 +159,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden bg-white shadow-sm ring-1 ring-slate-200">
                 <img 
-                  src="/src/assets/images/mediqueue_clinica_logo_1789222232060.jpg" 
-                  alt="MediQueue Clinica Logo" 
+                  src="/src/assets/images/makati_medical_center_logo_1789222548043.jpg" 
+                  alt="Makati Medical Center Logo" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />
               </div>
               <div>
                 <span className="text-lg font-bold tracking-tight text-slate-900 block leading-tight">
-                  MediQueue Clinica
+                  Makati Medical Center
                 </span>
                 <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider block">
-                  Clinical Systems
+                  Hospital Systems
                 </span>
               </div>
             </button>
@@ -292,7 +292,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       ? `${patient.first_name} ${patient.last_name}`
                       : isDoctor && doctor
                       ? `Dr. ${doctor.last_name}`
-                      : 'Clinic Admin'}
+                      : 'Hospital Admin'}
                   </div>
                   <div className="text-[10px] text-slate-500">
                     {isPatient && (patient?.patient_number || 'Patient Account')}

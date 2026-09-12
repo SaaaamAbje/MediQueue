@@ -34,7 +34,7 @@ export const AdminAuditLogsView: React.FC = () => {
       <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Shield className="w-5 h-5 text-purple-600" />
+            <Shield className="w-5 h-5 text-blue-600" />
             <h2 className="text-xl font-bold text-slate-900">System Security &amp; Audit Trail</h2>
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
@@ -121,7 +121,7 @@ export const AdminAuditLogsView: React.FC = () => {
                       {log.action}
                     </td>
                     <td className="px-5 py-3.5">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-100">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-100">
                         {log.module}
                       </span>
                     </td>

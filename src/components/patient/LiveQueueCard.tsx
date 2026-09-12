@@ -72,9 +72,9 @@ export const LiveQueueCard: React.FC<LiveQueueCardProps> = ({ onNavigateToQueue 
 
   if (!queueStatus || !queueStatus.hasTicket) {
     return (
-      <div className="p-6 bg-gradient-to-br from-slate-50 to-teal-50/30 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="p-6 bg-gradient-to-br from-slate-50 to-blue-50/30 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-semibold text-teal-700 uppercase tracking-wider block mb-1">
+          <span className="text-xs font-semibold text-blue-700 uppercase tracking-wider block mb-1">
             Live Clinic Queue
           </span>
           <h3 className="text-base font-bold text-slate-900">
@@ -127,7 +127,7 @@ export const LiveQueueCard: React.FC<LiveQueueCardProps> = ({ onNavigateToQueue 
         isCalled
           ? 'bg-amber-50 border-amber-300 shadow-lg shadow-amber-500/10 ring-2 ring-amber-400'
           : isInConsultation
-          ? 'bg-teal-50 border-teal-300 shadow-md'
+          ? 'bg-blue-50 border-blue-300 shadow-md'
           : 'bg-white border-slate-200 shadow-sm'
       }`}
     >
@@ -150,7 +150,7 @@ export const LiveQueueCard: React.FC<LiveQueueCardProps> = ({ onNavigateToQueue 
       <div className="p-5 sm:p-6">
         <div className="flex items-center justify-between gap-2 mb-4">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-teal-700 uppercase tracking-wider">
+            <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">
               Today's Live Queue Ticket
             </span>
             <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
@@ -169,9 +169,9 @@ export const LiveQueueCard: React.FC<LiveQueueCardProps> = ({ onNavigateToQueue 
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pb-4 border-b border-slate-100">
           {/* Your Ticket */}
-          <div className="p-3 bg-teal-50/70 border border-teal-200/80 rounded-xl text-center">
-            <span className="text-[10px] font-medium text-teal-700 uppercase">Your Queue #</span>
-            <div className="text-2xl sm:text-3xl font-extrabold text-teal-900 font-mono tracking-tight">
+          <div className="p-3 bg-blue-50/70 border border-blue-200/80 rounded-xl text-center">
+            <span className="text-[10px] font-medium text-blue-700 uppercase">Your Queue #</span>
+            <div className="text-2xl sm:text-3xl font-extrabold text-blue-900 font-mono tracking-tight">
               {ticket.queue_number}
             </div>
           </div>
@@ -210,7 +210,7 @@ export const LiveQueueCard: React.FC<LiveQueueCardProps> = ({ onNavigateToQueue 
         <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-600">
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1">
-              <Stethoscope className="w-3.5 h-3.5 text-teal-600" />
+              <Stethoscope className="w-3.5 h-3.5 text-blue-600" />
               Dr. {ticket.doctor?.first_name} {ticket.doctor?.last_name} ({ticket.doctor?.specialization_name})
             </span>
             <span className="flex items-center gap-1">
@@ -222,7 +222,7 @@ export const LiveQueueCard: React.FC<LiveQueueCardProps> = ({ onNavigateToQueue 
           {onNavigateToQueue && (
             <button
               onClick={onNavigateToQueue}
-              className="text-xs font-semibold text-teal-700 hover:text-teal-900 underline"
+              className="text-xs font-semibold text-blue-700 hover:text-blue-900 underline"
             >
               Open Live Queue View &rarr;
             </button>

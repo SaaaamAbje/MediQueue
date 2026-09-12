@@ -142,13 +142,13 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
       <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4 mb-4">
           <div>
-            <h2 className="text-xl font-bold text-slate-900">Book Clinic Appointment</h2>
+            <h2 className="text-xl font-bold text-slate-900">Book MMC Consultation</h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              Follow the steps to reserve your consultation with our medical specialists.
+              Follow the steps to reserve your consultation with our Makati Medical Center specialists.
             </p>
           </div>
           {step < 6 && (
-            <div className="text-xs font-semibold px-3 py-1 bg-teal-50 text-teal-800 rounded-full self-start sm:self-auto">
+            <div className="text-xs font-semibold px-3 py-1 bg-blue-50 text-blue-800 rounded-full self-start sm:self-auto">
               Step {step} of 5
             </div>
           )}
@@ -157,20 +157,20 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
         {/* Step Progress Pills */}
         {step < 6 && (
           <div className="grid grid-cols-5 gap-2 text-center text-xs font-medium">
-            <div className={`p-2 rounded-lg ${step >= 1 ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-400'}`}>
-              1. Doctor
+            <div className={`p-2 rounded-lg ${step >= 1 ? 'bg-blue-700 text-white shadow-sm' : 'bg-slate-100 text-slate-400'}`}>
+              1. Physician
             </div>
-            <div className={`p-2 rounded-lg ${step >= 2 ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-400'}`}>
+            <div className={`p-2 rounded-lg ${step >= 2 ? 'bg-blue-700 text-white shadow-sm' : 'bg-slate-100 text-slate-400'}`}>
               2. Date
             </div>
-            <div className={`p-2 rounded-lg ${step >= 3 ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-400'}`}>
-              3. Time Slot
+            <div className={`p-2 rounded-lg ${step >= 3 ? 'bg-blue-700 text-white shadow-sm' : 'bg-slate-100 text-slate-400'}`}>
+              3. Schedule
             </div>
-            <div className={`p-2 rounded-lg ${step >= 4 ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-400'}`}>
+            <div className={`p-2 rounded-lg ${step >= 4 ? 'bg-blue-700 text-white shadow-sm' : 'bg-slate-100 text-slate-400'}`}>
               4. Reason
             </div>
-            <div className={`p-2 rounded-lg ${step >= 5 ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-400'}`}>
-              5. Summary
+            <div className={`p-2 rounded-lg ${step >= 5 ? 'bg-blue-700 text-white shadow-sm' : 'bg-slate-100 text-slate-400'}`}>
+              5. Review
             </div>
           </div>
         )}
@@ -185,7 +185,7 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
               onClick={() => setSelectedSpecialization('all')}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
                 selectedSpecialization === 'all'
-                  ? 'bg-teal-700 text-white shadow-xs'
+                  ? 'bg-blue-700 text-white shadow-xs'
                   : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
               }`}
             >
@@ -197,7 +197,7 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
                 onClick={() => setSelectedSpecialization(spec.id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
                   selectedSpecialization === spec.id
-                    ? 'bg-teal-700 text-white shadow-xs'
+                    ? 'bg-blue-700 text-white shadow-xs'
                     : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
                 }`}
               >
@@ -211,18 +211,18 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
               <div
                 key={doc.id}
                 onClick={() => handleDoctorSelect(doc)}
-                className={`p-5 rounded-2xl border transition-all cursor-pointer bg-white hover:border-teal-400 hover:shadow-md flex flex-col justify-between ${
-                  selectedDoctor?.id === doc.id ? 'border-teal-600 ring-2 ring-teal-500/20' : 'border-slate-200'
+                className={`p-5 rounded-2xl border transition-all cursor-pointer bg-white hover:border-blue-400 hover:shadow-md flex flex-col justify-between ${
+                  selectedDoctor?.id === doc.id ? 'border-blue-700 ring-2 ring-blue-500/20' : 'border-slate-200'
                 }`}
               >
                 <div>
-                  <div className="w-12 h-12 rounded-xl bg-teal-100 text-teal-800 flex items-center justify-center font-bold text-base mb-3">
+                  <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center font-bold text-base mb-3">
                     {doc.first_name[0]}{doc.last_name[0]}
                   </div>
                   <h3 className="text-sm font-bold text-slate-900">
                     Dr. {doc.first_name} {doc.last_name}
                   </h3>
-                  <p className="text-xs font-medium text-teal-700 mt-0.5">
+                  <p className="text-xs font-medium text-blue-700 mt-0.5">
                     {doc.specialization_name}
                   </p>
                   <p className="text-[11px] text-slate-500 mt-1 line-clamp-2">
@@ -248,15 +248,15 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
       {/* Step 2: Select Date */}
       {step === 2 && selectedDoctor && (
         <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-6">
-          <div className="flex items-center gap-3 p-3 rounded-xl bg-teal-50/80 border border-teal-200">
-            <div className="w-10 h-10 rounded-lg bg-teal-600 text-white flex items-center justify-center font-bold">
+          <div className="flex items-center gap-3 p-3 rounded-xl bg-blue-50/80 border border-blue-200">
+            <div className="w-10 h-10 rounded-lg bg-blue-700 text-white flex items-center justify-center font-bold">
               {selectedDoctor.first_name[0]}{selectedDoctor.last_name[0]}
             </div>
             <div>
               <h4 className="text-sm font-bold text-slate-900">
                 Dr. {selectedDoctor.first_name} {selectedDoctor.last_name}
               </h4>
-              <p className="text-xs text-teal-700">
+              <p className="text-xs text-blue-700">
                 {selectedDoctor.specialization_name} • Room {selectedDoctor.room_number}
               </p>
             </div>
@@ -274,7 +274,7 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
               min={todayStr}
               value={appointmentDate}
               onChange={(e) => setAppointmentDate(e.target.value)}
-              className="px-4 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 max-w-xs"
+              className="px-4 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 max-w-xs"
             />
           </div>
 
@@ -287,9 +287,9 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
             </button>
             <button
               onClick={handleNextToSlots}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-600 text-white text-xs font-semibold rounded-lg hover:bg-teal-700"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-700 text-white text-xs font-semibold rounded-lg hover:bg-blue-800"
             >
-              Next: Choose Time Slot <ArrowRight className="w-4 h-4" />
+              Next: Choose Schedule <ArrowRight className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -335,14 +335,14 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
                       !isAvailable
                         ? 'bg-slate-100 border-slate-200 opacity-50 cursor-not-allowed'
                         : isSelected
-                        ? 'bg-teal-600 text-white border-teal-700 shadow-sm'
-                        : 'bg-white border-slate-200 hover:border-teal-400 hover:bg-teal-50/50'
+                        ? 'bg-blue-700 text-white border-blue-800 shadow-sm'
+                        : 'bg-white border-slate-200 hover:border-blue-400 hover:bg-blue-50/50'
                     }`}
                   >
                     <div className="font-bold text-sm font-mono">{slot.formattedTime}</div>
                     <div
                       className={`text-[10px] mt-1 font-medium ${
-                        isSelected ? 'text-teal-100' : isAvailable ? 'text-teal-700' : 'text-slate-400'
+                        isSelected ? 'text-blue-100' : isAvailable ? 'text-blue-700' : 'text-slate-400'
                       }`}
                     >
                       {isAvailable ? `${slot.maxCapacity - slot.bookedCount} slots left` : 'Fully Booked'}
@@ -363,7 +363,7 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
             <button
               onClick={handleNextToReason}
               disabled={!selectedSlot}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-600 text-white text-xs font-semibold rounded-lg hover:bg-teal-700 disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-700 text-white text-xs font-semibold rounded-lg hover:bg-blue-800 disabled:opacity-50"
             >
               Next: Enter Reason <ArrowRight className="w-4 h-4" />
             </button>
@@ -390,7 +390,7 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="e.g., Persistent cough for 4 days with slight fever, headache, and fatigue..."
-              className="w-full p-3 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+              className="w-full p-3 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
 
@@ -404,7 +404,7 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
             <button
               onClick={handleNextToSummary}
               disabled={!reason.trim()}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-600 text-white text-xs font-semibold rounded-lg hover:bg-teal-700 disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-700 text-white text-xs font-semibold rounded-lg hover:bg-blue-800 disabled:opacity-50"
             >
               Review Summary <ArrowRight className="w-4 h-4" />
             </button>
@@ -446,7 +446,7 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
             </div>
             <div className="py-2.5 flex justify-between text-xs">
               <span className="text-slate-500">Time Slot:</span>
-              <span className="font-bold text-teal-700">{selectedSlot}</span>
+              <span className="font-bold text-blue-700">{selectedSlot}</span>
             </div>
             <div className="py-2.5 flex justify-between text-xs">
               <span className="text-slate-500">Patient:</span>
@@ -472,7 +472,7 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
             <button
               onClick={handleConfirmBooking}
               disabled={isSubmitting}
-              className="inline-flex items-center gap-1.5 px-6 py-2.5 bg-teal-600 text-white text-xs font-bold rounded-xl hover:bg-teal-700 shadow-md transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-6 py-2.5 bg-blue-700 text-white text-xs font-bold rounded-xl hover:bg-blue-800 shadow-md transition-colors disabled:opacity-50"
             >
               {isSubmitting ? 'Confirming Booking...' : 'Confirm & Book Appointment'}
             </button>
@@ -482,20 +482,20 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
 
       {/* Step 6: Booking Success Screen */}
       {step === 6 && bookedAppointment && (
-        <div className="bg-white rounded-2xl border border-teal-200 p-8 text-center space-y-6 shadow-md">
-          <div className="mx-auto w-16 h-16 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center">
+        <div className="bg-white rounded-2xl border border-blue-200 p-8 text-center space-y-6 shadow-md">
+          <div className="mx-auto w-16 h-16 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center">
             <CheckCircle2 className="w-10 h-10" />
           </div>
 
           <div>
-            <span className="px-3 py-1 bg-teal-50 text-teal-800 text-xs font-bold rounded-full uppercase tracking-wider">
+            <span className="px-3 py-1 bg-blue-50 text-blue-800 text-xs font-bold rounded-full uppercase tracking-wider">
               Booking Confirmed
             </span>
             <h2 className="text-2xl font-bold text-slate-900 mt-2">
               Appointment Successfully Reserved!
             </h2>
             <p className="text-xs text-slate-500 mt-1">
-              Your appointment reference number has been generated.
+              Your Makati Medical Center appointment reference number has been generated.
             </p>
           </div>
 
@@ -503,7 +503,7 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
             <span className="text-[10px] uppercase font-bold text-slate-400">
               Reference Number
             </span>
-            <div className="text-xl font-mono font-extrabold text-teal-700 mt-0.5">
+            <div className="text-xl font-mono font-extrabold text-blue-700 mt-0.5">
               {bookedAppointment.reference_number}
             </div>
             <p className="text-xs text-slate-500 mt-2">
@@ -514,7 +514,7 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
           <div className="flex items-center justify-center gap-3 pt-4">
             <button
               onClick={() => onNavigate('patient-appointments')}
-              className="px-4 py-2.5 bg-teal-600 text-white text-xs font-semibold rounded-lg hover:bg-teal-700 shadow-sm"
+              className="px-4 py-2.5 bg-blue-700 text-white text-xs font-semibold rounded-lg hover:bg-blue-800 shadow-sm"
             >
               View in My Appointments
             </button>

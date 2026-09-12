@@ -158,7 +158,7 @@ export const AdminSchedulesView: React.FC = () => {
 
           <button
             onClick={handleOpenAdd}
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl shadow-xs"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs"
           >
             <Plus className="w-4 h-4" /> Add Duty Shift
           </button>
@@ -166,19 +166,19 @@ export const AdminSchedulesView: React.FC = () => {
       </div>
 
       {selectedDoctor && (
-        <div className="p-4 bg-teal-50 border border-teal-200 rounded-xl flex items-center justify-between text-xs text-teal-900">
+        <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl flex items-center justify-between text-xs text-blue-900">
           <div className="flex items-center gap-3">
-            <Stethoscope className="w-5 h-5 text-teal-700" />
+            <Stethoscope className="w-5 h-5 text-blue-700" />
             <div>
               <span className="font-bold">
                 Dr. {selectedDoctor.first_name} {selectedDoctor.last_name}
               </span>
-              <span className="text-teal-700 ml-1.5">
+              <span className="text-blue-700 ml-1.5">
                 • {selectedDoctor.specialization_name} • Room {selectedDoctor.room_number}
               </span>
             </div>
           </div>
-          <span className="font-medium text-teal-800">
+          <span className="font-medium text-blue-800">
             Fee: ₱{selectedDoctor.consultation_fee?.toLocaleString()}
           </span>
         </div>
@@ -215,7 +215,7 @@ export const AdminSchedulesView: React.FC = () => {
                 schedules.map((sc) => (
                   <tr key={sc.id} className="hover:bg-slate-50 transition-colors">
                     <td className="px-5 py-3.5 font-bold text-slate-900">{sc.day_of_week}</td>
-                    <td className="px-5 py-3.5 font-mono text-teal-800 font-semibold">
+                    <td className="px-5 py-3.5 font-mono text-blue-800 font-semibold">
                       {sc.start_time} - {sc.end_time}
                     </td>
                     <td className="px-5 py-3.5">{sc.slot_duration_minutes} minutes</td>
@@ -340,7 +340,7 @@ export const AdminSchedulesView: React.FC = () => {
             <button
               type="submit"
               disabled={isSaving}
-              className="px-4 py-2 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 disabled:opacity-50"
+              className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 disabled:opacity-50"
             >
               {isSaving ? 'Saving...' : editingSchedule ? 'Save Shift' : 'Create Shift'}
             </button>

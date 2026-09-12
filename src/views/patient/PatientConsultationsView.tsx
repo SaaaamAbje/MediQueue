@@ -84,10 +84,10 @@ export const PatientConsultationsView: React.FC = () => {
             setVerifyCodeToPass('');
             setVerifyModalOpen(true);
           }}
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-teal-50 border border-teal-200 hover:bg-teal-100 text-teal-800 rounded-xl text-xs font-bold shadow-2xs transition-colors self-start md:self-auto"
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-50 border border-blue-200 hover:bg-blue-100 text-blue-800 rounded-xl text-xs font-bold shadow-2xs transition-colors self-start md:self-auto"
         >
-          <QrCode className="w-4 h-4 text-teal-600" />
-          Verify Medical Certificate Authenticity
+          <QrCode className="w-4 h-4 text-blue-600" />
+          Verify Certificate Authenticity
         </button>
       </div>
 
@@ -97,7 +97,7 @@ export const PatientConsultationsView: React.FC = () => {
           onClick={() => setActiveTab('consultations')}
           className={`py-3.5 px-4 text-xs font-bold flex items-center gap-2 border-b-2 transition-colors whitespace-nowrap ${
             activeTab === 'consultations'
-              ? 'border-teal-600 text-teal-700'
+              ? 'border-blue-700 text-blue-800'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
@@ -108,7 +108,7 @@ export const PatientConsultationsView: React.FC = () => {
           onClick={() => setActiveTab('certificates')}
           className={`py-3.5 px-4 text-xs font-bold flex items-center gap-2 border-b-2 transition-colors whitespace-nowrap ${
             activeTab === 'certificates'
-              ? 'border-teal-600 text-teal-700'
+              ? 'border-blue-700 text-blue-800'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
@@ -119,7 +119,7 @@ export const PatientConsultationsView: React.FC = () => {
           onClick={() => setActiveTab('referrals')}
           className={`py-3.5 px-4 text-xs font-bold flex items-center gap-2 border-b-2 transition-colors whitespace-nowrap ${
             activeTab === 'referrals'
-              ? 'border-teal-600 text-teal-700'
+              ? 'border-blue-700 text-blue-800'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
@@ -203,7 +203,7 @@ export const PatientConsultationsView: React.FC = () => {
                         )}
                         <button
                           onClick={() => setSelectedRecord(c)}
-                          className="inline-flex items-center gap-1 text-xs font-semibold text-teal-700 hover:text-teal-900"
+                          className="inline-flex items-center gap-1 text-xs font-semibold text-blue-700 hover:text-blue-900"
                         >
                           View Full Record <ChevronRight className="w-3.5 h-3.5" />
                         </button>
@@ -293,7 +293,7 @@ export const PatientConsultationsView: React.FC = () => {
                         </span>
                         <button
                           onClick={() => setSelectedCertificate(cert)}
-                          className="inline-flex items-center gap-1 text-xs font-bold text-teal-700 hover:text-teal-900"
+                          className="inline-flex items-center gap-1 text-xs font-bold text-blue-700 hover:text-blue-900"
                         >
                           View &amp; Print Certificate <ChevronRight className="w-3.5 h-3.5" />
                         </button>
@@ -503,9 +503,9 @@ export const PatientConsultationsView: React.FC = () => {
             {/* Letterhead & Watermark Preview Container */}
             <div className="bg-white p-6 sm:p-8 rounded-2xl border-2 border-slate-200 shadow-sm relative overflow-hidden font-serif">
               {/* Header Letterhead */}
-              <div className="text-center pb-4 border-b-2 border-teal-800 mb-6 font-sans">
-                <h3 className="text-lg font-black tracking-wide text-teal-950 uppercase">
-                  Central Outpatient Medical Center
+              <div className="text-center pb-4 border-b-2 border-blue-900 mb-6 font-sans">
+                <h3 className="text-lg font-black tracking-wide text-blue-950 uppercase">
+                  Makati Medical Center
                 </h3>
                 <p className="text-xs text-slate-600">Department of Clinical Medicine &amp; Diagnostic Services</p>
                 <p className="text-[11px] text-slate-500">Republic of the Philippines • PRC Regulated Practice</p>
@@ -513,10 +513,10 @@ export const PatientConsultationsView: React.FC = () => {
 
               {/* Title */}
               <div className="text-center my-5">
-                <h2 className="text-xl font-bold uppercase tracking-widest text-slate-900 underline decoration-teal-600 decoration-2 underline-offset-8">
+                <h2 className="text-xl font-bold uppercase tracking-widest text-slate-900 underline decoration-blue-600 decoration-2 underline-offset-8">
                   Medical Certificate
                 </h2>
-                <span className="inline-block mt-2 px-3 py-0.5 rounded-full text-xs font-sans font-bold bg-teal-50 text-teal-800 border border-teal-200 uppercase">
+                <span className="inline-block mt-2 px-3 py-0.5 rounded-full text-xs font-sans font-bold bg-blue-50 text-blue-800 border border-blue-200 uppercase">
                   {selectedCertificate.certificate_type.replace(/_/g, ' ')}
                 </span>
               </div>
@@ -609,7 +609,7 @@ export const PatientConsultationsView: React.FC = () => {
               </button>
               <button
                 onClick={() => setSelectedCertificate(null)}
-                className="px-5 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold shadow-xs"
+                className="px-5 py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-xl text-xs font-semibold shadow-xs"
               >
                 Close
               </button>
@@ -720,7 +720,7 @@ export const PatientConsultationsView: React.FC = () => {
               </button>
               <button
                 onClick={() => setSelectedReferral(null)}
-                className="px-5 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold shadow-xs"
+                className="px-5 py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-xl text-xs font-semibold shadow-xs"
               >
                 Close
               </button>

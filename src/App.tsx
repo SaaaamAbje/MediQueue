@@ -153,11 +153,11 @@ const AppContent: React.FC = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center text-white p-4">
-        <div className="w-12 h-12 rounded-2xl bg-teal-600 flex items-center justify-center font-bold text-2xl animate-bounce mb-4 shadow-lg shadow-teal-500/30">
-          MQ
+        <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center font-bold text-2xl animate-bounce mb-4 shadow-lg shadow-blue-500/30">
+          MMC
         </div>
         <p className="text-sm font-semibold tracking-wide text-slate-300">
-          Initializing MediQueue Clinical Systems...
+          Initializing Makati Medical Center Systems...
         </p>
       </div>
     );
@@ -180,16 +180,16 @@ const AppContent: React.FC = () => {
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center overflow-hidden bg-white shadow-sm ring-1 ring-slate-200">
                 <img 
-                  src="/src/assets/images/mediqueue_clinica_logo_1789222232060.jpg" 
-                  alt="MediQueue Clinica Logo" 
+                  src="/src/assets/images/makati_medical_center_logo_1789222548043.jpg" 
+                  alt="Makati Medical Center Logo" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />
               </div>
               <div>
-                <span className="font-bold text-base text-slate-900 tracking-tight">MediQueue Clinica</span>
+                <span className="font-bold text-base text-slate-900 tracking-tight">Makati Medical Center</span>
                 <span className="text-[10px] text-slate-500 font-semibold block -mt-1 uppercase">
-                  Clinical Management System
+                  Hospital Management System
                 </span>
               </div>
             </div>
@@ -200,7 +200,7 @@ const AppContent: React.FC = () => {
                 onClick={() => setAuthView(authView === 'register' ? 'login' : 'register')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
                   authView === 'register'
-                    ? 'bg-teal-600 text-white shadow-xs'
+                    ? 'bg-blue-700 text-white shadow-xs'
                     : 'text-slate-600 hover:bg-slate-100'
                 }`}
               >
@@ -364,16 +364,16 @@ const AppContent: React.FC = () => {
             <span
               className={`w-2 h-2 rounded-full animate-ping ${
                 activeSystem === 'patient'
-                  ? 'bg-teal-500'
+                  ? 'bg-blue-500'
                   : activeSystem === 'doctor'
-                  ? 'bg-sky-500'
-                  : 'bg-purple-500'
+                  ? 'bg-indigo-500'
+                  : 'bg-slate-500'
               }`}
             />
             <span className="font-semibold text-slate-700">
-              {activeSystem === 'patient' && 'MediQueue Patient Portal Active'}
-              {activeSystem === 'doctor' && 'MediQueue Physician Clinical Workstation Active'}
-              {activeSystem === 'admin' && 'MediQueue Clinic Administration Console Active'}
+              {activeSystem === 'patient' && 'Makati Med Patient Portal Active'}
+              {activeSystem === 'doctor' && 'Makati Med Physician Clinical Workstation Active'}
+              {activeSystem === 'admin' && 'Makati Med Hospital Administration Console Active'}
             </span>
           </div>
           <div className="flex items-center gap-3 text-[11px] text-slate-500">

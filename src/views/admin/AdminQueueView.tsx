@@ -141,11 +141,11 @@ export const AdminQueueView: React.FC = () => {
       <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-            <h2 className="text-xl font-bold text-slate-900">Live Clinic Queue Display &amp; Dispatch</h2>
+            <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
+            <h2 className="text-xl font-bold text-slate-900">Makati Med Live Dispatch &amp; Patient Queue</h2>
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
-            Manage real-time queue calls, patient status transitions, and arrivals
+            Manage real-time hospital queue calls, patient status transitions, and specialist clinic arrivals
           </p>
         </div>
 
@@ -165,16 +165,16 @@ export const AdminQueueView: React.FC = () => {
 
           <button
             onClick={() => setIsCheckInOpen(true)}
-            className="inline-flex items-center gap-1.5 px-3 py-2 bg-teal-50 border border-teal-200 text-teal-800 text-xs font-semibold rounded-lg hover:bg-teal-100"
+            className="inline-flex items-center gap-1.5 px-3 py-2 bg-blue-50 border border-blue-200 text-blue-800 text-xs font-semibold rounded-lg hover:bg-blue-100"
           >
-            <PlusCircle className="w-4 h-4 text-teal-600" />
+            <PlusCircle className="w-4 h-4 text-blue-600" />
             Check-In Arrival
           </button>
 
           <button
             onClick={handleCallNext}
             disabled={waitingPatients.length === 0}
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-lg shadow-sm disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg shadow-sm disabled:opacity-50"
           >
             <Volume2 className="w-4 h-4" />
             Call Next Patient
@@ -185,10 +185,10 @@ export const AdminQueueView: React.FC = () => {
       {/* Hero Display Cards: Current & Next */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Current Patient Card */}
-        <div className="bg-white rounded-2xl border-2 border-teal-500 p-6 shadow-sm flex flex-col justify-between">
+        <div className="bg-white rounded-2xl border-2 border-blue-600 p-6 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-teal-700">
+              <span className="text-xs font-bold uppercase tracking-wider text-blue-700">
                 Now Serving / Active Patient
               </span>
               {currentPatient && <StatusBadge status={currentPatient.status} type="queue" />}
@@ -197,8 +197,8 @@ export const AdminQueueView: React.FC = () => {
             {currentPatient ? (
               <div className="space-y-3">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-xl bg-teal-700 text-white flex flex-col items-center justify-center font-mono font-black text-2xl shadow-xs">
-                    <span className="text-[9px] uppercase font-sans text-teal-200">Ticket</span>
+                  <div className="w-16 h-16 rounded-xl bg-blue-600 text-white flex flex-col items-center justify-center font-mono font-black text-2xl shadow-xs">
+                    <span className="text-[9px] uppercase font-sans text-blue-200">Ticket</span>
                     {currentPatient.queue_number}
                   </div>
                   <div>
@@ -208,7 +208,7 @@ export const AdminQueueView: React.FC = () => {
                     <p className="text-xs text-slate-500">
                       Patient ID: {currentPatient.patient?.patient_number}
                     </p>
-                    <p className="text-xs text-teal-800 font-medium">
+                    <p className="text-xs text-blue-800 font-medium">
                       Dr. {currentPatient.doctor?.last_name} • Room {currentPatient.doctor?.room_number}
                     </p>
                   </div>
@@ -294,7 +294,7 @@ export const AdminQueueView: React.FC = () => {
             <div className="mt-4 pt-3 border-t border-slate-100 flex justify-end">
               <button
                 onClick={handleCallNext}
-                className="px-4 py-1.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-lg shadow-xs flex items-center gap-1.5"
+                className="px-4 py-1.5 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded-lg shadow-xs flex items-center gap-1.5"
               >
                 <Volume2 className="w-3.5 h-3.5" /> Call Ticket #{nextPatient.queue_number}
               </button>
@@ -337,7 +337,7 @@ export const AdminQueueView: React.FC = () => {
               ) : (
                 waitingPatients.map((item, index) => (
                   <tr key={item.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="px-5 py-3.5 font-mono font-bold text-teal-800 text-sm">
+                    <td className="px-5 py-3.5 font-mono font-bold text-blue-800 text-sm">
                       {item.queue_number}
                     </td>
                     <td className="px-5 py-3.5 text-slate-500">{item.check_in_time}</td>
@@ -395,7 +395,7 @@ export const AdminQueueView: React.FC = () => {
               onChange={(e) => setCheckInRef(e.target.value)}
               placeholder="e.g. APT-2026-000001"
               required
-              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg font-mono focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg font-mono focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
 
@@ -410,7 +410,7 @@ export const AdminQueueView: React.FC = () => {
             <button
               type="submit"
               disabled={isCheckingIn}
-              className="px-4 py-2 bg-teal-600 text-white text-xs font-semibold rounded-lg hover:bg-teal-700 disabled:opacity-50"
+              className="px-4 py-2 bg-blue-700 text-white text-xs font-semibold rounded-lg hover:bg-blue-800 disabled:opacity-50"
             >
               {isCheckingIn ? 'Checking in...' : 'Issue Ticket'}
             </button>

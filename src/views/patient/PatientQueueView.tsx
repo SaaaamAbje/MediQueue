@@ -65,17 +65,17 @@ export const PatientQueueView: React.FC<PatientQueueViewProps> = ({ onNavigate }
   if (!queueData || !queueData.hasTicket) {
     return (
       <div className="max-w-2xl mx-auto py-12 text-center bg-white rounded-2xl border border-slate-200 p-8 shadow-xs">
-        <div className="w-16 h-16 rounded-full bg-teal-50 text-teal-600 flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 rounded-full bg-blue-50 text-blue-700 flex items-center justify-center mx-auto mb-4">
           <Clock className="w-8 h-8" />
         </div>
-        <h2 className="text-xl font-bold text-slate-900">No Active Queue Ticket</h2>
+        <h2 className="text-xl font-bold text-slate-900">No Active MMC Queue Ticket</h2>
         <p className="text-xs text-slate-500 mt-2 max-w-md mx-auto">
-          You are not currently in today's clinic queue. If you have an appointment scheduled for today, head over to your appointments to self-check-in.
+          You are not currently in today's Makati Medical Center clinic queue. If you have an appointment scheduled for today, head over to your appointments to self-check-in.
         </p>
         <div className="mt-6 flex items-center justify-center gap-3">
           <button
             onClick={() => onNavigate('patient-appointments')}
-            className="px-4 py-2 bg-teal-600 text-white text-xs font-semibold rounded-lg hover:bg-teal-700 shadow-sm"
+            className="px-4 py-2 bg-blue-700 text-white text-xs font-semibold rounded-lg hover:bg-blue-800 shadow-sm"
           >
             Check In from My Appointments
           </button>
@@ -149,8 +149,8 @@ export const PatientQueueView: React.FC<PatientQueueViewProps> = ({ onNavigate }
       {/* Main Board Ticket Visualizer */}
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
         <div className="bg-slate-900 text-white p-6 text-center">
-          <span className="text-xs uppercase tracking-widest text-teal-400 font-semibold">
-            Your Digital Queue Pass
+          <span className="text-xs uppercase tracking-widest text-blue-400 font-semibold">
+            MMC Digital Queue Pass
           </span>
           <div className="text-5xl sm:text-6xl font-black font-mono tracking-tight my-2 text-white">
             {ticket.queue_number}
@@ -186,7 +186,7 @@ export const PatientQueueView: React.FC<PatientQueueViewProps> = ({ onNavigate }
             <span className="text-[10px] font-medium uppercase text-slate-500 block">
               Est. Waiting Time
             </span>
-            <span className="text-lg font-bold text-teal-800 mt-2 block">
+            <span className="text-lg font-bold text-blue-800 mt-2 block">
               {estimatedWaitTime}
             </span>
           </div>
@@ -196,7 +196,7 @@ export const PatientQueueView: React.FC<PatientQueueViewProps> = ({ onNavigate }
         <div className="p-6 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
           <div className="space-y-1">
             <div className="flex items-center gap-1.5 font-bold text-slate-900">
-              <Stethoscope className="w-4 h-4 text-teal-600" />
+              <Stethoscope className="w-4 h-4 text-blue-700" />
               Dr. {ticket.doctor?.first_name} {ticket.doctor?.last_name}
               <span className="font-normal text-slate-500">
                 ({ticket.doctor?.specialization_name})
@@ -204,7 +204,7 @@ export const PatientQueueView: React.FC<PatientQueueViewProps> = ({ onNavigate }
             </div>
             <div className="flex items-center gap-1.5 text-slate-600">
               <MapPin className="w-3.5 h-3.5 text-slate-400" />
-              Consultation Room: Room {ticket.doctor?.room_number || '101'}
+              Makati Med Room: {ticket.doctor?.room_number || '101'}
             </div>
           </div>
 
@@ -212,19 +212,19 @@ export const PatientQueueView: React.FC<PatientQueueViewProps> = ({ onNavigate }
             onClick={playChime}
             className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-700 font-medium hover:bg-slate-100 self-start sm:self-auto"
           >
-            <Volume2 className="w-4 h-4 text-teal-600" />
+            <Volume2 className="w-4 h-4 text-blue-700" />
             Test Audio Chime
           </button>
         </div>
       </div>
 
       {/* Advisory Card */}
-      <div className="p-4 bg-teal-50 border border-teal-200 rounded-xl flex items-start gap-3 text-xs text-teal-900">
-        <Info className="w-5 h-5 text-teal-700 shrink-0 mt-0.5" />
+      <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl flex items-start gap-3 text-xs text-blue-950">
+        <Info className="w-5 h-5 text-blue-700 shrink-0 mt-0.5" />
         <div className="space-y-1">
-          <p className="font-semibold">Queue Etiquette &amp; Waiting Advisory</p>
-          <p className="text-teal-800 leading-relaxed">
-            Please remain in or near the designated waiting lounge. When your ticket number is called, a chime will sound and your status will change. If you step away, kindly notify the clinic desk nurse.
+          <p className="font-semibold text-blue-900">MMC Queue Etiquette &amp; Waiting Advisory</p>
+          <p className="text-blue-800 leading-relaxed">
+            Please remain in or near the Makati Medical Center waiting lounge. When your ticket number is called, a chime will sound and your status will change. If you step away, kindly notify the clinic desk nurse.
           </p>
         </div>
       </div>

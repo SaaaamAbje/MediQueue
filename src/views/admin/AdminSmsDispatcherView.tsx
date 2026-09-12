@@ -24,7 +24,7 @@ export const AdminSmsDispatcherView: React.FC = () => {
   const [recipientPhone, setRecipientPhone] = useState<string>('+63 917 123 4567');
   const [recipientName, setRecipientName] = useState<string>('Juan Dela Cruz');
   const [messageText, setMessageText] = useState<string>(
-    'MediQueue ALERT: You are next in line! Ticket #A002. Please proceed to Consultation Room 101.'
+    'Makati Med ALERT: You are next in line! Ticket #A002. Please proceed to Consultation Room 101.'
   );
   const [smsType, setSmsType] = useState<string>('queue_proximity');
   const [isSending, setIsSending] = useState<boolean>(false);
@@ -77,13 +77,13 @@ export const AdminSmsDispatcherView: React.FC = () => {
   const setTemplate = (type: string) => {
     setSmsType(type);
     if (type === 'queue_proximity') {
-      setMessageText('MediQueue ALERT: You are next in line! Ticket #A002. Please proceed to Consultation Room 101.');
+      setMessageText('Makati Med ALERT: You are next in line! Ticket #A002. Please proceed to Consultation Room 101.');
     } else if (type === 'appointment_reminder') {
-      setMessageText('MediQueue: Reminder for your clinic consultation tomorrow at 9:00 AM. Ref #APT-2026-0001. Reply C to cancel.');
+      setMessageText('Makati Med: Reminder for your clinic consultation tomorrow at 9:00 AM. Ref #APT-2026-0001. Reply C to cancel.');
     } else if (type === 'lab_ready') {
-      setMessageText('MediQueue LAB: Your diagnostic test results have been certified and released. View them now on your portal.');
+      setMessageText('Makati Med LAB: Your diagnostic test results have been certified and released. View them now on your portal.');
     } else if (type === 'urgent_call') {
-      setMessageText('MediQueue URGENT: The physician is ready for you now in Room 101. Please proceed immediately.');
+      setMessageText('Makati Med URGENT: The physician is ready for you now in Room 101. Please proceed immediately.');
     }
   };
 
@@ -92,7 +92,7 @@ export const AdminSmsDispatcherView: React.FC = () => {
       await api.sendSms({
         recipient_phone: phone || '+63 917 000 1122',
         recipient_name: patientName,
-        message: `MediQueue ALERT: You are next in line! Ticket #${ticket}. Please proceed to Doctor's Room ${room}.`,
+        message: `Makati Med ALERT: You are next in line! Ticket #${ticket}. Please proceed to Doctor's Room ${room}.`,
         type: 'queue_proximity',
       });
       fetchData();
@@ -109,7 +109,7 @@ export const AdminSmsDispatcherView: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
         <div>
-          <div className="flex items-center gap-2 text-violet-700 mb-1">
+          <div className="flex items-center gap-2 text-blue-700 mb-1">
             <MessageSquare className="w-5 h-5" />
             <span className="text-xs font-bold uppercase tracking-wider">Automated Messaging Engine</span>
           </div>
@@ -120,8 +120,8 @@ export const AdminSmsDispatcherView: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 bg-violet-50 px-3 py-1.5 rounded-lg border border-violet-200">
-            <span className="text-xs font-semibold text-violet-900">Auto-Proximity Daemon:</span>
+          <div className="flex items-center gap-2 bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-200">
+            <span className="text-xs font-semibold text-blue-900">Auto-Proximity Daemon:</span>
             <button
               onClick={() => setAutoDispatcherEnabled(!autoDispatcherEnabled)}
               className={`text-xs px-2.5 py-0.5 rounded-full font-bold uppercase transition-colors ${
@@ -147,10 +147,10 @@ export const AdminSmsDispatcherView: React.FC = () => {
           <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
             <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-violet-600" />
+                <Users className="w-4 h-4 text-blue-600" />
                 <h2 className="font-semibold text-slate-900">Live Waiting Patients (Proximity Target)</h2>
               </div>
-              <span className="text-xs bg-violet-100 text-violet-800 px-2 py-0.5 rounded-full font-semibold">
+              <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-semibold">
                 {waitingPatients.length} Waiting
               </span>
             </div>
@@ -206,7 +206,7 @@ export const AdminSmsDispatcherView: React.FC = () => {
                             q.doctor?.room_number || '101'
                           )
                         }
-                        className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-violet-600 text-white hover:bg-violet-700 flex items-center gap-1.5 shadow-sm"
+                        className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-blue-700 text-white hover:bg-blue-800 flex items-center gap-1.5 shadow-sm"
                       >
                         <Send className="w-3 h-3" />
                         Send Alert SMS
@@ -230,7 +230,7 @@ export const AdminSmsDispatcherView: React.FC = () => {
                 <div key={log.id} className="p-4 hover:bg-slate-50 text-xs space-y-1">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Smartphone className="w-3.5 h-3.5 text-violet-600" />
+                      <Smartphone className="w-3.5 h-3.5 text-blue-600" />
                       <strong className="text-slate-900">{log.recipient_name}</strong>
                       <span className="text-slate-500 font-mono">({log.recipient_phone})</span>
                       <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] uppercase font-semibold">
@@ -257,7 +257,7 @@ export const AdminSmsDispatcherView: React.FC = () => {
         {/* Right Column: Manual Dispatch Console */}
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-5 h-fit">
           <div className="flex items-center gap-2 text-slate-900 font-bold border-b pb-3">
-            <Send className="w-5 h-5 text-violet-600" />
+            <Send className="w-5 h-5 text-blue-600" />
             <h2>Instant SMS Dispatcher</h2>
           </div>
 
@@ -276,7 +276,7 @@ export const AdminSmsDispatcherView: React.FC = () => {
                 onClick={() => setTemplate('queue_proximity')}
                 className={`p-2 rounded-lg border text-left font-medium transition-colors ${
                   smsType === 'queue_proximity'
-                    ? 'border-violet-500 bg-violet-50 text-violet-900'
+                    ? 'border-blue-500 bg-blue-50 text-blue-900'
                     : 'border-slate-200 text-slate-700 hover:bg-slate-50'
                 }`}
               >
@@ -287,7 +287,7 @@ export const AdminSmsDispatcherView: React.FC = () => {
                 onClick={() => setTemplate('appointment_reminder')}
                 className={`p-2 rounded-lg border text-left font-medium transition-colors ${
                   smsType === 'appointment_reminder'
-                    ? 'border-violet-500 bg-violet-50 text-violet-900'
+                    ? 'border-blue-500 bg-blue-50 text-blue-900'
                     : 'border-slate-200 text-slate-700 hover:bg-slate-50'
                 }`}
               >
@@ -298,7 +298,7 @@ export const AdminSmsDispatcherView: React.FC = () => {
                 onClick={() => setTemplate('lab_ready')}
                 className={`p-2 rounded-lg border text-left font-medium transition-colors ${
                   smsType === 'lab_ready'
-                    ? 'border-violet-500 bg-violet-50 text-violet-900'
+                    ? 'border-blue-500 bg-blue-50 text-blue-900'
                     : 'border-slate-200 text-slate-700 hover:bg-slate-50'
                 }`}
               >
@@ -309,7 +309,7 @@ export const AdminSmsDispatcherView: React.FC = () => {
                 onClick={() => setTemplate('urgent_call')}
                 className={`p-2 rounded-lg border text-left font-medium transition-colors ${
                   smsType === 'urgent_call'
-                    ? 'border-violet-500 bg-violet-50 text-violet-900'
+                    ? 'border-blue-500 bg-blue-50 text-blue-900'
                     : 'border-slate-200 text-slate-700 hover:bg-slate-50'
                 }`}
               >
@@ -359,7 +359,7 @@ export const AdminSmsDispatcherView: React.FC = () => {
             <button
               type="submit"
               disabled={isSending}
-              className="w-full py-2.5 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-semibold flex items-center justify-center gap-2 shadow-sm transition-colors"
+              className="w-full py-2.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-semibold flex items-center justify-center gap-2 shadow-sm transition-colors"
             >
               <Send className="w-4 h-4" />
               {isSending ? 'Transmitting via Telco Gateway...' : 'Send SMS Notification'}

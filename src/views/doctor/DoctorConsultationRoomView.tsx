@@ -149,7 +149,7 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
         </p>
         <button
           onClick={() => onNavigate('doctor-queue')}
-          className="mt-6 px-5 py-2.5 bg-teal-600 text-white text-xs font-semibold rounded-xl hover:bg-teal-700 shadow-xs transition-colors"
+          className="mt-6 px-5 py-2.5 bg-blue-600 text-white text-xs font-semibold rounded-xl hover:bg-blue-700 shadow-xs transition-colors"
         >
           Go to Queue Board
         </button>
@@ -165,7 +165,7 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
       {/* Top Operational Status Bar */}
       <div className="bg-white rounded-3xl border border-slate-200/80 p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-teal-600 text-white flex items-center justify-center font-bold">
+          <div className="w-10 h-10 rounded-2xl bg-blue-700 text-white flex items-center justify-center font-bold">
             <Stethoscope className="w-5 h-5" />
           </div>
           <div>
@@ -186,7 +186,7 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
       <div className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+            <div className="w-12 h-12 rounded-2xl bg-blue-700 text-white flex items-center justify-center font-bold text-lg shadow-sm">
               {patient?.first_name?.[0]}{patient?.last_name?.[0]}
             </div>
             <div>
@@ -194,7 +194,7 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
                 <h2 className="text-xl font-bold text-slate-900">
                   {patient?.first_name} {patient?.last_name}
                 </h2>
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-teal-50 text-teal-800 border border-teal-200">
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-blue-50 text-blue-800 border border-blue-200">
                   Ticket #{activeQueueItem.queue_number}
                 </span>
               </div>
@@ -226,9 +226,9 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
             <button
               type="button"
               onClick={() => setShowLabModal(true)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-teal-50 border border-teal-200 text-teal-800 text-xs font-bold rounded-xl hover:bg-teal-100 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-blue-50 border border-blue-200 text-blue-800 text-xs font-bold rounded-xl hover:bg-blue-100 transition-colors"
             >
-              <Microscope className="w-4 h-4 text-teal-600" />
+              <Microscope className="w-4 h-4 text-blue-600" />
               Order Labs
             </button>
 
@@ -237,7 +237,7 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
               onClick={() => setShowHistory(!showHistory)}
               className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-50 border border-slate-200 text-slate-700 text-xs font-medium rounded-xl hover:bg-slate-100 transition-colors"
             >
-              <History className="w-4 h-4 text-teal-600" />
+              <History className="w-4 h-4 text-blue-600" />
               {showHistory ? 'Hide Visits' : `Visits (${patientHistory.length})`}
             </button>
           </div>
@@ -272,15 +272,15 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
 
         {/* Pre-Consultation Triage Intake Card (if completed) */}
         {triage && (
-          <div className="mt-4 p-4 rounded-2xl bg-teal-50/60 border border-teal-200/80">
+          <div className="mt-4 p-4 rounded-2xl bg-blue-50/60 border border-blue-200/80">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
-                <ClipboardList className="w-4 h-4 text-teal-700" />
-                <h4 className="text-xs font-bold uppercase tracking-wider text-teal-900">
+                <ClipboardList className="w-4 h-4 text-blue-700" />
+                <h4 className="text-xs font-bold uppercase tracking-wider text-blue-900">
                   Pre-Consultation Patient Intake (Triage)
                 </h4>
               </div>
-              <span className="text-[10px] text-teal-700 font-medium">
+              <span className="text-[10px] text-blue-700 font-medium">
                 Submitted {new Date(triage.submitted_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
               </span>
             </div>
@@ -322,7 +322,7 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
                     </div>
                     <p className="text-slate-600 mt-1">Complaint: "{h.chief_complaint}"</p>
                     {h.prescription && (
-                      <p className="text-teal-700 font-mono mt-0.5">Rx: {h.prescription}</p>
+                      <p className="text-blue-700 font-mono mt-0.5">Rx: {h.prescription}</p>
                     )}
                   </div>
                 ))}
@@ -347,14 +347,14 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
       <form onSubmit={handleComplete} className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-7 shadow-xs space-y-5">
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2">
-            <Stethoscope className="w-5 h-5 text-teal-600" />
+            <Stethoscope className="w-5 h-5 text-blue-600" />
             <h3 className="text-base font-bold text-slate-900">Clinical Consultation Notes</h3>
           </div>
           {prescription && (
             <button
               type="button"
               onClick={() => setShowRxModal(true)}
-              className="text-xs font-semibold text-teal-600 hover:underline flex items-center gap-1"
+              className="text-xs font-semibold text-blue-600 hover:underline flex items-center gap-1"
             >
               <Printer className="w-3.5 h-3.5" /> Preview Official Prescription Slip
             </button>
@@ -524,7 +524,7 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
               id="lock-note"
               checked={isLocked}
               onChange={(e) => setIsLocked(e.target.checked)}
-              className="w-4 h-4 text-teal-600 border-slate-300 rounded focus:ring-teal-500"
+              className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
             />
             <label htmlFor="lock-note" className="text-xs font-bold text-slate-700 flex items-center gap-1.5 cursor-pointer">
               <FileCheck className="w-4 h-4 text-emerald-600" />
@@ -545,7 +545,7 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
               type="submit"
               disabled={isSubmitting || (!isLocked && diagnosis.length > 0)}
               title={!isLocked ? "You must sign the record to complete consultation" : ""}
-              className="inline-flex items-center gap-2 px-6 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl shadow-md disabled:opacity-50 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-2.5 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded-xl shadow-md disabled:opacity-50 transition-colors"
             >
               <CheckCircle2 className="w-4 h-4" />
               {isSubmitting ? 'Finalizing...' : 'Complete Consultation & Release Patient'}
@@ -575,11 +575,11 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
                 <h3 className="text-lg font-bold text-slate-900">
                   DR. {doctor?.first_name?.toUpperCase()} {doctor?.last_name?.toUpperCase()}, M.D.
                 </h3>
-                <p className="text-xs font-medium text-teal-700">{doctor?.specialization_name}</p>
+                <p className="text-xs font-medium text-blue-700">{doctor?.specialization_name}</p>
                 <p className="text-[10px] text-slate-500">
                   PRC License No: {doctor?.license_number || '0098412'} • PTR No: 8819201A
                 </p>
-                <p className="text-[10px] text-slate-400">MediQueue Outpatient Clinic • Room #{doctor?.room_number || '101'}</p>
+                <p className="text-[10px] text-slate-400">Makati Medical Center • Room #{doctor?.room_number || '101'}</p>
               </div>
 
               {/* Patient Info */}

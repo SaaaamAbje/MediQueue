@@ -63,7 +63,7 @@ export const DoctorReferralModal: React.FC<DoctorReferralModalProps> = ({
 }) => {
   const [receivingSpecialty, setReceivingSpecialty] = useState('Cardiology & Vascular Medicine');
   const [receivingDoctorName, setReceivingDoctorName] = useState('');
-  const [receivingBranch, setReceivingBranch] = useState('MediQueue Main Flagship Center');
+  const [receivingBranch, setReceivingBranch] = useState('Makati Med Main Center');
   const [priority, setPriority] = useState<ReferralPriority>('Routine');
   const [reasonForReferral, setReasonForReferral] = useState('');
   const [clinicalSummary, setClinicalSummary] = useState('');
@@ -97,7 +97,7 @@ export const DoctorReferralModal: React.FC<DoctorReferralModalProps> = ({
       setCreatedRef(existingReferral);
       setReceivingSpecialty(existingReferral.receiving_specialty);
       setReceivingDoctorName(existingReferral.receiving_doctor_name || '');
-      setReceivingBranch(existingReferral.receiving_clinic_branch || 'MediQueue Main Flagship Center');
+      setReceivingBranch(existingReferral.receiving_clinic_branch || 'Makati Med Main Center');
       setPriority(existingReferral.priority);
       setReasonForReferral(existingReferral.reason_for_referral);
       setClinicalSummary(existingReferral.clinical_summary);
@@ -395,7 +395,7 @@ export const DoctorReferralModal: React.FC<DoctorReferralModalProps> = ({
                       onChange={(e) => setReceivingBranch(e.target.value)}
                       className="w-full text-xs px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 bg-white"
                     >
-                      <option value="MediQueue Main Flagship Center">MediQueue Main Flagship Center</option>
+                      <option value="Makati Med Main Center">Makati Med Main Center</option>
                       {branches.map((b) => (
                         <option key={b.id} value={b.name}>
                           {b.name} ({b.city})
@@ -555,7 +555,7 @@ export const DoctorReferralModal: React.FC<DoctorReferralModalProps> = ({
                     <div className="flex items-center gap-2">
                       <Building2 className="w-5 h-5 text-sky-700" />
                       <h1 className="text-lg font-black tracking-wide uppercase text-sky-950">
-                        MediQueue Outpatient Health Network
+                        Makati Medical Center Outpatient Health Network
                       </h1>
                     </div>
                     <p className="text-[11px] text-slate-600">
@@ -659,7 +659,7 @@ export const DoctorReferralModal: React.FC<DoctorReferralModalProps> = ({
                 <div className="border-t-2 border-slate-200 pt-6 mt-8 flex items-end justify-between">
                   <div className="text-[10px] text-slate-500 space-y-0.5">
                     <p className="font-bold text-slate-700">Official Clinical Transfer Form</p>
-                    <p>MediQueue Integrated Electronic Health Record</p>
+                    <p>Makati Medical Center Integrated Electronic Health Record</p>
                     <p className="font-mono text-[9px]">DOC-REF-VALIDATED</p>
                   </div>
 

@@ -169,7 +169,7 @@ export const LabOrdersModal: React.FC<LabOrdersModalProps> = ({
         {/* Header */}
         <div className="px-6 py-5 bg-slate-900 text-white flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-teal-500/20 text-teal-300 border border-teal-500/30 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-300 border border-blue-500/30 flex items-center justify-center">
               <Microscope className="w-5 h-5" />
             </div>
             <div>
@@ -197,7 +197,7 @@ export const LabOrdersModal: React.FC<LabOrdersModalProps> = ({
               <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 text-slate-800 font-sans print:border-none">
                 {/* Clinic Official Header */}
                 <div className="text-center border-b pb-4 border-slate-200">
-                  <h3 className="text-xl font-bold tracking-tight text-slate-900">MEDI-QUEUE CLINICAL LABORATORY</h3>
+                  <h3 className="text-xl font-bold tracking-tight text-slate-900">MAKATI MEDICAL CENTER LABORATORY</h3>
                   <p className="text-xs text-slate-500">Official Diagnostic Requisition Slip</p>
                   <p className="text-[11px] text-slate-400">Accredited by DOH &amp; Health Insurance Partners</p>
                 </div>
@@ -229,7 +229,7 @@ export const LabOrdersModal: React.FC<LabOrdersModalProps> = ({
 
                 {/* Priority & Fasting alert */}
                 <div className="flex items-center gap-3 my-3">
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase bg-teal-100 text-teal-800">
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase bg-blue-100 text-blue-800">
                     Priority: {createdOrder.priority}
                   </span>
                   {createdOrder.fasting_required && (
@@ -266,7 +266,7 @@ export const LabOrdersModal: React.FC<LabOrdersModalProps> = ({
                     ))}
                     <tr className="border-t border-slate-200 font-bold">
                       <td colSpan={2} className="py-2 text-slate-800 text-right pr-4">Total Estimated Fee:</td>
-                      <td className="py-2 text-right font-mono text-teal-700">₱{totalAmount.toFixed(2)}</td>
+                      <td className="py-2 text-right font-mono text-blue-700">₱{totalAmount.toFixed(2)}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -274,7 +274,7 @@ export const LabOrdersModal: React.FC<LabOrdersModalProps> = ({
                 {/* Signature Block */}
                 <div className="pt-6 mt-6 border-t border-slate-200 flex items-end justify-between text-xs">
                   <div className="text-slate-400 text-[10px]">
-                    Generated via MediQueue Clinical System
+                    Generated via Makati Medical Center Hospital System
                     <br />
                     Verifiable at Laboratory Reception Counter
                   </div>
@@ -294,7 +294,7 @@ export const LabOrdersModal: React.FC<LabOrdersModalProps> = ({
                 </button>
                 <button
                   onClick={onClose}
-                  className="px-5 py-2 bg-teal-600 text-white rounded-xl text-xs font-semibold hover:bg-teal-700"
+                  className="px-5 py-2 bg-blue-600 text-white rounded-xl text-xs font-semibold hover:bg-blue-700"
                 >
                   Done
                 </button>
@@ -317,7 +317,7 @@ export const LabOrdersModal: React.FC<LabOrdersModalProps> = ({
                         onClick={() => toggleTest(test)}
                         className={`p-3 rounded-2xl border cursor-pointer transition-all flex items-start justify-between ${
                           isChecked
-                            ? 'bg-teal-50 border-teal-500 text-slate-900'
+                            ? 'bg-blue-50 border-blue-500 text-slate-900'
                             : 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700'
                         }`}
                       >
@@ -336,7 +336,7 @@ export const LabOrdersModal: React.FC<LabOrdersModalProps> = ({
                             type="checkbox"
                             checked={isChecked}
                             onChange={() => {}}
-                            className="mt-1 rounded text-teal-600 focus:ring-teal-500"
+                            className="mt-1 rounded text-blue-600 focus:ring-blue-500"
                           />
                         </div>
                       </div>
@@ -384,7 +384,7 @@ export const LabOrdersModal: React.FC<LabOrdersModalProps> = ({
                   value={clinicalIndication}
                   onChange={(e) => setClinicalIndication(e.target.value)}
                   placeholder="e.g. Assessment for persistent cough, ruling out respiratory infection."
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs text-slate-900 focus:ring-2 focus:ring-teal-500"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs text-slate-900 focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
@@ -398,7 +398,7 @@ export const LabOrdersModal: React.FC<LabOrdersModalProps> = ({
                   value={specimenNotes}
                   onChange={(e) => setSpecimenNotes(e.target.value)}
                   placeholder="e.g. Morning midstream specimen; patient has slight needle anxiety."
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs text-slate-900 focus:ring-2 focus:ring-teal-500"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs text-slate-900 focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
@@ -406,7 +406,7 @@ export const LabOrdersModal: React.FC<LabOrdersModalProps> = ({
               <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
                 <div>
                   <span className="text-xs text-slate-500 block">Tests Selected: {selectedTests.length}</span>
-                  <span className="text-base font-bold font-mono text-teal-700">Total: ₱{totalAmount.toFixed(2)}</span>
+                  <span className="text-base font-bold font-mono text-blue-700">Total: ₱{totalAmount.toFixed(2)}</span>
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -420,7 +420,7 @@ export const LabOrdersModal: React.FC<LabOrdersModalProps> = ({
                   <button
                     type="submit"
                     disabled={isSubmitting || selectedTests.length === 0}
-                    className="px-5 py-2 bg-teal-600 text-white rounded-xl text-xs font-semibold hover:bg-teal-700 shadow-sm transition-colors disabled:opacity-50 flex items-center gap-2"
+                    className="px-5 py-2 bg-blue-600 text-white rounded-xl text-xs font-semibold hover:bg-blue-700 shadow-sm transition-colors disabled:opacity-50 flex items-center gap-2"
                   >
                     {isSubmitting ? 'Issuing...' : 'Issue Lab Order'}
                   </button>

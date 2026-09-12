@@ -95,9 +95,9 @@ export const AdminReportsView: React.FC = () => {
       {/* Header */}
       <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-slate-900">Clinic Operational Reports &amp; Analytics</h2>
+          <h2 className="text-xl font-bold text-slate-900">Makati Medical Center Operations &amp; Analytics</h2>
           <p className="text-xs text-slate-500 mt-0.5">
-            Audit logs, daily appointments summaries, queue turnaround times, and doctor performance
+            Audit logs, daily appointments summaries, queue turnaround times, and physician performance
           </p>
         </div>
 
@@ -131,7 +131,7 @@ export const AdminReportsView: React.FC = () => {
           onClick={() => setActiveTab('appointments')}
           className={`px-4 py-2 text-xs font-semibold rounded-xl transition-all ${
             activeTab === 'appointments'
-              ? 'bg-teal-700 text-white shadow-xs'
+              ? 'bg-blue-700 text-white shadow-xs'
               : 'text-slate-600 hover:bg-slate-100'
           }`}
         >
@@ -142,7 +142,7 @@ export const AdminReportsView: React.FC = () => {
           onClick={() => setActiveTab('queue')}
           className={`px-4 py-2 text-xs font-semibold rounded-xl transition-all ${
             activeTab === 'queue'
-              ? 'bg-teal-700 text-white shadow-xs'
+              ? 'bg-blue-700 text-white shadow-xs'
               : 'text-slate-600 hover:bg-slate-100'
           }`}
         >
@@ -153,7 +153,7 @@ export const AdminReportsView: React.FC = () => {
           onClick={() => setActiveTab('doctors')}
           className={`px-4 py-2 text-xs font-semibold rounded-xl transition-all ${
             activeTab === 'doctors'
-              ? 'bg-teal-700 text-white shadow-xs'
+              ? 'bg-blue-700 text-white shadow-xs'
               : 'text-slate-600 hover:bg-slate-100'
           }`}
         >
@@ -164,7 +164,7 @@ export const AdminReportsView: React.FC = () => {
           onClick={() => setActiveTab('stats')}
           className={`px-4 py-2 text-xs font-semibold rounded-xl transition-all ${
             activeTab === 'stats'
-              ? 'bg-teal-700 text-white shadow-xs'
+              ? 'bg-blue-700 text-white shadow-xs'
               : 'text-slate-600 hover:bg-slate-100'
           }`}
         >
@@ -193,7 +193,7 @@ export const AdminReportsView: React.FC = () => {
             </div>
             <div className="p-4 bg-white rounded-xl border border-slate-200 text-center shadow-xs">
               <span className="text-[10px] uppercase font-semibold text-slate-400">Checked In</span>
-              <div className="text-2xl font-bold text-teal-700 mt-1">
+              <div className="text-2xl font-bold text-blue-700 mt-1">
                 {appointmentReport?.summary?.checked_in || 0}
               </div>
             </div>
@@ -223,7 +223,7 @@ export const AdminReportsView: React.FC = () => {
                 <tbody className="divide-y divide-slate-100">
                   {(appointmentReport?.appointments || []).map((apt: any) => (
                     <tr key={apt.id} className="hover:bg-slate-50 transition-colors">
-                      <td className="px-5 py-3 font-mono font-bold text-teal-800">
+                      <td className="px-5 py-3 font-mono font-bold text-blue-800">
                         {apt.reference_number}
                       </td>
                       <td className="px-5 py-3 font-semibold">{apt.time_slot}</td>
@@ -264,7 +264,7 @@ export const AdminReportsView: React.FC = () => {
             </div>
             <div className="p-4 bg-white rounded-xl border border-slate-200 text-center shadow-xs">
               <span className="text-[10px] uppercase font-semibold text-slate-400">Currently Waiting</span>
-              <div className="text-2xl font-bold text-indigo-700 mt-1">
+              <div className="text-2xl font-bold text-blue-700 mt-1">
                 {queueReport?.summary?.waiting || 0}
               </div>
             </div>
@@ -293,7 +293,7 @@ export const AdminReportsView: React.FC = () => {
                 <tbody className="divide-y divide-slate-100">
                   {(queueReport?.queueItems || []).map((q: any) => (
                     <tr key={q.id} className="hover:bg-slate-50 transition-colors">
-                      <td className="px-5 py-3 font-mono font-bold text-teal-800 text-sm">
+                      <td className="px-5 py-3 font-mono font-bold text-blue-800 text-sm">
                         {q.queue_number}
                       </td>
                       <td className="px-5 py-3 font-semibold">
@@ -332,12 +332,12 @@ export const AdminReportsView: React.FC = () => {
                 {doctorPerformance.map((dp) => (
                   <tr key={dp.doctorId} className="hover:bg-slate-50 transition-colors">
                     <td className="px-5 py-3.5 font-bold text-slate-900">{dp.doctorName}</td>
-                    <td className="px-5 py-3.5 text-teal-700 font-medium">{dp.specialization}</td>
+                    <td className="px-5 py-3.5 text-blue-700 font-medium">{dp.specialization}</td>
                     <td className="px-5 py-3.5">Room {dp.roomNumber}</td>
                     <td className="px-5 py-3.5 font-bold">{dp.totalAppointments}</td>
                     <td className="px-5 py-3.5 font-bold text-emerald-700">{dp.completed}</td>
                     <td className="px-5 py-3.5 text-rose-700">{dp.cancelled}</td>
-                    <td className="px-5 py-3.5 text-right font-bold text-teal-800 text-sm">
+                    <td className="px-5 py-3.5 text-right font-bold text-blue-800 text-sm">
                       {dp.completionRate}%
                     </td>
                   </tr>
@@ -378,7 +378,7 @@ export const AdminReportsView: React.FC = () => {
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-500">Today's Scheduled Consultations</span>
-                <span className="font-bold text-teal-800">{appointmentReport?.summary?.total || 0}</span>
+                <span className="font-bold text-blue-800">{appointmentReport?.summary?.total || 0}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-500">Overall Completed Consultations</span>

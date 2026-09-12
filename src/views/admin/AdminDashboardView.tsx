@@ -101,26 +101,26 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({ onNaviga
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-purple-900 via-slate-900 to-teal-900 rounded-2xl p-6 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="bg-gradient-to-r from-blue-900 via-slate-900 to-blue-800 rounded-2xl p-6 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/20 text-white">
-              Clinic Operations Central
+              Hospital Operations Central
             </span>
-            <span className="text-xs text-purple-200">Date: {todayStr}</span>
+            <span className="text-xs text-blue-200">Date: {todayStr}</span>
           </div>
-          <h1 className="text-2xl font-bold tracking-tight">Clinic Administrator Dashboard</h1>
-          <p className="text-xs text-purple-100 mt-1">
-            Centralized coordination for patient appointments, doctor schedules, and live reception queues.
+          <h1 className="text-2xl font-bold tracking-tight">Makati Med Administration Console</h1>
+          <p className="text-xs text-blue-100 mt-1">
+            Centralized hospital coordination for patient appointments, specialist schedules, and live reception queues.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsCheckInOpen(true)}
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs rounded-xl shadow-md transition-all"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-md transition-all"
           >
-            <PlusCircle className="w-4 h-4 text-slate-950" />
+            <PlusCircle className="w-4 h-4 text-white" />
             Check In Arriving Patient
           </button>
           <button
@@ -146,7 +146,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({ onNaviga
 
         <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-xs">
           <span className="text-[10px] font-semibold uppercase text-slate-500">In Consultation</span>
-          <div className="text-xl font-bold text-teal-700 mt-1">{inConsultCount}</div>
+          <div className="text-xl font-bold text-blue-700 mt-1">{inConsultCount}</div>
         </div>
 
         <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-xs">
@@ -170,14 +170,14 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({ onNaviga
         <div className="p-5 border-b border-slate-100 flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-              <h3 className="text-base font-bold text-slate-900">Today's Live Queue Overview</h3>
+              <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
+              <h3 className="text-base font-bold text-slate-900">Hospital Live Queue Overview</h3>
             </div>
-            <p className="text-xs text-slate-500">Real-time status across all clinic rooms</p>
+            <p className="text-xs text-slate-500">Real-time status across all MMC outpatient departments</p>
           </div>
           <button
             onClick={() => onNavigate('admin-queue')}
-            className="text-xs font-semibold text-teal-700 hover:text-teal-900 flex items-center gap-1"
+            className="text-xs font-semibold text-blue-700 hover:text-blue-900 flex items-center gap-1"
           >
             Full Queue Manager &rarr;
           </button>
@@ -205,7 +205,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({ onNaviga
               ) : (
                 queue.map((item) => (
                   <tr key={item.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="px-5 py-3.5 font-mono font-bold text-teal-800 text-sm">
+                    <td className="px-5 py-3.5 font-mono font-bold text-blue-800 text-sm">
                       {item.queue_number}
                     </td>
                     <td className="px-5 py-3.5 text-slate-500">{item.check_in_time}</td>
@@ -241,7 +241,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({ onNaviga
             </div>
             <button
               onClick={() => onNavigate('admin-doctors')}
-              className="text-xs font-semibold text-sky-700 hover:text-sky-900"
+              className="text-xs font-semibold text-blue-700 hover:text-blue-900"
             >
               Manage Doctors &rarr;
             </button>
@@ -254,14 +254,14 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({ onNaviga
                 className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-teal-600 text-white flex items-center justify-center font-bold text-xs">
+                  <div className="w-9 h-9 rounded-lg bg-blue-700 text-white flex items-center justify-center font-bold text-xs">
                     {doc.first_name[0]}{doc.last_name[0]}
                   </div>
                   <div>
                     <h4 className="text-xs font-bold text-slate-900">
                       Dr. {doc.first_name} {doc.last_name}
                     </h4>
-                    <p className="text-[11px] text-teal-700">{doc.specialization_name} • Room {doc.room_number}</p>
+                    <p className="text-[11px] text-blue-700">{doc.specialization_name} • Room {doc.room_number}</p>
                   </div>
                 </div>
                 <StatusBadge status={doc.is_active ? 'active' : 'inactive'} />
@@ -279,7 +279,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({ onNaviga
             </div>
             <button
               onClick={() => onNavigate('admin-audit-logs')}
-              className="text-xs font-semibold text-purple-700 hover:text-purple-900"
+              className="text-xs font-semibold text-blue-700 hover:text-blue-900"
             >
               View All Logs &rarr;
             </button>
@@ -324,7 +324,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({ onNaviga
               onChange={(e) => setCheckInRef(e.target.value)}
               placeholder="e.g. APT-2026-000001"
               required
-              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 font-mono"
+              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono"
             />
             <p className="text-[11px] text-slate-500 mt-1">
               Check in the patient when they physically arrive at the clinic reception desk.
@@ -342,7 +342,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({ onNaviga
             <button
               type="submit"
               disabled={isCheckingIn}
-              className="px-4 py-2 bg-teal-600 text-white text-xs font-semibold rounded-lg hover:bg-teal-700 disabled:opacity-50"
+              className="px-4 py-2 bg-blue-700 text-white text-xs font-semibold rounded-lg hover:bg-blue-800 disabled:opacity-50"
             >
               {isCheckingIn ? 'Checking in...' : 'Issue Queue Ticket'}
             </button>

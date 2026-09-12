@@ -128,7 +128,7 @@ export const AdminLabWorkbenchView: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
         <div>
-          <div className="flex items-center gap-2 text-indigo-700 mb-1">
+          <div className="flex items-center gap-2 text-blue-700 mb-1">
             <FlaskConical className="w-5 h-5" />
             <span className="text-xs font-bold uppercase tracking-wider">Clinical Laboratory Module</span>
           </div>
@@ -143,7 +143,7 @@ export const AdminLabWorkbenchView: React.FC = () => {
             onClick={() => setActiveTab('pending')}
             className={`px-4 py-2 text-sm font-semibold rounded-lg transition-colors ${
               activeTab === 'pending'
-                ? 'bg-indigo-600 text-white shadow-sm'
+                ? 'bg-blue-700 text-white shadow-sm'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
@@ -153,7 +153,7 @@ export const AdminLabWorkbenchView: React.FC = () => {
             onClick={() => setActiveTab('results')}
             className={`px-4 py-2 text-sm font-semibold rounded-lg transition-colors ${
               activeTab === 'results'
-                ? 'bg-indigo-600 text-white shadow-sm'
+                ? 'bg-blue-700 text-white shadow-sm'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
@@ -170,7 +170,7 @@ export const AdminLabWorkbenchView: React.FC = () => {
               <h2 className="font-semibold text-slate-900">Doctor-Ordered Diagnostic Requisitions</h2>
               <button
                 onClick={fetchData}
-                className="text-xs text-indigo-600 hover:text-indigo-700 font-medium"
+                className="text-xs text-blue-700 hover:text-blue-800 font-medium"
               >
                 Refresh Queue
               </button>
@@ -217,12 +217,12 @@ export const AdminLabWorkbenchView: React.FC = () => {
                           {ord.tests.map((test) => (
                             <div
                               key={test.id}
-                              className="bg-indigo-50 border border-indigo-200 text-indigo-900 px-3 py-1.5 rounded-lg text-xs flex items-center gap-2"
+                              className="bg-blue-50 border border-blue-200 text-blue-900 px-3 py-1.5 rounded-lg text-xs flex items-center gap-2"
                             >
                               <span>{test.test_name}</span>
                               <button
                                 onClick={() => openResultEntry(ord, test.test_name)}
-                                className="px-2 py-0.5 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-[11px]"
+                                className="px-2 py-0.5 rounded bg-blue-700 hover:bg-blue-800 text-white font-medium text-[11px]"
                               >
                                 Enter Findings
                               </button>
@@ -254,7 +254,7 @@ export const AdminLabWorkbenchView: React.FC = () => {
               <h2 className="font-semibold text-slate-900">Released Diagnostic Test Results</h2>
               <button
                 onClick={fetchData}
-                className="text-xs text-indigo-600 hover:text-indigo-700 font-medium"
+                className="text-xs text-blue-700 hover:text-blue-800 font-medium"
               >
                 Refresh
               </button>
@@ -272,7 +272,7 @@ export const AdminLabWorkbenchView: React.FC = () => {
                       <div className="space-y-2">
                         <div className="flex items-center gap-2">
                           <span className="font-bold text-slate-900">{res.test_name}</span>
-                          <span className="text-xs px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 font-medium">
+                          <span className="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-medium">
                             {res.category}
                           </span>
                           <span className="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-emerald-100 text-emerald-800">
@@ -329,7 +329,7 @@ export const AdminLabWorkbenchView: React.FC = () => {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => setPrintResult(res)}
-                          className="px-3.5 py-2 text-xs font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 flex items-center gap-1.5 shadow-sm"
+                          className="px-3.5 py-2 text-xs font-semibold rounded-lg bg-blue-700 text-white hover:bg-blue-800 flex items-center gap-1.5 shadow-sm"
                         >
                           <Printer className="w-3.5 h-3.5" />
                           Print Certificate of Findings
@@ -352,7 +352,7 @@ export const AdminLabWorkbenchView: React.FC = () => {
               <div>
                 <h2 className="font-bold text-slate-900 text-lg">Enter Diagnostic Test Findings</h2>
                 <p className="text-xs text-slate-500">
-                  Test: <span className="font-semibold text-indigo-700">{selectedTestName}</span> • Patient:{' '}
+                  Test: <span className="font-semibold text-blue-700">{selectedTestName}</span> • Patient:{' '}
                   {selectedOrder.patient ? `${selectedOrder.patient.first_name} ${selectedOrder.patient.last_name}` : 'Patient'}
                 </p>
               </div>
@@ -393,7 +393,7 @@ export const AdminLabWorkbenchView: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleAddParam}
-                    className="text-xs text-indigo-600 font-semibold flex items-center gap-1 hover:text-indigo-700"
+                    className="text-xs text-blue-700 font-semibold flex items-center gap-1 hover:text-blue-800"
                   >
                     <Plus className="w-3 h-3" /> Add Parameter
                   </button>
@@ -468,7 +468,7 @@ export const AdminLabWorkbenchView: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 font-semibold shadow-sm flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-lg bg-blue-700 text-white hover:bg-blue-800 font-semibold shadow-sm flex items-center gap-1.5"
                 >
                   <ShieldCheck className="w-4 h-4" />
                   Release Certified Results
@@ -485,7 +485,7 @@ export const AdminLabWorkbenchView: React.FC = () => {
           <div className="bg-white rounded-2xl max-w-2xl w-full p-8 shadow-2xl space-y-6">
             <div className="flex items-center justify-between border-b pb-4">
               <div className="flex items-center gap-3">
-                <FlaskConical className="w-6 h-6 text-indigo-600" />
+                <FlaskConical className="w-6 h-6 text-blue-700" />
                 <div>
                   <h3 className="font-bold text-lg text-slate-900">CERTIFICATE OF LABORATORY FINDINGS</h3>
                   <p className="text-xs text-slate-500">Official Clinical Diagnostic Report</p>
@@ -532,7 +532,7 @@ export const AdminLabWorkbenchView: React.FC = () => {
                         <td className="py-1 font-medium text-slate-800">{p.parameter_name}</td>
                         <td className="py-1 font-bold text-slate-900">{p.value} {p.unit}</td>
                         <td className="py-1 text-slate-500">{p.reference_range}</td>
-                        <td className="py-1 uppercase font-semibold text-indigo-900">{p.flag}</td>
+                        <td className="py-1 uppercase font-semibold text-blue-900">{p.flag}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -567,7 +567,7 @@ export const AdminLabWorkbenchView: React.FC = () => {
               </button>
               <button
                 onClick={() => window.print()}
-                className="px-4 py-2 text-xs font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 flex items-center gap-1.5 shadow-sm"
+                className="px-4 py-2 text-xs font-semibold rounded-lg bg-blue-700 text-white hover:bg-blue-800 flex items-center gap-1.5 shadow-sm"
               >
                 <Printer className="w-4 h-4" />
                 Print Certificate

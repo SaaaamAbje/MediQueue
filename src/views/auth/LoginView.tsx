@@ -81,20 +81,20 @@ export const LoginView: React.FC<LoginViewProps> = ({
           {/* Hospital Logo Asset */}
           <div className="mx-auto w-20 h-20 rounded-3xl bg-white p-3 shadow-xl mb-6 ring-1 ring-slate-100 overflow-hidden">
             <img 
-              src="/src/assets/images/mediqueue_logo_1789109406002.jpg" 
-              alt="MediQueue Logo" 
+              src="/src/assets/images/makati_medical_center_logo_1789222548043.jpg" 
+              alt="Makati Medical Center Logo" 
               className="w-full h-full object-contain"
               referrerPolicy="no-referrer"
             />
           </div>
           
           <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
-            MediQueue
+            Makati Medical Center
           </h2>
           <p className="mt-2 text-sm text-slate-600 font-medium">
             {isPatient && 'Patient Self-Service Portal'}
             {isDoctor && 'Physician Clinical Workstation'}
-            {isAdmin && 'Clinic Operations & Admin Console'}
+            {isAdmin && 'Hospital Operations & Admin Console'}
           </p>
         </div>
         <p className="mt-1 text-xs text-slate-500 text-center px-4">
@@ -132,9 +132,9 @@ export const LoginView: React.FC<LoginViewProps> = ({
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="user@mediqueue.clinic"
+                  placeholder="user@makatimed.ph"
                   required
-                  className="block w-full pl-9 pr-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 bg-white font-medium"
+                  className="block w-full pl-9 pr-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white font-medium"
                 />
               </div>
             </div>
@@ -160,7 +160,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
-                  className="block w-full pl-9 pr-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 bg-white"
+                  className="block w-full pl-9 pr-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
                 />
               </div>
             </div>
@@ -170,10 +170,10 @@ export const LoginView: React.FC<LoginViewProps> = ({
               disabled={isLoading}
               className={`w-full mt-2 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg shadow-sm text-xs font-bold text-white transition-colors cursor-pointer disabled:opacity-50 ${
                 isPatient
-                  ? 'bg-teal-600 hover:bg-teal-700'
+                  ? 'bg-blue-700 hover:bg-blue-800'
                   : isDoctor
-                  ? 'bg-sky-600 hover:bg-sky-700'
-                  : 'bg-purple-700 hover:bg-purple-800'
+                  ? 'bg-indigo-700 hover:bg-indigo-800'
+                  : 'bg-slate-800 hover:bg-slate-900'
               }`}
             >
               {isLoading ? (
@@ -190,7 +190,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
           {isPatient && (
             <div className="mt-6 pt-4 border-t border-slate-100 text-center">
               <p className="text-xs text-slate-600">
-                New patient at MediQueue?{' '}
+                New patient at Makati Med?{' '}
                 <button
                   type="button"
                   onClick={() => onNavigate('register')}

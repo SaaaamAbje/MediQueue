@@ -79,21 +79,21 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
   return (
     <div className="space-y-6">
       {/* Welcome Banner */}
-      <div className="bg-gradient-to-r from-sky-900 via-sky-800 to-teal-800 rounded-2xl p-6 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-gradient-to-r from-indigo-950 via-indigo-900 to-slate-900 rounded-2xl p-6 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/20 text-white">
-              Doctor Station
+              MMC Physician Workstation
             </span>
-            <span className="text-xs text-sky-200">
+            <span className="text-xs text-indigo-200">
               Room {doctor?.room_number || '101'} • {doctor?.specialization_name}
             </span>
           </div>
           <h1 className="text-2xl font-bold tracking-tight">
             Dr. {doctor?.first_name} {doctor?.last_name}
           </h1>
-          <p className="text-xs text-sky-100 mt-1">
-            Manage your daily clinic appointments and live patient consultation queue.
+          <p className="text-xs text-indigo-100 mt-1">
+            Manage your Makati Medical Center daily appointments and live patient consultation queue.
           </p>
         </div>
 
@@ -122,7 +122,7 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
         <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs">
           <span className="text-xs font-medium text-slate-500 block">Today's Appointments</span>
           <div className="text-2xl font-bold text-slate-900 mt-1">{appointments.length}</div>
-          <span className="text-[11px] text-teal-600 font-medium mt-1 block">Scheduled for today</span>
+          <span className="text-[11px] text-blue-600 font-medium mt-1 block">Scheduled for today</span>
         </div>
 
         <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs">
@@ -133,7 +133,7 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
 
         <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs">
           <span className="text-xs font-medium text-slate-500 block">In Consultation</span>
-          <div className="text-2xl font-bold text-teal-700 mt-1">{inConsultCount}</div>
+          <div className="text-2xl font-bold text-blue-700 mt-1">{inConsultCount}</div>
           <span className="text-[11px] text-slate-500 mt-1 block">Active in room</span>
         </div>
 
@@ -146,10 +146,10 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
 
       {/* Current Serving Card */}
       {currentPatient ? (
-        <div className="p-5 rounded-2xl bg-teal-50 border border-teal-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-5 rounded-2xl bg-blue-50 border border-blue-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-xl bg-teal-600 text-white flex flex-col items-center justify-center font-mono font-black text-xl shadow-xs">
-              <span className="text-[9px] uppercase font-sans font-medium text-teal-200">Ticket</span>
+            <div className="w-14 h-14 rounded-xl bg-blue-700 text-white flex flex-col items-center justify-center font-mono font-black text-xl shadow-xs">
+              <span className="text-[9px] uppercase font-sans font-medium text-blue-200">Ticket</span>
               {currentPatient.queue_number}
             </div>
             <div>
@@ -172,13 +172,13 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
                 if (onSelectQueueItem) onSelectQueueItem(currentPatient);
                 onNavigate('doctor-consultation-room');
               }}
-              className="px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold rounded-lg shadow-sm flex items-center gap-1.5"
+              className="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded-lg shadow-sm flex items-center gap-1.5"
             >
               <Stethoscope className="w-4 h-4" /> Open Consultation Form
             </button>
             <button
               onClick={() => onNavigate('doctor-queue')}
-              className="px-3 py-2 bg-white border border-teal-200 text-teal-800 text-xs font-medium rounded-lg hover:bg-teal-100"
+              className="px-3 py-2 bg-white border border-blue-200 text-blue-800 text-xs font-medium rounded-lg hover:bg-blue-100"
             >
               Queue Board
             </button>
@@ -202,7 +202,7 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
           {waitingCount > 0 && (
             <button
               onClick={handleCallNext}
-              className="px-4 py-2 bg-teal-600 text-white text-xs font-bold rounded-lg hover:bg-teal-700 flex items-center gap-1.5"
+              className="px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-lg hover:bg-blue-700 flex items-center gap-1.5"
             >
               <Play className="w-3.5 h-3.5" /> Call Next Patient
             </button>
@@ -219,7 +219,7 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
           </div>
           <button
             onClick={() => onNavigate('doctor-appointments')}
-            className="text-xs font-semibold text-sky-700 hover:text-sky-900 flex items-center gap-1"
+            className="text-xs font-semibold text-blue-700 hover:text-blue-900 flex items-center gap-1"
           >
             View All Schedule <ArrowRight className="w-3.5 h-3.5" />
           </button>
@@ -247,7 +247,7 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
               ) : (
                 appointments.map((apt) => (
                   <tr key={apt.id} className="hover:bg-slate-50/70 transition-colors">
-                    <td className="px-5 py-3.5 font-bold font-mono text-teal-800">
+                    <td className="px-5 py-3.5 font-bold font-mono text-blue-800">
                       {apt.time_slot}
                     </td>
                     <td className="px-5 py-3.5 font-mono text-slate-500">
@@ -275,7 +275,7 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
                             }
                             onNavigate('doctor-queue');
                           }}
-                          className="text-xs font-semibold text-teal-700 hover:text-teal-900"
+                          className="text-xs font-semibold text-blue-700 hover:text-blue-900"
                         >
                           Manage Queue &rarr;
                         </button>

@@ -147,9 +147,9 @@ export const MyAppointmentsView: React.FC<MyAppointmentsViewProps> = ({ onNaviga
         </div>
         <button
           onClick={() => onNavigate('patient-book')}
-          className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-600 text-white text-xs font-semibold rounded-lg hover:bg-teal-700 shadow-sm self-start sm:self-auto"
+          className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-700 text-white text-xs font-semibold rounded-lg hover:bg-blue-800 shadow-sm self-start sm:self-auto"
         >
-          <Calendar className="w-4 h-4" /> Book New Appointment
+          <Calendar className="w-4 h-4" /> Book MMC Consultation
         </button>
       </div>
 
@@ -162,7 +162,7 @@ export const MyAppointmentsView: React.FC<MyAppointmentsViewProps> = ({ onNaviga
             placeholder="Search by reference #, doctor name, or complaint..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-xs border border-slate-300 rounded-xl bg-white focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+            className="w-full pl-9 pr-4 py-2 text-xs border border-slate-300 rounded-xl bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
 
@@ -173,7 +173,7 @@ export const MyAppointmentsView: React.FC<MyAppointmentsViewProps> = ({ onNaviga
               onClick={() => setStatusFilter(st)}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize whitespace-nowrap transition-colors ${
                 statusFilter === st
-                  ? 'bg-teal-700 text-white shadow-xs'
+                  ? 'bg-blue-800 text-white shadow-xs'
                   : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
               }`}
             >
@@ -208,7 +208,7 @@ export const MyAppointmentsView: React.FC<MyAppointmentsViewProps> = ({ onNaviga
               >
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-3">
-                    <span className="text-xs font-mono font-bold text-teal-800 bg-teal-50 px-2 py-0.5 rounded border border-teal-100">
+                    <span className="text-xs font-mono font-bold text-blue-800 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
                       {apt.reference_number}
                     </span>
                     <StatusBadge status={apt.status} type="appointment" />
@@ -220,7 +220,7 @@ export const MyAppointmentsView: React.FC<MyAppointmentsViewProps> = ({ onNaviga
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Stethoscope className="w-4 h-4 text-teal-600 shrink-0" />
+                    <Stethoscope className="w-4 h-4 text-blue-700 shrink-0" />
                     <h3 className="text-sm font-bold text-slate-900">
                       Dr. {apt.doctor?.first_name} {apt.doctor?.last_name}
                       <span className="text-xs font-normal text-slate-500 ml-1.5">
@@ -239,7 +239,7 @@ export const MyAppointmentsView: React.FC<MyAppointmentsViewProps> = ({ onNaviga
                         year: 'numeric',
                       })}
                     </span>
-                    <span className="flex items-center gap-1 font-medium text-teal-700">
+                    <span className="flex items-center gap-1 font-medium text-blue-800">
                       <Clock className="w-3.5 h-3.5" />
                       {apt.time_slot}
                     </span>
@@ -254,12 +254,11 @@ export const MyAppointmentsView: React.FC<MyAppointmentsViewProps> = ({ onNaviga
                   </p>
                 </div>
 
-                {/* Actions */}
-                <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap pt-2 md:pt-0 border-t md:border-t-0 border-slate-100">
+                  <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap pt-2 md:pt-0 border-t md:border-t-0 border-slate-100">
                   {canCheckIn && (
                     <button
                       onClick={() => handleSelfCheckIn(apt)}
-                      className="px-3 py-1.5 bg-teal-600 text-white text-xs font-bold rounded-lg hover:bg-teal-700 flex items-center gap-1 shadow-xs"
+                      className="px-3 py-1.5 bg-blue-700 text-white text-xs font-bold rounded-lg hover:bg-blue-800 flex items-center gap-1 shadow-xs"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5" /> Self Check-in
                     </button>
@@ -291,7 +290,7 @@ export const MyAppointmentsView: React.FC<MyAppointmentsViewProps> = ({ onNaviga
                       onClick={() => onNavigate('patient-consultations')}
                       className="px-3 py-1.5 bg-slate-50 border border-slate-200 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-100 flex items-center gap-1"
                     >
-                      <FileText className="w-3.5 h-3.5 text-teal-600" /> View Notes
+                      <FileText className="w-3.5 h-3.5 text-blue-700" /> View Notes
                     </button>
                   )}
                 </div>
@@ -411,7 +410,7 @@ export const MyAppointmentsView: React.FC<MyAppointmentsViewProps> = ({ onNaviga
               type="button"
               onClick={handleConfirmReschedule}
               disabled={isRescheduling || !newSlot}
-              className="px-4 py-1.5 text-xs font-semibold text-white bg-teal-600 hover:bg-teal-700 rounded-lg disabled:opacity-50"
+              className="px-4 py-1.5 text-xs font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-lg disabled:opacity-50"
             >
               {isRescheduling ? 'Rescheduling...' : 'Save New Schedule'}
             </button>

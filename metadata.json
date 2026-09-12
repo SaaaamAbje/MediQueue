@@ -1,6 +1,6 @@
 {
-  "name": "MediQueue Clinica",
-  "description": "Your comprehensive clinic management platform for patient scheduling, automated queue management, and digital health records.",
+  "name": "Makati Medical Center",
+  "description": "The official outpatient appointment and queue management platform for Makati Medical Center.",
   "requestFramePermissions": ["camera", "microphone"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

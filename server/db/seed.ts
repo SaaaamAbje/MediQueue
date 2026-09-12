@@ -1133,17 +1133,17 @@ export function getInitialSeedData(): DatabaseState {
   // Clinic Settings
   const clinic_settings: ClinicSettings = {
     id: 'cli_001',
-    clinic_name: 'MediQueue Healthcare Center',
-    tagline: 'Modern Community & School Health Services',
-    contact_number: '+63 43 756 1234 / +63 917 800 5000',
-    email: 'info@mediqueue.ph',
-    address: '100 Medical Plaza, Ayala Highway, Lipa City, Batangas 4217',
-    operating_days: 'Monday to Saturday',
-    opening_time: '08:00',
-    closing_time: '17:00',
-    daily_queue_prefix: 'A',
-    avg_consultation_time_minutes: 20,
-    emergency_contact: 'Batangas Emergency Hotline: 911 / (043) 723-1234',
+    clinic_name: 'Makati Medical Center',
+    tagline: 'Trusted healthcare at the heart of Makati',
+    contact_number: '+63 2 8888 8999',
+    email: 'info@makatimed.ph',
+    address: '2 Amorsolo Street, Legaspi Village, Makati City, Metro Manila 1229',
+    operating_days: 'Monday to Sunday',
+    opening_time: '00:00',
+    closing_time: '23:59',
+    daily_queue_prefix: 'M',
+    avg_consultation_time_minutes: 30,
+    emergency_contact: 'MMC Emergency Hotline: (02) 8888-8911',
     updated_at: '2026-09-01T08:00:00Z',
   };
 

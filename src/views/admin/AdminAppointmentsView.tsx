@@ -201,7 +201,7 @@ export const AdminAppointmentsView: React.FC = () => {
               onClick={() => setStatusFilter(st)}
               className={`px-3 py-1 text-xs font-medium rounded-lg capitalize whitespace-nowrap transition-colors ${
                 statusFilter === st
-                  ? 'bg-teal-700 text-white shadow-xs'
+                  ? 'bg-blue-700 text-white shadow-xs'
                   : 'bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100'
               }`}
             >
@@ -248,12 +248,12 @@ export const AdminAppointmentsView: React.FC = () => {
 
                   return (
                     <tr key={apt.id} className="hover:bg-slate-50 transition-colors">
-                      <td className="px-5 py-3.5 font-mono font-bold text-teal-800">
+                      <td className="px-5 py-3.5 font-mono font-bold text-blue-800">
                         {apt.reference_number}
                       </td>
                       <td className="px-5 py-3.5">
                         <div className="font-semibold text-slate-900">{apt.appointment_date}</div>
-                        <div className="font-mono text-teal-700">{apt.time_slot}</div>
+                        <div className="font-mono text-blue-700">{apt.time_slot}</div>
                       </td>
                       <td className="px-5 py-3.5">
                         <div className="font-bold text-slate-900">
@@ -295,7 +295,7 @@ export const AdminAppointmentsView: React.FC = () => {
                         {canCheckIn && (
                           <button
                             onClick={() => handleCheckIn(apt)}
-                            className="px-2 py-1 bg-teal-50 text-teal-700 hover:bg-teal-100 rounded text-[11px] font-semibold"
+                            className="px-2 py-1 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded text-[11px] font-semibold"
                           >
                             Check-in
                           </button>
@@ -373,7 +373,7 @@ export const AdminAppointmentsView: React.FC = () => {
               </div>
               <div className="p-2.5 rounded-lg border border-slate-200 bg-white">
                 <span className="text-slate-400 block text-[10px]">Time Slot</span>
-                <span className="font-bold text-teal-700">{selectedApt.time_slot}</span>
+                <span className="font-bold text-blue-700">{selectedApt.time_slot}</span>
               </div>
               <div className="p-2.5 rounded-lg border border-slate-200 bg-white">
                 <span className="text-slate-400 block text-[10px]">Status</span>
@@ -475,8 +475,8 @@ export const AdminAppointmentsView: React.FC = () => {
                       !slot.available
                         ? 'opacity-40 bg-slate-100 cursor-not-allowed'
                         : isSelected
-                        ? 'bg-teal-600 text-white font-bold'
-                        : 'bg-white hover:bg-teal-50 border-slate-200'
+                        ? 'bg-blue-600 text-white font-bold'
+                        : 'bg-white hover:bg-blue-50 border-slate-200'
                     }`}
                   >
                     {slot.formattedTime}
@@ -496,7 +496,7 @@ export const AdminAppointmentsView: React.FC = () => {
             <button
               onClick={handleConfirmReschedule}
               disabled={isRescheduling || !rescheduleSlot}
-              className="px-4 py-1.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold rounded-lg disabled:opacity-50"
+              className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg disabled:opacity-50"
             >
               {isRescheduling ? 'Saving...' : 'Confirm Reschedule'}
             </button>

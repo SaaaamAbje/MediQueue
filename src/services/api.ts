@@ -31,7 +31,7 @@ import {
 const API_BASE = '/api';
 
 function getHeaders(): HeadersInit {
-  const token = localStorage.getItem('mq_token');
+  const token = localStorage.getItem('mmc_token');
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
   };
@@ -44,7 +44,7 @@ function getHeaders(): HeadersInit {
 async function handleResponse<T>(res: Response): Promise<T> {
   if (res.status === 401) {
     // Dispatch global event for auth failure
-    window.dispatchEvent(new CustomEvent('mq-auth-failure'));
+    window.dispatchEvent(new CustomEvent('mmc-auth-failure'));
   }
   const data = await res.json();
   if (!res.ok) {

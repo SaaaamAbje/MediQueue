@@ -175,7 +175,7 @@ export const AdminDoctorsView: React.FC = () => {
 
           <button
             onClick={handleOpenAdd}
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl shadow-xs"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs"
           >
             <Plus className="w-4 h-4" /> Add Doctor
           </button>
@@ -216,7 +216,7 @@ export const AdminDoctorsView: React.FC = () => {
                     <td className="px-5 py-3.5 font-bold text-slate-900">
                       Dr. {doc.first_name} {doc.last_name}
                     </td>
-                    <td className="px-5 py-3.5 font-medium text-teal-800">
+                    <td className="px-5 py-3.5 font-medium text-blue-800">
                       {doc.specialization_name}
                     </td>
                     <td className="px-5 py-3.5 font-mono font-bold">Room {doc.room_number}</td>
@@ -293,7 +293,7 @@ export const AdminDoctorsView: React.FC = () => {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="doctor@mediqueue.clinic"
+                  placeholder="doctor@mmc.com.ph"
                   className="w-full px-3 py-2 border border-slate-300 rounded-lg"
                 />
               </div>
@@ -394,7 +394,7 @@ export const AdminDoctorsView: React.FC = () => {
             <button
               type="submit"
               disabled={isSaving}
-              className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg disabled:opacity-50"
+              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg disabled:opacity-50"
             >
               {isSaving ? 'Saving...' : editingDoctor ? 'Save Changes' : 'Create Doctor'}
             </button>

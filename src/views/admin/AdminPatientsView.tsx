@@ -125,7 +125,7 @@ export const AdminPatientsView: React.FC = () => {
               ) : (
                 patients.map((p) => (
                   <tr key={p.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="px-5 py-3.5 font-mono font-bold text-teal-800">
+                    <td className="px-5 py-3.5 font-mono font-bold text-blue-800">
                       {p.patient_number}
                     </td>
                     <td className="px-5 py-3.5 font-semibold text-slate-900">
@@ -157,7 +157,7 @@ export const AdminPatientsView: React.FC = () => {
                       <button
                         onClick={() => handleToggleStatus(p)}
                         className={`text-[11px] font-semibold ${
-                          p.is_active ? 'text-amber-700 hover:text-amber-900' : 'text-emerald-700 hover:text-emerald-900'
+                          p.is_active ? 'text-amber-700 hover:text-amber-900' : 'text-blue-700 hover:text-blue-900'
                         }`}
                       >
                         {p.is_active ? 'Deactivate' : 'Activate'}
@@ -230,7 +230,7 @@ export const AdminPatientsView: React.FC = () => {
                       </div>
                       <p className="text-slate-600">Chief Complaint: "{c.chief_complaint}"</p>
                       {c.prescription && (
-                        <p className="text-teal-700 font-mono text-[11px]">Rx: {c.prescription}</p>
+                        <p className="text-blue-700 font-mono text-[11px]">Rx: {c.prescription}</p>
                       )}
                     </div>
                   ))}
@@ -241,7 +241,7 @@ export const AdminPatientsView: React.FC = () => {
             <div className="pt-3 border-t border-slate-100 flex justify-end">
               <button
                 onClick={() => setSelectedPatient(null)}
-                className="px-4 py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700"
+                className="px-4 py-2 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-800"
               >
                 Close
               </button>

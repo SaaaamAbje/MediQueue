@@ -105,31 +105,31 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
   return (
     <div className="space-y-6">
       {/* Welcome Header */}
-      <div className="bg-gradient-to-r from-teal-800 via-teal-700 to-teal-600 rounded-3xl p-6 sm:p-7 text-white shadow-md relative overflow-hidden">
+      <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-800 rounded-3xl p-6 sm:p-7 text-white shadow-md relative overflow-hidden">
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/20 text-white backdrop-blur-xs">
-                Patient Portal
+                MMC Patient Care Portal
               </span>
-              <span className="text-xs text-teal-100 font-mono">
+              <span className="text-xs text-blue-100 font-mono">
                 {patient?.patient_number || 'PT-2026-0001'}
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
               Mabuhay, {patient?.first_name || 'Patient'}!
             </h1>
-            <p className="text-xs sm:text-sm text-teal-100 mt-1 max-w-xl">
-              Manage your clinic visits, track your real-time queue ticket, view lab orders, and monitor your vitals.
+            <p className="text-xs sm:text-sm text-blue-100 mt-1 max-w-xl">
+              Manage your MMC hospital visits, track your real-time queue ticket, view lab orders, and monitor your vitals.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={() => onNavigate('patient-book')}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-teal-900 font-semibold text-xs shadow-md hover:bg-teal-50 transition-all transform active:scale-95"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-blue-900 font-semibold text-xs shadow-md hover:bg-blue-50 transition-all transform active:scale-95"
             >
-              <PlusCircle className="w-4 h-4 text-teal-700" />
+              <PlusCircle className="w-4 h-4 text-blue-700" />
               Book Appointment
             </button>
           </div>
@@ -153,9 +153,9 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
       )}
 
       {/* Pre-Consultation Triage Banner */}
-      <div className="bg-white rounded-3xl border border-teal-100 p-5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white rounded-3xl border border-blue-100 p-5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-2xl bg-teal-50 text-teal-700 flex items-center justify-center shrink-0">
+          <div className="w-11 h-11 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center shrink-0">
             <ClipboardList className="w-6 h-6" />
           </div>
           <div>
@@ -176,14 +176,14 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
             <p className="text-xs text-slate-500 mt-0.5">
               {triage
                 ? `Chief complaint logged: "${triage.chief_complaint}" (Pain: ${triage.pain_scale}/10). You can update this prior to calling.`
-                : 'Help your doctor prepare your diagnosis by submitting your symptoms and pain scale in advance.'}
+                : 'Help your Makati Med doctor prepare your diagnosis by submitting your symptoms in advance.'}
             </p>
           </div>
         </div>
 
         <button
           onClick={() => setShowTriageModal(true)}
-          className="px-4 py-2 bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 rounded-xl text-xs font-bold transition-colors whitespace-nowrap self-start sm:self-auto"
+          className="px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 rounded-xl text-xs font-bold transition-colors whitespace-nowrap self-start sm:self-auto"
         >
           {triage ? 'Edit My Symptoms' : 'Complete Triage Intake'}
         </button>
@@ -197,8 +197,8 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
         <div className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-xs">
           <div className="flex items-center justify-between gap-2 mb-4">
             <div className="flex items-center gap-2">
-              <Calendar className="w-5 h-5 text-teal-600" />
-              <h3 className="text-base font-bold text-slate-900">Next Scheduled Appointment</h3>
+              <Calendar className="w-5 h-5 text-blue-700" />
+              <h3 className="text-base font-bold text-slate-900">Next Scheduled MMC Appointment</h3>
             </div>
             <StatusBadge status={nextAppointment.status} type="appointment" />
           </div>
@@ -206,7 +206,7 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200">
             <div className="space-y-1">
               <div className="flex items-center gap-3">
-                <span className="text-xs font-mono font-bold text-teal-700">
+                <span className="text-xs font-mono font-bold text-blue-800">
                   {nextAppointment.reference_number}
                 </span>
                 <span className="text-xs text-slate-500">
@@ -219,7 +219,7 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
                 </span>
               </div>
               <h4 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <Stethoscope className="w-4 h-4 text-teal-600" />
+                <Stethoscope className="w-4 h-4 text-blue-700" />
                 Dr. {nextAppointment.doctor?.first_name} {nextAppointment.doctor?.last_name}
               </h4>
               <div className="flex items-center gap-4 text-xs text-slate-600">
@@ -235,22 +235,22 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
 
             <div className="flex items-center gap-2 w-full md:w-auto">
               {isTodayAppt && nextAppointment.status === 'confirmed' ? (
-                <button
-                  onClick={() => handleSelfCheckIn(nextAppointment.id)}
-                  disabled={isCheckingIn === nextAppointment.id}
-                  className="w-full md:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-teal-600 text-white text-xs font-bold rounded-xl hover:bg-teal-700 shadow-sm transition-colors"
-                >
-                  <CheckCircle2 className="w-4 h-4" />
-                  {isCheckingIn === nextAppointment.id ? 'Checking in...' : 'Self Check-in for Today'}
-                </button>
-              ) : (
-                <button
-                  onClick={() => onNavigate('patient-appointments')}
-                  className="w-full md:w-auto text-xs font-semibold text-teal-700 hover:text-teal-900 border border-teal-200 bg-white px-4 py-2 rounded-xl hover:bg-teal-50"
-                >
-                  View Details
-                </button>
-              )}
+                  <button
+                    onClick={() => handleSelfCheckIn(nextAppointment.id)}
+                    disabled={isCheckingIn === nextAppointment.id}
+                    className="w-full md:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-blue-700 text-white text-xs font-bold rounded-xl hover:bg-blue-800 shadow-sm transition-colors"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                    {isCheckingIn === nextAppointment.id ? 'Checking in...' : 'Self Check-in for Today'}
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => onNavigate('patient-appointments')}
+                    className="w-full md:w-auto text-xs font-semibold text-blue-800 hover:text-blue-900 border border-blue-200 bg-white px-4 py-2 rounded-xl hover:bg-blue-50"
+                  >
+                    View Details
+                  </button>
+                )}
             </div>
           </div>
         </div>
@@ -261,8 +261,8 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-              <Activity className="w-5 h-5 text-teal-600" />
-              My Continuous Health &amp; Vital Signs History
+              <Activity className="w-5 h-5 text-blue-700" />
+              MMC Health &amp; Vital Signs History
             </h3>
             <button
               onClick={() => setShowVitalsTracker(!showVitalsTracker)}
@@ -287,12 +287,12 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
       <div className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-xs">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
               <Microscope className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900">Diagnostic &amp; Laboratory Requisitions</h3>
-              <p className="text-xs text-slate-500">Official lab test orders prescribed by your attending physicians</p>
+              <h3 className="text-base font-bold text-slate-900">MMC Diagnostic Requisitions</h3>
+              <p className="text-xs text-slate-500">Official lab test orders prescribed by Makati Medical Center physicians</p>
             </div>
           </div>
         </div>
@@ -354,27 +354,27 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <button
           onClick={() => onNavigate('patient-book')}
-          className="p-5 rounded-3xl bg-white border border-slate-200/80 hover:border-teal-300 hover:shadow-md transition-all text-left group"
+          className="p-5 rounded-3xl bg-white border border-slate-200/80 hover:border-blue-300 hover:shadow-md transition-all text-left group"
         >
-          <div className="w-10 h-10 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
             <Calendar className="w-5 h-5" />
           </div>
-          <h4 className="text-sm font-bold text-slate-900 group-hover:text-teal-700">
+          <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-700">
             Book Appointment
           </h4>
           <p className="text-xs text-slate-500 mt-1">
-            Choose doctor, date, and reserved time slot.
+            Choose specialist, date, and reserved time slot.
           </p>
         </button>
 
         <button
           onClick={() => onNavigate('patient-appointments')}
-          className="p-5 rounded-3xl bg-white border border-slate-200/80 hover:border-teal-300 hover:shadow-md transition-all text-left group"
+          className="p-5 rounded-3xl bg-white border border-slate-200/80 hover:border-blue-300 hover:shadow-md transition-all text-left group"
         >
-          <div className="w-10 h-10 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
             <Clock className="w-5 h-5" />
           </div>
-          <h4 className="text-sm font-bold text-slate-900 group-hover:text-sky-700">
+          <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-700">
             My Appointments
           </h4>
           <p className="text-xs text-slate-500 mt-1">
@@ -384,12 +384,12 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
 
         <button
           onClick={() => onNavigate('patient-queue')}
-          className="p-5 rounded-3xl bg-white border border-slate-200/80 hover:border-teal-300 hover:shadow-md transition-all text-left group"
+          className="p-5 rounded-3xl bg-white border border-slate-200/80 hover:border-blue-300 hover:shadow-md transition-all text-left group"
         >
-          <div className="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
             <Sparkles className="w-5 h-5" />
           </div>
-          <h4 className="text-sm font-bold text-slate-900 group-hover:text-indigo-700">
+          <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-700">
             Live Queue Board
           </h4>
           <p className="text-xs text-slate-500 mt-1">
@@ -399,12 +399,12 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
 
         <button
           onClick={() => onNavigate('patient-consultations')}
-          className="p-5 rounded-3xl bg-white border border-slate-200/80 hover:border-teal-300 hover:shadow-md transition-all text-left group"
+          className="p-5 rounded-3xl bg-white border border-slate-200/80 hover:border-blue-300 hover:shadow-md transition-all text-left group"
         >
-          <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
             <FileText className="w-5 h-5" />
           </div>
-          <h4 className="text-sm font-bold text-slate-900 group-hover:text-emerald-700">
+          <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-700">
             Medical History &amp; Rx
           </h4>
           <p className="text-xs text-slate-500 mt-1">
@@ -419,8 +419,8 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
           <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-100 p-6 sm:p-8 max-h-[90vh] overflow-y-auto">
             <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 text-slate-800 font-sans print:border-none">
               <div className="text-center pb-4 border-b border-slate-300">
-                <h3 className="text-lg font-bold text-slate-900">MEDIQUEUE DIAGNOSTIC LABORATORY</h3>
-                <p className="text-xs text-slate-500">Official Patient Requisition Slip</p>
+                <h3 className="text-lg font-bold text-slate-900">MAKATI MEDICAL CENTER DIAGNOSTIC LABORATORY</h3>
+                <p className="text-xs text-slate-500">Official Hospital Requisition Slip</p>
               </div>
 
               <div className="grid grid-cols-2 gap-3 my-4 text-xs">
@@ -493,7 +493,7 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
               </button>
               <button
                 onClick={() => setSelectedLabSlip(null)}
-                className="px-5 py-2 bg-teal-600 text-white rounded-xl text-xs font-semibold hover:bg-teal-700"
+                className="px-5 py-2 bg-blue-700 text-white rounded-xl text-xs font-semibold hover:bg-blue-800"
               >
                 Close
               </button>

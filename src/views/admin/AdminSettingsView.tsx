@@ -21,14 +21,14 @@ export const AdminSettingsView: React.FC = () => {
   const { showToast } = useNotifications();
 
   const [settings, setSettings] = useState<any>({
-    clinic_name: 'MediQueue Central Clinic',
-    tagline: 'Smart Clinic Appointment and Queue Management System',
-    address: '742 Evergreen Healthcare Ave, Medical District',
-    contact_phone: '+63 2 8123 4567',
-    emergency_phone: '+63 917 999 8888',
-    operating_hours: 'Monday to Saturday, 8:00 AM - 6:00 PM',
-    queue_prefix: 'A',
-    avg_consultation_minutes: 20,
+    clinic_name: 'Makati Medical Center',
+    tagline: 'Trusted healthcare at the heart of Makati',
+    address: '2 Amorsolo Street, Legaspi Village, Makati City, Metro Manila 1229',
+    contact_phone: '+63 2 8888 8999',
+    emergency_phone: '+63 2 8888 8911',
+    operating_hours: 'Monday to Sunday, 24/7 Operations',
+    queue_prefix: 'M',
+    avg_consultation_minutes: 30,
   });
 
   const [isSaving, setIsSaving] = useState(false);
@@ -154,7 +154,7 @@ export const AdminSettingsView: React.FC = () => {
             onClick={playTestChime}
             className="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-50 border border-slate-200 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-100"
           >
-            <Volume2 className="w-4 h-4 text-teal-600" />
+            <Volume2 className="w-4 h-4 text-blue-600" />
             Test Audio Chime
           </button>
         </div>
@@ -274,7 +274,7 @@ export const AdminSettingsView: React.FC = () => {
           <button
             type="submit"
             disabled={isSaving}
-            className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold rounded-lg shadow-sm disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg shadow-sm disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
             {isSaving ? 'Saving...' : 'Save Settings'}
@@ -286,16 +286,16 @@ export const AdminSettingsView: React.FC = () => {
       <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2">
-            <MapPin className="w-5 h-5 text-teal-600" />
+            <MapPin className="w-5 h-5 text-blue-600" />
             <div>
-              <h3 className="text-sm font-bold text-slate-900">Clinic Satellite Branch Network</h3>
-              <p className="text-xs text-slate-500">Multi-location satellite clinics and specialized centers</p>
+              <h3 className="text-sm font-bold text-slate-900">Makati Med Health Network</h3>
+              <p className="text-xs text-slate-500">Multi-location satellite clinics and specialized medical centers</p>
             </div>
           </div>
           <button
             type="button"
             onClick={() => setShowAddBranch(true)}
-            className="px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 shadow-sm"
+            className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 shadow-sm"
           >
             <Plus className="w-3.5 h-3.5" />
             Add Satellite Branch
@@ -313,7 +313,7 @@ export const AdminSettingsView: React.FC = () => {
                   <h4 className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
                     {b.name}
                     {b.is_main && (
-                      <span className="text-[10px] bg-teal-100 text-teal-800 px-2 py-0.5 rounded-full font-bold uppercase">
+                      <span className="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-bold uppercase">
                         Main Flagship
                       </span>
                     )}
@@ -348,15 +348,15 @@ export const AdminSettingsView: React.FC = () => {
 
         {/* Modal for adding a new branch */}
         {showAddBranch && (
-          <div className="p-4 border border-teal-200 bg-teal-50/40 rounded-xl space-y-3">
-            <h4 className="font-bold text-teal-900 text-xs">Register New Satellite Branch</h4>
+          <div className="p-4 border border-blue-200 bg-blue-50/40 rounded-xl space-y-3">
+            <h4 className="font-bold text-blue-900 text-xs">Register New Satellite Branch</h4>
             <form onSubmit={handleSaveNewBranch} className="grid grid-cols-2 gap-3 text-xs">
               <div>
                 <label className="block text-slate-700 font-semibold mb-1">Branch Name *</label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. MediQueue South Express"
+                  placeholder="e.g. Makati Med Satellite Pasay"
                   value={newBranch.name}
                   onChange={(e) => setNewBranch({ ...newBranch, name: e.target.value })}
                   className="w-full p-2 border border-slate-300 rounded bg-white"
@@ -367,7 +367,7 @@ export const AdminSettingsView: React.FC = () => {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. MQ-SOUTH"
+                  placeholder="e.g. MMC-PASAY"
                   value={newBranch.code}
                   onChange={(e) => setNewBranch({ ...newBranch, code: e.target.value })}
                   className="w-full p-2 border border-slate-300 rounded bg-white font-mono"
@@ -414,7 +414,7 @@ export const AdminSettingsView: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-1.5 rounded bg-teal-600 text-white font-semibold hover:bg-teal-700"
+                  className="px-4 py-1.5 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700"
                 >
                   Save Satellite Branch
                 </button>

@@ -119,7 +119,7 @@ export const DoctorQueueView: React.FC<DoctorQueueViewProps> = ({
       <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
             <h2 className="text-xl font-bold text-slate-900">Queue Management Board</h2>
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
@@ -138,7 +138,7 @@ export const DoctorQueueView: React.FC<DoctorQueueViewProps> = ({
           <button
             onClick={handleCallNext}
             disabled={waitingPatients.length === 0}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-lg shadow-sm disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg shadow-sm disabled:opacity-50"
           >
             <Volume2 className="w-4 h-4" />
             Call Next Patient ({waitingPatients.length} waiting)
@@ -148,9 +148,9 @@ export const DoctorQueueView: React.FC<DoctorQueueViewProps> = ({
 
       {/* Active Serving Card */}
       {currentPatient ? (
-        <div className="p-6 rounded-2xl bg-white border-2 border-teal-500 shadow-sm space-y-4">
+        <div className="p-6 rounded-2xl bg-white border-2 border-blue-500 shadow-sm space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-teal-700">
+            <span className="text-xs font-bold uppercase tracking-wider text-blue-700">
               Active Patient in Station
             </span>
             <StatusBadge status={currentPatient.status} type="queue" />
@@ -158,8 +158,8 @@ export const DoctorQueueView: React.FC<DoctorQueueViewProps> = ({
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-xl bg-teal-700 text-white flex flex-col items-center justify-center font-mono font-black text-2xl shadow-sm">
-                <span className="text-[9px] uppercase font-sans font-medium text-teal-200">Ticket</span>
+              <div className="w-16 h-16 rounded-xl bg-blue-700 text-white flex flex-col items-center justify-center font-mono font-black text-2xl shadow-sm">
+                <span className="text-[9px] uppercase font-sans font-medium text-blue-200">Ticket</span>
                 {currentPatient.queue_number}
               </div>
               <div>
@@ -169,7 +169,7 @@ export const DoctorQueueView: React.FC<DoctorQueueViewProps> = ({
                 <p className="text-xs text-slate-500">
                   Patient ID: {currentPatient.patient?.patient_number} • Age: {currentPatient.patient?.age} • Sex: {currentPatient.patient?.sex}
                 </p>
-                <p className="text-xs text-teal-800 font-medium mt-1">
+                <p className="text-xs text-blue-800 font-medium mt-1">
                   Complaint: "{currentPatient.appointment?.reason_for_consultation || 'Consultation'}"
                 </p>
               </div>
@@ -210,7 +210,7 @@ export const DoctorQueueView: React.FC<DoctorQueueViewProps> = ({
                     if (onSelectQueueItem) onSelectQueueItem(currentPatient);
                     onNavigate('doctor-consultation-room');
                   }}
-                  className="px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold rounded-lg shadow-sm flex items-center gap-1.5"
+                  className="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded-lg shadow-sm flex items-center gap-1.5"
                 >
                   <Stethoscope className="w-3.5 h-3.5" /> Open Consultation Form
                 </button>
@@ -253,7 +253,7 @@ export const DoctorQueueView: React.FC<DoctorQueueViewProps> = ({
               ) : (
                 waitingPatients.map((item, index) => (
                   <tr key={item.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="px-5 py-3.5 font-bold font-mono text-teal-800 text-sm">
+                    <td className="px-5 py-3.5 font-bold font-mono text-blue-800 text-sm">
                       {item.queue_number}
                     </td>
                     <td className="px-5 py-3.5 text-slate-500">{item.check_in_time}</td>
@@ -273,7 +273,7 @@ export const DoctorQueueView: React.FC<DoctorQueueViewProps> = ({
                       {index === 0 && !currentPatient ? (
                         <button
                           onClick={handleCallNext}
-                          className="px-3 py-1 bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold rounded shadow-xs inline-flex items-center gap-1"
+                          className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded shadow-xs inline-flex items-center gap-1"
                         >
                           <Volume2 className="w-3 h-3" /> Call This Patient
                         </button>

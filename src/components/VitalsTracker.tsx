@@ -369,7 +369,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
               <Activity className="w-5 h-5" />
             </div>
             <div>
@@ -377,7 +377,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
                 Vital Signs &amp; Clinical Health Tracker
               </h2>
               <p className="text-xs text-slate-500">
-                {patientName ? `Continuous clinical record for ${patientName}` : 'Longitudinal physiological monitoring'}
+                {patientName ? `Makati Med longitudinal record for ${patientName}` : 'Continuous physiological monitoring'}
               </p>
             </div>
           </div>
@@ -386,7 +386,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
         {canRecord && (
           <button
             onClick={() => setShowAddModal(true)}
-            className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-sm font-semibold flex items-center gap-2 shadow-sm transition-colors self-start sm:self-auto"
+            className="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-xl text-sm font-semibold flex items-center gap-2 shadow-sm transition-colors self-start sm:self-auto"
           >
             <Plus className="w-4 h-4" />
             Record New Vitals
@@ -406,7 +406,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
           {canRecord && (
             <button
               onClick={() => setShowAddModal(true)}
-              className="mt-4 px-4 py-2 bg-teal-600 text-white rounded-xl text-xs font-semibold hover:bg-teal-700"
+              className="mt-4 px-4 py-2 bg-blue-700 text-white rounded-xl text-xs font-semibold hover:bg-blue-800"
             >
               Add Initial Baseline Vitals
             </button>
@@ -531,7 +531,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col justify-between">
                 <div className="flex items-center justify-between text-xs text-slate-500">
                   <span className="font-semibold">Blood Sugar</span>
-                  <Droplet className="w-4 h-4 text-teal-500" />
+                  <Droplet className="w-4 h-4 text-blue-500" />
                 </div>
                 <div className="my-2">
                   <span className="text-2xl font-black font-mono text-slate-900">
@@ -553,7 +553,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
               <div>
                 <h3 className="text-sm font-bold text-slate-800 flex items-center gap-2">
-                  <TrendingUp className="w-4 h-4 text-teal-600" />
+                  <TrendingUp className="w-4 h-4 text-blue-700" />
                   Health Progression & Trends
                 </h3>
                 <p className="text-[10px] text-slate-500 font-medium">Visualizing {vitals.length} historical records</p>
@@ -563,7 +563,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
                 <button
                   onClick={() => setActiveMetric('bp')}
                   className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all ${
-                    activeMetric === 'bp' ? 'bg-teal-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'
+                    activeMetric === 'bp' ? 'bg-blue-700 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'
                   }`}
                 >
                   BP
@@ -676,7 +676,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
                     max={250}
                     value={form.systolic_bp}
                     onChange={(e) => setForm({ ...form, systolic_bp: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono font-bold text-slate-900 focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono font-bold text-slate-900 focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
@@ -690,7 +690,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
                     max={150}
                     value={form.diastolic_bp}
                     onChange={(e) => setForm({ ...form, diastolic_bp: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono font-bold text-slate-900 focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono font-bold text-slate-900 focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               </div>
@@ -707,7 +707,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
                     max={220}
                     value={form.heart_rate}
                     onChange={(e) => setForm({ ...form, heart_rate: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono text-slate-900 focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono text-slate-900 focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
@@ -722,7 +722,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
                     max={43}
                     value={form.temperature_c}
                     onChange={(e) => setForm({ ...form, temperature_c: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono text-slate-900 focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono text-slate-900 focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
@@ -736,7 +736,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
                     max={100}
                     value={form.spo2}
                     onChange={(e) => setForm({ ...form, spo2: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono text-slate-900 focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono text-slate-900 focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               </div>
@@ -754,7 +754,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
                     max={300}
                     value={form.weight_kg}
                     onChange={(e) => setForm({ ...form, weight_kg: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono text-slate-900 focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono text-slate-900 focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
@@ -768,7 +768,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
                     max={250}
                     value={form.height_cm}
                     onChange={(e) => setForm({ ...form, height_cm: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono text-slate-900 focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono text-slate-900 focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
@@ -781,7 +781,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
                     max={600}
                     value={form.blood_glucose_mgdl}
                     onChange={(e) => setForm({ ...form, blood_glucose_mgdl: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono text-slate-900 focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-mono text-slate-900 focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               </div>
@@ -795,7 +795,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
                   value={form.notes}
                   onChange={(e) => setForm({ ...form, notes: e.target.value })}
                   placeholder="Patient reports mild headache; rested 10 minutes prior to blood pressure reading."
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs text-slate-800 focus:ring-2 focus:ring-teal-500"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs text-slate-800 focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
@@ -810,7 +810,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-5 py-2 bg-teal-600 text-white rounded-xl text-xs font-semibold hover:bg-teal-700 transition-colors shadow-sm disabled:opacity-50"
+                  className="px-5 py-2 bg-blue-700 text-white rounded-xl text-xs font-semibold hover:bg-blue-800 transition-colors shadow-sm disabled:opacity-50"
                 >
                   {saving ? 'Saving...' : 'Save Vital Signs'}
                 </button>

@@ -22,7 +22,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [patient, setPatient] = useState<Patient | null>(null);
   const [doctor, setDoctor] = useState<Doctor | null>(null);
-  const [token, setToken] = useState<string | null>(localStorage.getItem('mq_token'));
+  const [token, setToken] = useState<string | null>(localStorage.getItem('mmc_token'));
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // Initialize session
@@ -30,17 +30,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Listen for global auth failure (401s)
     const handleAuthFailure = () => {
       console.warn('Authentication failure detected, logging out...');
-      localStorage.removeItem('mq_token');
+      localStorage.removeItem('mmc_token');
       setToken(null);
       setUser(null);
       setPatient(null);
       setDoctor(null);
     };
 
-    window.addEventListener('mq-auth-failure', handleAuthFailure);
+    window.addEventListener('mmc-auth-failure', handleAuthFailure);
 
     async function initAuth() {
-      const savedToken = localStorage.getItem('mq_token');
+      const savedToken = localStorage.getItem('mmc_token');
       if (savedToken) {
         try {
           const res = await api.getMe();
@@ -48,7 +48,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setPatient(res.patient || null);
           setDoctor(res.doctor || null);
         } catch {
-          localStorage.removeItem('mq_token');
+          localStorage.removeItem('mmc_token');
           setToken(null);
           setUser(null);
           setPatient(null);
@@ -60,7 +60,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     initAuth();
 
     return () => {
-      window.removeEventListener('mq-auth-failure', handleAuthFailure);
+      window.removeEventListener('mmc-auth-failure', handleAuthFailure);
     };
   }, []);
 
@@ -68,7 +68,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(true);
     try {
       const res = await api.login(email, pass);
-      localStorage.setItem('mq_token', res.token);
+      localStorage.setItem('mmc_token', res.token);
       setToken(res.token);
       setUser(res.user);
       setPatient(res.patient || null);
@@ -82,7 +82,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(true);
     try {
       const res = await api.register(data);
-      localStorage.setItem('mq_token', res.token);
+      localStorage.setItem('mmc_token', res.token);
       setToken(res.token);
       setUser(res.user);
       setPatient(res.patient || null);
@@ -98,7 +98,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } catch {
       // ignore
     } finally {
-      localStorage.removeItem('mq_token');
+      localStorage.removeItem('mmc_token');
       setToken(null);
       setUser(null);
       setPatient(null);

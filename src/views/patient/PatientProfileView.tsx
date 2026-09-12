@@ -70,8 +70,8 @@ export const PatientProfileView: React.FC = () => {
           </p>
         </div>
         <div className="text-right">
-          <span className="text-[10px] text-slate-400 font-mono uppercase">Patient ID</span>
-          <p className="text-sm font-bold font-mono text-teal-800">{patient?.patient_number}</p>
+          <span className="text-[10px] text-slate-400 font-mono uppercase">MMC Patient ID</span>
+          <p className="text-sm font-bold font-mono text-blue-800">{patient?.patient_number}</p>
         </div>
       </div>
 
@@ -89,7 +89,7 @@ export const PatientProfileView: React.FC = () => {
               value={formData.first_name}
               onChange={handleChange}
               required
-              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
 
@@ -101,7 +101,7 @@ export const PatientProfileView: React.FC = () => {
               value={formData.last_name}
               onChange={handleChange}
               required
-              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
         </div>
@@ -125,7 +125,7 @@ export const PatientProfileView: React.FC = () => {
               value={formData.contact_number}
               onChange={handleChange}
               required
-              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
         </div>
@@ -139,7 +139,7 @@ export const PatientProfileView: React.FC = () => {
               value={formData.date_of_birth}
               onChange={handleChange}
               required
-              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
 
@@ -149,7 +149,7 @@ export const PatientProfileView: React.FC = () => {
               name="sex"
               value={formData.sex}
               onChange={handleChange}
-              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 bg-white"
+              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
             >
               <option value="Female">Female</option>
               <option value="Male">Male</option>
@@ -166,7 +166,7 @@ export const PatientProfileView: React.FC = () => {
             value={formData.address}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+            className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
 
@@ -181,7 +181,7 @@ export const PatientProfileView: React.FC = () => {
               name="blood_type"
               value={formData.blood_type}
               onChange={handleChange}
-              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 bg-white"
+              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
             >
               <option value="">Unknown / Select</option>
               <option value="A+">A+</option>
@@ -203,7 +203,7 @@ export const PatientProfileView: React.FC = () => {
               value={formData.allergies}
               onChange={handleChange}
               placeholder="e.g. Penicillin, Peanuts, Sulfa (or None)"
-              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
         </div>
@@ -217,7 +217,7 @@ export const PatientProfileView: React.FC = () => {
               value={formData.emergency_contact_name}
               onChange={handleChange}
               placeholder="Full Name (e.g. Spouse, Parent)"
-              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
 
@@ -229,7 +229,7 @@ export const PatientProfileView: React.FC = () => {
               value={formData.emergency_contact_phone}
               onChange={handleChange}
               placeholder="+63 9XX XXX XXXX"
-              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+              className="mt-1 block w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
         </div>
@@ -238,7 +238,7 @@ export const PatientProfileView: React.FC = () => {
           <button
             type="submit"
             disabled={isSaving}
-            className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-teal-600 text-white text-xs font-semibold rounded-lg hover:bg-teal-700 shadow-sm transition-colors disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-blue-700 text-white text-xs font-semibold rounded-lg hover:bg-blue-800 shadow-sm transition-colors disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
             {isSaving ? 'Saving Changes...' : 'Save Profile Changes'}

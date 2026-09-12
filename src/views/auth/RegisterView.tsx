@@ -60,7 +60,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
 
     try {
       await register(formData);
-      showToast('success', 'Registration Successful', 'Welcome to MediQueue! Your patient profile has been created.');
+      showToast('success', 'Registration Successful', 'Welcome to Makati Medical Center! Your patient profile has been created.');
     } catch (err: any) {
       setError(err.message || 'Registration failed. Please verify your information.');
     }
@@ -70,8 +70,13 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
     <div className="min-h-screen bg-slate-50 py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
-          <div className="mx-auto w-12 h-12 rounded-2xl bg-teal-600 flex items-center justify-center text-white shadow-lg shadow-teal-600/30 mb-3">
-            <Stethoscope className="w-7 h-7" />
+          <div className="mx-auto w-16 h-16 rounded-2xl bg-white flex items-center justify-center overflow-hidden shadow-lg shadow-blue-600/10 mb-3 ring-1 ring-slate-100">
+            <img 
+              src="/src/assets/images/makati_medical_center_logo_1789222548043.jpg" 
+              alt="Makati Medical Center Logo" 
+              className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
+            />
           </div>
           <h2 className="text-2xl font-bold tracking-tight text-slate-900">
             Create Patient Account
@@ -103,7 +108,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
                     onChange={handleChange}
                     placeholder="e.g. Juan"
                     required
-                    className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -121,7 +126,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
                     onChange={handleChange}
                     placeholder="e.g. Dela Cruz"
                     required
-                    className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -141,7 +146,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
                     onChange={handleChange}
                     placeholder="name@example.ph"
                     required
-                    className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -159,7 +164,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
                     onChange={handleChange}
                     placeholder="+63 9XX XXX XXXX"
                     required
-                    className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -178,7 +183,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
                     value={formData.date_of_birth}
                     onChange={handleChange}
                     required
-                    className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -189,7 +194,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
                   name="sex"
                   value={formData.sex}
                   onChange={handleChange}
-                  className="mt-1 block w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 bg-white"
+                  className="mt-1 block w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
                 >
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
@@ -211,7 +216,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
                   onChange={handleChange}
                   placeholder="Street, Barangay, City, Province"
                   required
-                  className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                  className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
             </div>
@@ -230,7 +235,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
                     onChange={handleChange}
                     placeholder="••••••••"
                     required
-                    className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -248,7 +253,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
                     onChange={handleChange}
                     placeholder="••••••••"
                     required
-                    className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -258,7 +263,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-50 transition-colors"
+                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 transition-colors"
               >
                 {isLoading ? (
                   'Creating Profile...'
@@ -278,7 +283,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
               <button
                 type="button"
                 onClick={() => onNavigate('login')}
-                className="font-semibold text-teal-600 hover:text-teal-800"
+                className="font-semibold text-blue-700 hover:text-blue-900"
               >
                 Sign In here
               </button>
