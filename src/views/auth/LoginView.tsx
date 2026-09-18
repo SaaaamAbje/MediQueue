@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 
 interface LoginViewProps {
-  onNavigate: (view: string) => void;
+  onNavigate: (view: any) => void;
   targetSystem?: 'patient' | 'doctor' | 'admin';
   onSelectSystem?: (system: 'patient' | 'doctor' | 'admin') => void;
 }
@@ -64,39 +64,26 @@ export const LoginView: React.FC<LoginViewProps> = ({
   const isAdmin = targetSystem === 'admin';
 
   return (
-    <div className="min-h-screen flex flex-col justify-center relative overflow-hidden bg-slate-50">
-      {/* Light Professional Hospital Background */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src="/src/assets/images/mmc_building_bg_v2_1789706583663.jpg" 
-          alt="Hospital Background" 
-          className="w-full h-full object-cover opacity-60"
-          referrerPolicy="no-referrer"
-        />
-        <div className="absolute inset-0 bg-white/20" />
-      </div>
-
-      <div className="relative z-10 py-6 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-          {/* Hospital Logo Asset */}
-          <div className="mx-auto w-20 h-20 rounded-3xl bg-white p-3 shadow-xl mb-6 ring-1 ring-slate-100 overflow-hidden">
-            <img 
-              src="/src/assets/images/mmc_logo_v2_1789706568681.jpg" 
-              alt="Makati Medical Center Logo" 
-              className="w-full h-full object-contain"
-              referrerPolicy="no-referrer"
-            />
-          </div>
-          
-          <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
-            Makati Medical Center
-          </h2>
-          <p className="mt-2 text-sm text-slate-600 font-medium">
-            {isPatient && 'Patient Self-Service Portal'}
-            {isDoctor && 'Physician Clinical Workstation'}
-            {isAdmin && 'Hospital Operations & Admin Console'}
-          </p>
+    <div className="flex-1 flex flex-col justify-center relative overflow-hidden py-8 px-4 sm:px-6 lg:px-8">
+      <div className="relative sm:mx-auto sm:w-full sm:max-w-md text-center">
+        {/* Hospital Logo Asset */}
+        <div className="mx-auto w-20 h-20 rounded-3xl bg-white p-3 shadow-xl mb-6 ring-1 ring-slate-100 overflow-hidden">
+          <img 
+            src="/assets/images/mmc_logo.jpg" 
+            alt="Makati Medical Center Logo" 
+            className="w-full h-full object-contain"
+            referrerPolicy="no-referrer"
+          />
         </div>
+        
+        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
+          Makati Medical Center
+        </h2>
+        <p className="mt-2 text-sm text-slate-600 font-medium">
+          {isPatient && 'Patient Self-Service Portal'}
+          {isDoctor && 'Physician Clinical Workstation'}
+          {isAdmin && 'Hospital Operations & Admin Console'}
+        </p>
         <p className="mt-1 text-xs text-slate-500 text-center px-4">
           {isPatient && 'Book consultations, check live queue status, and access medical records'}
           {isDoctor && 'Room 102 outpatient queue, consultation room timer, and digital prescription builder'}

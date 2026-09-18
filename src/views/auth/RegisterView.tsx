@@ -4,7 +4,7 @@ import { useNotifications } from '../../context/NotificationContext';
 import { Stethoscope, User, Mail, Phone, Calendar, MapPin, Lock, ArrowRight } from 'lucide-react';
 
 interface RegisterViewProps {
-  onNavigate: (view: string) => void;
+  onNavigate: (view: any) => void;
 }
 
 export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
@@ -67,12 +67,12 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto">
+    <div className="flex-1 flex flex-col justify-center py-6">
+      <div className="max-w-2xl mx-auto w-full">
         <div className="text-center mb-8">
           <div className="mx-auto w-16 h-16 rounded-2xl bg-white flex items-center justify-center overflow-hidden shadow-lg shadow-blue-600/10 mb-3 ring-1 ring-slate-100">
             <img 
-              src="/src/assets/images/mmc_logo_v2_1789706568681.jpg" 
+              src="/assets/images/mmc_logo.jpg" 
               alt="Makati Medical Center Logo" 
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"

@@ -172,15 +172,27 @@ const AppContent: React.FC = () => {
 
   if (!user || systemRoleMismatch) {
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col justify-between">
+      <div className="min-h-screen flex flex-col justify-between relative overflow-hidden">
+        {/* Full Screen Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/assets/images/mmc_bg.jpg" 
+            alt="Hospital Background" 
+            className="w-full h-full object-cover opacity-60"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-white/10 backdrop-blur-[2px]" />
+        </div>
+
         <ToastContainer />
-        <header className="border-b border-slate-200 bg-white/90 backdrop-blur-md sticky top-0 z-30 shadow-2xs">
+        
+        <header className="relative z-30 border-b border-slate-200/50 bg-white/70 backdrop-blur-md sticky top-0 shadow-2xs">
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
             {/* System Branding */}
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center overflow-hidden bg-white shadow-sm ring-1 ring-slate-200">
                 <img 
-                  src="/src/assets/images/mmc_logo_v2_1789706568681.jpg" 
+                  src="/assets/images/mmc_logo.jpg" 
                   alt="Makati Medical Center Logo" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
@@ -201,7 +213,7 @@ const AppContent: React.FC = () => {
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
                   authView === 'register'
                     ? 'bg-blue-700 text-white shadow-xs'
-                    : 'text-slate-600 hover:bg-slate-100'
+                    : 'text-slate-600 hover:bg-white/80 hover:shadow-sm'
                 }`}
               >
                 {authView === 'register' ? 'Sign In' : 'Patient Registration'}
@@ -210,7 +222,7 @@ const AppContent: React.FC = () => {
           </div>
         </header>
 
-        <main className="flex-1 py-6 px-4">
+        <main className="flex-1 relative z-10 flex flex-col overflow-y-auto">
           {authView === 'login' && (
             <LoginView
               onNavigate={setAuthView}
@@ -218,8 +230,16 @@ const AppContent: React.FC = () => {
               onSelectSystem={handleSelectSystem}
             />
           )}
-          {authView === 'register' && <RegisterView onNavigate={setAuthView} />}
-          {authView === 'forgot-password' && <ForgotPasswordView onNavigate={setAuthView} />}
+          {authView === 'register' && (
+            <div className="py-8 px-4 flex-1 flex flex-col justify-center">
+              <RegisterView onNavigate={setAuthView} />
+            </div>
+          )}
+          {authView === 'forgot-password' && (
+            <div className="py-8 px-4 flex-1 flex flex-col justify-center">
+              <ForgotPasswordView onNavigate={setAuthView} />
+            </div>
+          )}
         </main>
       </div>
     );

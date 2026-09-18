@@ -4,7 +4,7 @@ import { useNotifications } from '../../context/NotificationContext';
 import { Stethoscope, Mail, Lock, KeyRound, ArrowLeft, CheckCircle2 } from 'lucide-react';
 
 interface ForgotPasswordViewProps {
-  onNavigate: (view: string) => void;
+  onNavigate: (view: any) => void;
 }
 
 export const ForgotPasswordView: React.FC<ForgotPasswordViewProps> = ({ onNavigate }) => {
@@ -67,11 +67,11 @@ export const ForgotPasswordView: React.FC<ForgotPasswordViewProps> = ({ onNaviga
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="flex-1 flex flex-col justify-center py-6">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <div className="mx-auto w-16 h-16 rounded-2xl bg-white flex items-center justify-center overflow-hidden shadow-lg shadow-blue-600/10 mb-3 ring-1 ring-slate-100">
           <img 
-            src="/src/assets/images/mmc_logo_v2_1789706568681.jpg" 
+            src="/assets/images/mmc_logo.jpg" 
             alt="Makati Medical Center Logo" 
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"
