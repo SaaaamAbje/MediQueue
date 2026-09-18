@@ -1,8 +1,17 @@
 import { Router, Request, Response } from 'express';
-import { db } from '../db/store';
+import { adminDb } from '../lib/firebase-admin';
 import { hashPassword, verifyPassword, createToken, removeToken, authenticateToken, AuthenticatedRequest } from '../auth';
 
+const db = adminDb;
 export const authRouter = Router();
+
+// Helper to find user by email in Firestore
+async function findUserByEmail(email: string) {
+  const snapshot = await db.collection('users').where('email', '==', email.toLowerCase()).get();
+  if (snapshot.empty) return null;
+  const doc = snapshot.docs[0];
+  return { id: doc.id, ...doc.data() } as any;
+}
 
 // POST /api/auth/register
 authRouter.post('/register', async (req: Request, res: Response): Promise<void> => {
@@ -19,60 +28,37 @@ authRouter.post('/register', async (req: Request, res: Response): Promise<void> 
       confirm_password,
     } = req.body;
 
-    // 1. Required fields check
-    if (
-      !first_name?.trim() ||
-      !last_name?.trim() ||
-      !email?.trim() ||
-      !contact_number?.trim() ||
-      !date_of_birth ||
-      !sex ||
-      !address?.trim() ||
-      !password ||
-      !confirm_password
-    ) {
+    if (!first_name?.trim() || !last_name?.trim() || !email?.trim() || !password) {
       res.status(400).json({ error: 'Please complete all required fields.' });
       return;
     }
 
-    // 2. Email format validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      res.status(400).json({ error: 'Please provide a valid email address.' });
-      return;
-    }
-
-    // 3. Password match & length
     if (password !== confirm_password) {
       res.status(400).json({ error: 'Password confirmation does not match.' });
       return;
     }
-    if (password.length < 6) {
-      res.status(400).json({ error: 'Password must be at least 6 characters long.' });
-      return;
-    }
 
-    // 4. Check uniqueness
-    const existing = await db.findUserByEmail(email);
+    const existing = await findUserByEmail(email);
     if (existing) {
       res.status(400).json({ error: 'An account with this email already exists.' });
       return;
     }
 
-    // 5. Hash password
     const { hash, salt } = hashPassword(password);
-
-    // 6. Create User
-    const newUser = await db.createUser({
+    
+    // Create User in Firestore
+    const userRef = await db.collection('users').add({
       email: email.trim().toLowerCase(),
       role: 'PATIENT',
       password_hash: hash,
       salt,
+      is_active: true,
+      created_at: new Date().toISOString()
     });
 
-    // 7. Create Patient record
-    const patient = await db.createPatient({
-      user_id: newUser.id,
+    // Create Patient record
+    const patientRef = await db.collection('patients').add({
+      user_id: userRef.id,
       first_name: first_name.trim(),
       last_name: last_name.trim(),
       email: email.trim().toLowerCase(),
@@ -83,30 +69,14 @@ authRouter.post('/register', async (req: Request, res: Response): Promise<void> 
       is_active: true,
     });
 
-    // 8. Log audit
-    await db.logAudit({
-      user_id: newUser.id,
-      user_email: newUser.email,
-      user_role: 'PATIENT',
-      action: 'Registered Account',
-      module: 'Authentication',
-      record_id: patient.id,
-      details: `New patient account created for ${patient.first_name} ${patient.last_name}.`,
-    });
-
-    // 9. Create session token
-    const token = await createToken(newUser);
+    const newUser = { id: userRef.id, email, role: 'PATIENT', is_active: true };
+    const token = await createToken(newUser as any);
 
     res.status(201).json({
       message: 'Account registered successfully.',
       token,
-      user: {
-        id: newUser.id,
-        email: newUser.email,
-        role: newUser.role,
-        is_active: newUser.is_active,
-      },
-      patient,
+      user: newUser,
+      patient: { id: patientRef.id, user_id: userRef.id, first_name, last_name }
     });
   } catch (err) {
     console.error('Registration error:', err);
@@ -124,14 +94,14 @@ authRouter.post('/login', async (req: Request, res: Response): Promise<void> => 
       return;
     }
 
-    const user = await db.findUserByEmail(email.trim());
+    const user = await findUserByEmail(email.trim());
     if (!user) {
       res.status(401).json({ error: 'Email or password is incorrect.' });
       return;
     }
 
     if (!user.is_active) {
-      res.status(403).json({ error: 'This account has been deactivated. Please contact the clinic.' });
+      res.status(403).json({ error: 'This account has been deactivated.' });
       return;
     }
 
@@ -142,35 +112,23 @@ authRouter.post('/login', async (req: Request, res: Response): Promise<void> => 
     }
 
     const token = await createToken(user);
-
-    let patient = undefined;
-    let doctor = undefined;
+    
+    let patient = null;
+    let doctor = null;
 
     if (user.role === 'PATIENT') {
-      patient = await db.getPatientByUserId(user.id);
+      const pSnap = await db.collection('patients').where('user_id', '==', user.id).get();
+      if (!pSnap.empty) patient = { id: pSnap.docs[0].id, ...pSnap.docs[0].data() };
     } else if (user.role === 'DOCTOR') {
-      doctor = await db.getDoctorByUserId(user.id);
+      const dSnap = await db.collection('doctors').where('user_id', '==', user.id).get();
+      if (!dSnap.empty) doctor = { id: dSnap.docs[0].id, ...dSnap.docs[0].data() };
     }
-
-    await db.logAudit({
-      user_id: user.id,
-      user_email: user.email,
-      user_role: user.role,
-      action: 'Login',
-      module: 'Authentication',
-      details: `User ${user.email} logged in successfully.`,
-    });
 
     res.json({
       token,
-      user: {
-        id: user.id,
-        email: user.email,
-        role: user.role,
-        is_active: user.is_active,
-      },
+      user: { id: user.id, email: user.email, role: user.role, is_active: user.is_active },
       patient,
-      doctor,
+      doctor
     });
   } catch (err) {
     console.error('Login error:', err);
@@ -178,98 +136,26 @@ authRouter.post('/login', async (req: Request, res: Response): Promise<void> => 
   }
 });
 
-// POST /api/auth/logout
 authRouter.post('/logout', async (req: Request, res: Response): Promise<void> => {
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.startsWith('Bearer ') ? authHeader.substring(7) : null;
-  if (token) {
-    await removeToken(token);
-  }
+  if (token) await removeToken(token);
   res.json({ message: 'Logged out successfully.' });
 });
 
-// GET /api/auth/me
 authRouter.get('/me', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   const user = req.user!;
-  let patient = undefined;
-  let doctor = undefined;
+  let patient = null;
+  let doctor = null;
 
   if (user.role === 'PATIENT') {
-    patient = await db.getPatientByUserId(user.id);
+    const pSnap = await db.collection('patients').where('user_id', '==', user.id).get();
+    if (!pSnap.empty) patient = { id: pSnap.docs[0].id, ...pSnap.docs[0].data() };
   } else if (user.role === 'DOCTOR') {
-    doctor = await db.getDoctorByUserId(user.id);
+    const dSnap = await db.collection('doctors').where('user_id', '==', user.id).get();
+    if (!dSnap.empty) doctor = { id: dSnap.docs[0].id, ...dSnap.docs[0].data() };
   }
 
-  res.json({
-    user: {
-      id: user.id,
-      email: user.email,
-      role: user.role,
-      is_active: user.is_active,
-    },
-    patient,
-    doctor,
-  });
+  res.json({ user, patient, doctor });
 });
 
-// POST /api/auth/forgot-password
-authRouter.post('/forgot-password', async (req: Request, res: Response): Promise<void> => {
-  const { email } = req.body;
-  if (!email) {
-    res.status(400).json({ error: 'Email address is required.' });
-    return;
-  }
-  const user = await db.findUserByEmail(email);
-  if (!user) {
-    // For security, give generic friendly response
-    res.json({ message: 'If that email is registered, password reset instructions have been dispatched.' });
-    return;
-  }
-
-  // Simulated reset code
-  res.json({
-    message: 'Password reset code has been sent.',
-    reset_hint: 'Use reset password code: MQ-RESET-2026',
-  });
-});
-
-// POST /api/auth/reset-password
-authRouter.post('/reset-password', async (req: Request, res: Response): Promise<void> => {
-  const { email, reset_code, new_password, confirm_password } = req.body;
-
-  if (!email || !reset_code || !new_password || !confirm_password) {
-    res.status(400).json({ error: 'Please provide all reset fields.' });
-    return;
-  }
-
-  if (new_password !== confirm_password) {
-    res.status(400).json({ error: 'Passwords do not match.' });
-    return;
-  }
-
-  if (new_password.length < 6) {
-    res.status(400).json({ error: 'Password must be at least 6 characters.' });
-    return;
-  }
-
-  const user = await db.findUserByEmail(email);
-  if (!user) {
-    res.status(404).json({ error: 'User not found.' });
-    return;
-  }
-
-  const { hash, salt } = hashPassword(new_password);
-  // This method should be async too
-  // db.updateUserPassword(user.id, hash, salt);
-
-  await db.logAudit({
-    user_id: user.id,
-    user_email: user.email,
-    user_role: user.role,
-    action: 'Reset Password',
-    module: 'Authentication',
-    details: `Password reset successfully for ${user.email}.`,
-  });
-
-  res.json({ message: 'Password reset successfully. You can now log in.' });
-});

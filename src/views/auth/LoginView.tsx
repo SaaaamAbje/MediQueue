@@ -68,7 +68,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
       {/* Light Professional Hospital Background */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="/src/assets/images/hospital_login_bg_1789109420944.jpg" 
+          src="/src/assets/images/mmc_building_bg_v2_1789706583663.jpg" 
           alt="Hospital Background" 
           className="w-full h-full object-cover opacity-60"
           referrerPolicy="no-referrer"
@@ -81,7 +81,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
           {/* Hospital Logo Asset */}
           <div className="mx-auto w-20 h-20 rounded-3xl bg-white p-3 shadow-xl mb-6 ring-1 ring-slate-100 overflow-hidden">
             <img 
-              src="/src/assets/images/makati_medical_center_logo_1789222548043.jpg" 
+              src="/src/assets/images/mmc_logo_v2_1789706568681.jpg" 
               alt="Makati Medical Center Logo" 
               className="w-full h-full object-contain"
               referrerPolicy="no-referrer"

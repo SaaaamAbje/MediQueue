@@ -1,7 +1,26 @@
 import express from 'express';
 import 'express-async-errors';
 import path from 'path';
+import dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
+
 import { createServer as createViteServer } from 'vite';
+import fs from 'fs';
+
+// Check for firebase credentials in local development
+if (process.env.NODE_ENV !== 'production') {
+  const saPath = path.join(process.cwd(), 'service-account.json');
+  if (!fs.existsSync(saPath) && !process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+    console.warn('\n' + '!'.repeat(50));
+    console.warn('⚠️  LOCAL DEVELOPMENT WARNING: Firebase Key Missing');
+    console.warn('The application will start, but database features will fail.');
+    console.warn('To fix, save your service account JSON as "service-account.json"');
+    console.warn('in this folder: ' + process.cwd());
+    console.warn('!'.repeat(50) + '\n');
+  }
+}
 
 import { authRouter } from './server/routes/auth';
 import { doctorsRouter } from './server/routes/doctors';

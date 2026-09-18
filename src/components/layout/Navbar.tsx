@@ -159,7 +159,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden bg-white shadow-sm ring-1 ring-slate-200">
                 <img 
-                  src="/src/assets/images/makati_medical_center_logo_1789222548043.jpg" 
+                  src="/src/assets/images/mmc_logo_v2_1789706568681.jpg" 
                   alt="Makati Medical Center Logo" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"

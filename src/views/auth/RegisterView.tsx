@@ -72,7 +72,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
         <div className="text-center mb-8">
           <div className="mx-auto w-16 h-16 rounded-2xl bg-white flex items-center justify-center overflow-hidden shadow-lg shadow-blue-600/10 mb-3 ring-1 ring-slate-100">
             <img 
-              src="/src/assets/images/makati_medical_center_logo_1789222548043.jpg" 
+              src="/src/assets/images/mmc_logo_v2_1789706568681.jpg" 
               alt="Makati Medical Center Logo" 
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
