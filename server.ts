@@ -42,9 +42,8 @@ import { branchesRouter } from './server/routes/branches';
 import { db } from './server/db/store';
 import { getInitialSeedData } from './server/db/seed';
 
-async function startServer() {
+export async function createExpressApp() {
   const app = express();
-  const PORT = 3000;
 
   // Auto-seed check for Firestore
   try {
@@ -65,8 +64,35 @@ async function startServer() {
   app.use(express.urlencoded({ extended: true }));
 
   // Health check endpoint
-  app.get('/api/health', (_req, res) => {
-    res.json({ status: 'ok', app: 'Makati Medical Center', hospital: 'Makati Med', timestamp: new Date().toISOString() });
+  app.get('/api/health', async (_req, res) => {
+    let dbStatus = 'disconnected';
+    try {
+      await db.getUsers();
+      dbStatus = 'connected';
+    } catch (err: any) {
+      dbStatus = `error: ${err.message}`;
+    }
+    res.json({ 
+      status: 'ok', 
+      app: 'Makati Medical Center', 
+      database: dbStatus,
+      env: process.env.NODE_ENV,
+      vercel: !!process.env.VERCEL,
+      timestamp: new Date().toISOString() 
+    });
+  });
+
+  // Admin & Debug Routes
+  app.post('/api/admin/force-seed', async (_req, res) => {
+    try {
+      console.log('[MediQueue] Manual force-seed triggered...');
+      const seed = getInitialSeedData();
+      await db.seedDatabase(seed);
+      res.json({ message: 'Database seeded successfully.' });
+    } catch (err: any) {
+      console.error('[MediQueue] Force-seed failed:', err);
+      res.status(500).json({ error: `Seeding failed: ${err.message}` });
+    }
   });
 
   // RESTful API Routes
@@ -89,7 +115,7 @@ async function startServer() {
   app.use('/api/branches', branchesRouter);
 
   // Vite integration
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
     const vite = await createViteServer({
       server: { 
         middlewareMode: true,
@@ -106,6 +132,13 @@ async function startServer() {
     });
   }
 
+  return app;
+}
+
+async function startServer() {
+  const app = await createExpressApp();
+  const PORT = 3000;
+
   const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`[MediQueue] Server running at http://0.0.0.0:${PORT}`);
   });
@@ -119,6 +152,8 @@ async function startServer() {
   });
 }
 
-startServer().catch((err) => {
-  console.error('[MediQueue] Failed to start server:', err);
-});
+if (import.meta.url === `file://${process.argv[1]}` || !process.env.VERCEL) {
+  startServer().catch((err) => {
+    console.error('[MediQueue] Failed to start server:', err);
+  });
+}

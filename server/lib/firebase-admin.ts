@@ -32,7 +32,24 @@ function getAppInstance(): App {
 
   const options: any = { projectId };
   
-  if (fs.existsSync(serviceAccountPath)) {
+  if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+    try {
+      const sa = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+      options.credential = cert(sa);
+    } catch (e) {
+      console.error('Failed to parse FIREBASE_SERVICE_ACCOUNT environment variable');
+    }
+  } else if (process.env.FIREBASE_PRIVATE_KEY && process.env.FIREBASE_CLIENT_EMAIL) {
+    let privateKey = process.env.FIREBASE_PRIVATE_KEY;
+    if (privateKey.startsWith('"') && privateKey.endsWith('"')) {
+      privateKey = privateKey.substring(1, privateKey.length - 1);
+    }
+    options.credential = cert({
+      projectId: process.env.FIREBASE_PROJECT_ID || projectId,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: privateKey.replace(/\\n/g, '\n'),
+    });
+  } else if (fs.existsSync(serviceAccountPath)) {
     options.credential = cert(serviceAccountPath);
   }
 
