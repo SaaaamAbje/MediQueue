@@ -149,13 +149,13 @@ export const PublicQueueTvView: React.FC<PublicQueueTvViewProps> = ({ onClose })
             </div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-3">
-                {data?.clinic_name || 'Makati Medical Center'}
+                {data?.clinic_name || 'MediQueue Clinical'}
                 <span className="text-xs px-2.5 py-0.5 rounded-full font-semibold uppercase tracking-wider bg-blue-500/20 text-blue-300 border border-blue-500/30">
                   Lobby Signage
                 </span>
               </h1>
               <p className="text-sm text-slate-400 font-medium">
-                {data?.tagline || 'Makati Med Outpatient Consultation & Diagnostic Queue'}
+                {data?.tagline || 'MediQueue Clinical Outpatient Consultation & Diagnostic Queue'}
               </p>
             </div>
           </div>
@@ -176,7 +176,7 @@ export const PublicQueueTvView: React.FC<PublicQueueTvViewProps> = ({ onClose })
             }`}
           >
             {soundEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
-            <span className="hidden md:inline">{soundEnabled ? 'MMC Voice Alert: ON' : 'Audio: Muted'}</span>
+            <span className="hidden md:inline">{soundEnabled ? 'MediQueue Voice Alert: ON' : 'Audio: Muted'}</span>
           </button>
 
           {/* Test Sound Button */}

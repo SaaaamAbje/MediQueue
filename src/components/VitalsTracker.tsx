@@ -377,7 +377,7 @@ export const VitalsTracker: React.FC<VitalsTrackerProps> = ({
                 Vital Signs &amp; Clinical Health Tracker
               </h2>
               <p className="text-xs text-slate-500">
-                {patientName ? `Makati Med longitudinal record for ${patientName}` : 'Continuous physiological monitoring'}
+                {patientName ? `MediQueue Clinical longitudinal record for ${patientName}` : 'Continuous physiological monitoring'}
               </p>
             </div>
           </div>

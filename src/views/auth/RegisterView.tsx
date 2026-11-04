@@ -60,7 +60,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
 
     try {
       await register(formData);
-      showToast('success', 'Registration Successful', 'Welcome to Makati Medical Center! Your patient profile has been created.');
+      showToast('success', 'Registration Successful', 'Welcome to MediQueue Clinical! Your patient profile has been created.');
     } catch (err: any) {
       setError(err.message || 'Registration failed. Please verify your information.');
     }
@@ -72,8 +72,8 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
         <div className="text-center mb-8">
           <div className="mx-auto w-16 h-16 rounded-2xl bg-white flex items-center justify-center overflow-hidden shadow-lg shadow-blue-600/10 mb-3 ring-1 ring-slate-100">
             <img 
-              src="/assets/images/mmc_logo.jpg" 
-              alt="Makati Medical Center Logo" 
+              src="/assets/images/mediqueue_logo.jpg" 
+              alt="MediQueue Clinical Logo" 
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
             />
@@ -144,11 +144,12 @@ export const RegisterView: React.FC<RegisterViewProps> = ({ onNavigate }) => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="name@example.ph"
+                    placeholder="name@dlsl.edu.ph"
                     required
                     className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
+                <p className="mt-1 text-[10px] text-slate-500 italic">Only @dlsl.edu.ph emails are allowed.</p>
               </div>
 
               <div>

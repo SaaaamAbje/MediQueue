@@ -109,7 +109,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({ onNaviga
             </span>
             <span className="text-xs text-blue-200">Date: {todayStr}</span>
           </div>
-          <h1 className="text-2xl font-bold tracking-tight">Makati Med Administration Console</h1>
+          <h1 className="text-2xl font-bold tracking-tight">MediQueue Clinical Administration Console</h1>
           <p className="text-xs text-blue-100 mt-1">
             Centralized hospital coordination for patient appointments, specialist schedules, and live reception queues.
           </p>
@@ -173,7 +173,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({ onNaviga
               <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
               <h3 className="text-base font-bold text-slate-900">Hospital Live Queue Overview</h3>
             </div>
-            <p className="text-xs text-slate-500">Real-time status across all MMC outpatient departments</p>
+            <p className="text-xs text-slate-500">Real-time status across all MediQueue outpatient departments</p>
           </div>
           <button
             onClick={() => onNavigate('admin-queue')}

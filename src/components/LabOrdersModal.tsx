@@ -197,7 +197,7 @@ export const LabOrdersModal: React.FC<LabOrdersModalProps> = ({
               <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 text-slate-800 font-sans print:border-none">
                 {/* Clinic Official Header */}
                 <div className="text-center border-b pb-4 border-slate-200">
-                  <h3 className="text-xl font-bold tracking-tight text-slate-900">MAKATI MEDICAL CENTER LABORATORY</h3>
+                  <h3 className="text-xl font-bold tracking-tight text-slate-900">MediQueue Healthcare LABORATORY</h3>
                   <p className="text-xs text-slate-500">Official Diagnostic Requisition Slip</p>
                   <p className="text-[11px] text-slate-400">Accredited by DOH &amp; Health Insurance Partners</p>
                 </div>
@@ -274,7 +274,7 @@ export const LabOrdersModal: React.FC<LabOrdersModalProps> = ({
                 {/* Signature Block */}
                 <div className="pt-6 mt-6 border-t border-slate-200 flex items-end justify-between text-xs">
                   <div className="text-slate-400 text-[10px]">
-                    Generated via Makati Medical Center Hospital System
+                    Generated via MediQueue Clinical Hospital System
                     <br />
                     Verifiable at Laboratory Reception Counter
                   </div>

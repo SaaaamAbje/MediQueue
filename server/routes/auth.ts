@@ -33,6 +33,11 @@ authRouter.post('/register', async (req: Request, res: Response): Promise<void> 
       return;
     }
 
+    if (!email.toLowerCase().endsWith('@dlsl.edu.ph')) {
+      res.status(400).json({ error: 'Registration is restricted to @dlsl.edu.ph domain.' });
+      return;
+    }
+
     if (password !== confirm_password) {
       res.status(400).json({ error: 'Password confirmation does not match.' });
       return;

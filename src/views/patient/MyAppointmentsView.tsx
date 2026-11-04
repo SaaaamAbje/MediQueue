@@ -149,7 +149,7 @@ export const MyAppointmentsView: React.FC<MyAppointmentsViewProps> = ({ onNaviga
           onClick={() => onNavigate('patient-book')}
           className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-700 text-white text-xs font-semibold rounded-lg hover:bg-blue-800 shadow-sm self-start sm:self-auto"
         >
-          <Calendar className="w-4 h-4" /> Book MMC Consultation
+          <Calendar className="w-4 h-4" /> Book MediQueue Consultation
         </button>
       </div>
 

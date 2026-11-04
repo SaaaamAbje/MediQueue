@@ -142,9 +142,9 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
       <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4 mb-4">
           <div>
-            <h2 className="text-xl font-bold text-slate-900">Book MMC Consultation</h2>
+            <h2 className="text-xl font-bold text-slate-900">Book MediQueue Consultation</h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              Follow the steps to reserve your consultation with our Makati Medical Center specialists.
+              Follow the steps to reserve your consultation with our MediQueue Clinical specialists.
             </p>
           </div>
           {step < 6 && (
@@ -495,7 +495,7 @@ export const BookAppointmentView: React.FC<BookAppointmentViewProps> = ({ onNavi
               Appointment Successfully Reserved!
             </h2>
             <p className="text-xs text-slate-500 mt-1">
-              Your Makati Medical Center appointment reference number has been generated.
+              Your MediQueue Clinical appointment reference number has been generated.
             </p>
           </div>
 

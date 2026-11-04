@@ -95,7 +95,7 @@ export const AdminReportsView: React.FC = () => {
       {/* Header */}
       <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-slate-900">Makati Medical Center Operations &amp; Analytics</h2>
+          <h2 className="text-xl font-bold text-slate-900">MediQueue Clinical Operations &amp; Analytics</h2>
           <p className="text-xs text-slate-500 mt-0.5">
             Audit logs, daily appointments summaries, queue turnaround times, and physician performance
           </p>

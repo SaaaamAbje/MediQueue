@@ -24,7 +24,7 @@ export const AdminSmsDispatcherView: React.FC = () => {
   const [recipientPhone, setRecipientPhone] = useState<string>('+63 917 123 4567');
   const [recipientName, setRecipientName] = useState<string>('Juan Dela Cruz');
   const [messageText, setMessageText] = useState<string>(
-    'Makati Med ALERT: You are next in line! Ticket #A002. Please proceed to Consultation Room 101.'
+    'MediQueue Clinical ALERT: You are next in line! Ticket #A002. Please proceed to Consultation Room 101.'
   );
   const [smsType, setSmsType] = useState<string>('queue_proximity');
   const [isSending, setIsSending] = useState<boolean>(false);
@@ -77,13 +77,13 @@ export const AdminSmsDispatcherView: React.FC = () => {
   const setTemplate = (type: string) => {
     setSmsType(type);
     if (type === 'queue_proximity') {
-      setMessageText('Makati Med ALERT: You are next in line! Ticket #A002. Please proceed to Consultation Room 101.');
+      setMessageText('MediQueue Clinical ALERT: You are next in line! Ticket #A002. Please proceed to Consultation Room 101.');
     } else if (type === 'appointment_reminder') {
-      setMessageText('Makati Med: Reminder for your clinic consultation tomorrow at 9:00 AM. Ref #APT-2026-0001. Reply C to cancel.');
+      setMessageText('MediQueue Clinical: Reminder for your clinic consultation tomorrow at 9:00 AM. Ref #APT-2026-0001. Reply C to cancel.');
     } else if (type === 'lab_ready') {
-      setMessageText('Makati Med LAB: Your diagnostic test results have been certified and released. View them now on your portal.');
+      setMessageText('MediQueue Clinical LAB: Your diagnostic test results have been certified and released. View them now on your portal.');
     } else if (type === 'urgent_call') {
-      setMessageText('Makati Med URGENT: The physician is ready for you now in Room 101. Please proceed immediately.');
+      setMessageText('MediQueue Clinical URGENT: The physician is ready for you now in Room 101. Please proceed immediately.');
     }
   };
 
@@ -92,7 +92,7 @@ export const AdminSmsDispatcherView: React.FC = () => {
       await api.sendSms({
         recipient_phone: phone || '+63 917 000 1122',
         recipient_name: patientName,
-        message: `Makati Med ALERT: You are next in line! Ticket #${ticket}. Please proceed to Doctor's Room ${room}.`,
+        message: `MediQueue Clinical ALERT: You are next in line! Ticket #${ticket}. Please proceed to Doctor's Room ${room}.`,
         type: 'queue_proximity',
       });
       fetchData();

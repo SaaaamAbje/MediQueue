@@ -70,7 +70,7 @@ export const PatientProfileView: React.FC = () => {
           </p>
         </div>
         <div className="text-right">
-          <span className="text-[10px] text-slate-400 font-mono uppercase">MMC Patient ID</span>
+          <span className="text-[10px] text-slate-400 font-mono uppercase">MediQueue Patient ID</span>
           <p className="text-sm font-bold font-mono text-blue-800">{patient?.patient_number}</p>
         </div>
       </div>

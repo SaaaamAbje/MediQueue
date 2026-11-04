@@ -31,7 +31,7 @@ import {
 const API_BASE = '/api';
 
 function getHeaders(): HeadersInit {
-  const token = localStorage.getItem('mmc_token');
+  const token = localStorage.getItem('mediqueue_token');
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
   };

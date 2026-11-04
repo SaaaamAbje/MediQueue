@@ -12,12 +12,13 @@ import {
   User,
   Activity,
   ShieldCheck,
+  Database,
 } from 'lucide-react';
 import { api } from '../../services/api';
 import { LabOrder, LabTestResult, LabResultParam } from '../../types';
 
 export const AdminLabWorkbenchView: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'pending' | 'results'>('pending');
+  const [activeTab, setActiveTab] = useState<'pending' | 'results' | 'bioinformatics'>('pending');
   const [pendingOrders, setPendingOrders] = useState<LabOrder[]>([]);
   const [labResults, setLabResults] = useState<LabTestResult[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -158,6 +159,16 @@ export const AdminLabWorkbenchView: React.FC = () => {
             }`}
           >
             Released Results ({labResults.length})
+          </button>
+          <button
+            onClick={() => setActiveTab('bioinformatics')}
+            className={`px-4 py-2 text-sm font-semibold rounded-lg transition-colors ${
+              activeTab === 'bioinformatics'
+                ? 'bg-blue-700 text-white shadow-sm'
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+            }`}
+          >
+            Bioinformatics Workbench
           </button>
         </div>
       </div>
@@ -573,6 +584,56 @@ export const AdminLabWorkbenchView: React.FC = () => {
                 Print Certificate
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* BIOINFORMATICS TAB */}
+      {activeTab === 'bioinformatics' && (
+        <div className="space-y-6">
+          <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+             <div className="flex items-center gap-3 mb-6">
+               <div className="p-3 bg-blue-50 rounded-xl border border-blue-100 text-blue-700">
+                 <FlaskConical size={24} />
+               </div>
+               <div>
+                 <h2 className="font-bold text-slate-900 text-lg">Integrated Bioinformatics & Structural Analysis</h2>
+                 <p className="text-xs text-slate-500">Advanced molecular diagnostics and structural modeling tools for precision medicine.</p>
+               </div>
+             </div>
+
+             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div className="lg:col-span-12">
+                   <div className="bg-slate-900 rounded-xl overflow-hidden border border-slate-800 p-4 min-h-[600px] flex flex-col">
+                      <div className="flex items-center justify-between mb-4 px-2">
+                        <div className="flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Active Structural Viewer</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-[10px] text-slate-500 font-mono">
+                          SRC: RCSB_PDB | ALPHAFOLD_DB
+                        </div>
+                      </div>
+                      
+                      {/* We'll use a simplified version of the viewer here or import a component if we had one */}
+                      {/* For now, I'll just explain we'd use the same logic as in DoctorResearchView */}
+                      <div className="flex-1 flex flex-col items-center justify-center text-center p-12">
+                         <Database size={48} className="text-slate-700 mb-4" />
+                         <h3 className="text-white font-bold mb-2">Technician Data Insight</h3>
+                         <p className="text-slate-500 text-sm max-w-md">
+                           The laboratory bioinformatics module allows technicians to verify structural integrity of samples 
+                           and compare clinical findings with known molecular structures.
+                         </p>
+                         <button 
+                           onClick={() => window.location.hash = 'doctor-research'}
+                           className="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-blue-500 transition-all"
+                         >
+                           Access Full Research Suite
+                         </button>
+                      </div>
+                   </div>
+                </div>
+             </div>
           </div>
         </div>
       )}

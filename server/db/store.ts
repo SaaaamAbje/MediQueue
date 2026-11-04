@@ -1202,7 +1202,7 @@ class FirestoreStore {
     if (doc.exists) return this.fromFirestore(doc.data()) as ClinicSettings;
     return {
       id: 'clinic',
-      clinic_name: 'MediQueue Clínica',
+      clinic_name: 'MediQueue Clinical Clínica',
       tagline: 'Modern Clinical Queue Management',
       contact_number: '+63 912 345 6789',
       email: 'info@mediqueue.ph',

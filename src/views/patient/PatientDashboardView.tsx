@@ -110,7 +110,7 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/20 text-white backdrop-blur-xs">
-                MMC Patient Care Portal
+                MediQueue Patient Care Portal
               </span>
               <span className="text-xs text-blue-100 font-mono">
                 {patient?.patient_number || 'PT-2026-0001'}
@@ -120,7 +120,7 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
               Mabuhay, {patient?.first_name || 'Patient'}!
             </h1>
             <p className="text-xs sm:text-sm text-blue-100 mt-1 max-w-xl">
-              Manage your MMC hospital visits, track your real-time queue ticket, view lab orders, and monitor your vitals.
+              Manage your MediQueue hospital visits, track your real-time queue ticket, view lab orders, and monitor your vitals.
             </p>
           </div>
 
@@ -176,7 +176,7 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
             <p className="text-xs text-slate-500 mt-0.5">
               {triage
                 ? `Chief complaint logged: "${triage.chief_complaint}" (Pain: ${triage.pain_scale}/10). You can update this prior to calling.`
-                : 'Help your Makati Med doctor prepare your diagnosis by submitting your symptoms in advance.'}
+                : 'Help your MediQueue Clinical doctor prepare your diagnosis by submitting your symptoms in advance.'}
             </p>
           </div>
         </div>
@@ -198,7 +198,7 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
           <div className="flex items-center justify-between gap-2 mb-4">
             <div className="flex items-center gap-2">
               <Calendar className="w-5 h-5 text-blue-700" />
-              <h3 className="text-base font-bold text-slate-900">Next Scheduled MMC Appointment</h3>
+              <h3 className="text-base font-bold text-slate-900">Next Scheduled MediQueue Appointment</h3>
             </div>
             <StatusBadge status={nextAppointment.status} type="appointment" />
           </div>
@@ -262,7 +262,7 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
           <div className="flex items-center justify-between">
             <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <Activity className="w-5 h-5 text-blue-700" />
-              MMC Health &amp; Vital Signs History
+              MediQueue Health &amp; Vital Signs History
             </h3>
             <button
               onClick={() => setShowVitalsTracker(!showVitalsTracker)}
@@ -291,8 +291,8 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
               <Microscope className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900">MMC Diagnostic Requisitions</h3>
-              <p className="text-xs text-slate-500">Official lab test orders prescribed by Makati Medical Center physicians</p>
+              <h3 className="text-base font-bold text-slate-900">MediQueue Diagnostic Requisitions</h3>
+              <p className="text-xs text-slate-500">Official lab test orders prescribed by MediQueue Clinical physicians</p>
             </div>
           </div>
         </div>
@@ -419,7 +419,7 @@ export const PatientDashboardView: React.FC<PatientDashboardViewProps> = ({ onNa
           <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-100 p-6 sm:p-8 max-h-[90vh] overflow-y-auto">
             <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 text-slate-800 font-sans print:border-none">
               <div className="text-center pb-4 border-b border-slate-300">
-                <h3 className="text-lg font-bold text-slate-900">MAKATI MEDICAL CENTER DIAGNOSTIC LABORATORY</h3>
+                <h3 className="text-lg font-bold text-slate-900">MediQueue Healthcare DIAGNOSTIC LABORATORY</h3>
                 <p className="text-xs text-slate-500">Official Hospital Requisition Slip</p>
               </div>
 

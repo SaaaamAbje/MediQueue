@@ -612,11 +612,11 @@ export const MedicalCertificateModal: React.FC<MedicalCertificateModalProps> = (
                   <div className="flex items-center justify-center gap-2 mb-1">
                     <Building2 className="w-6 h-6 text-blue-700" />
                     <h1 className="text-xl font-black tracking-wider uppercase text-blue-950 font-sans">
-                      Makati Medical Center Outpatient Health Network
+                      MediQueue Clinical Outpatient Health Network
                     </h1>
                   </div>
                   <p className="text-[11px] text-slate-600 font-sans tracking-wide">
-                    2 Amorsolo Street, Legaspi Village, Makati City, Metro Manila, Philippines • Tel: +63 (02) 8888-8999
+                    2 Amorsolo Street, Legaspi Village, Clinical City, Metro Manila, Philippines • Tel: +63 (02) 8888-8999
                   </p>
                   <p className="text-[10px] text-slate-500 font-sans mt-0.5">
                     DOH Licensed Tertiary Medical Center & Ambulatory Services
@@ -732,7 +732,7 @@ export const MedicalCertificateModal: React.FC<MedicalCertificateModalProps> = (
                         {createdCert?.qr_verification_code || 'VERIFY-MC-ONLINE'}
                       </p>
                       <p className="text-slate-400 text-[8px] leading-tight max-w-[150px]">
-                        Scan with camera or visit makatimed.ph/verify to authenticate.
+                        Scan with camera or visit mediqueue.health/verify to authenticate.
                       </p>
                     </div>
                   </div>
@@ -755,7 +755,7 @@ export const MedicalCertificateModal: React.FC<MedicalCertificateModalProps> = (
 
                 {/* Watermark */}
                 <div className="absolute inset-0 pointer-events-none opacity-4 flex items-center justify-center text-slate-900 font-sans font-black text-6xl rotate-[-30deg] select-none">
-                  MMC OFFICIAL DOCUMENT
+                  MediQueue OFFICIAL DOCUMENT
                 </div>
               </div>
             </div>

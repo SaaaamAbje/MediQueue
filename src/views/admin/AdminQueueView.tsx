@@ -142,7 +142,7 @@ export const AdminQueueView: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
-            <h2 className="text-xl font-bold text-slate-900">Makati Med Live Dispatch &amp; Patient Queue</h2>
+            <h2 className="text-xl font-bold text-slate-900">MediQueue Clinical Live Dispatch &amp; Patient Queue</h2>
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
             Manage real-time hospital queue calls, patient status transitions, and specialist clinic arrivals

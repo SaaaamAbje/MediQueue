@@ -871,7 +871,7 @@ export const AdminBillingView: React.FC = () => {
               {/* Header */}
               <div className="text-center pb-4 border-b border-slate-300">
                 <h3 className="text-lg font-bold uppercase tracking-tight text-slate-900">
-                  MAKATI MEDICAL CENTER OUTPATIENT CLINIC
+                  MediQueue Healthcare OUTPATIENT CLINIC
                 </h3>
                 <p className="text-xs text-slate-500">Official Cashier &amp; Billing Statement</p>
                 <p className="text-[10px] text-slate-400 font-mono">TIN: 401-889-102-000 • Non-VAT Clinic Provider</p>

@@ -62,7 +62,7 @@ export function getInitialSeedData(): DatabaseState {
   const users: (User & { password_hash: string; salt: string })[] = [
     {
       id: 'usr_admin_001',
-      email: 'admin@mediqueue.ph',
+      email: 'admin@dlsl.edu.ph',
       role: 'ADMIN',
       is_active: true,
       password_hash: adminPass.hash,
@@ -73,7 +73,7 @@ export function getInitialSeedData(): DatabaseState {
     // 5 Doctors
     {
       id: 'usr_doc_001',
-      email: 'dr.santos@mediqueue.ph',
+      email: 'dr.santos@dlsl.edu.ph',
       role: 'DOCTOR',
       is_active: true,
       password_hash: doctorPass.hash,
@@ -83,7 +83,7 @@ export function getInitialSeedData(): DatabaseState {
     },
     {
       id: 'usr_doc_002',
-      email: 'dr.reyes@mediqueue.ph',
+      email: 'dr.reyes@dlsl.edu.ph',
       role: 'DOCTOR',
       is_active: true,
       password_hash: doctorPass.hash,
@@ -93,7 +93,7 @@ export function getInitialSeedData(): DatabaseState {
     },
     {
       id: 'usr_doc_003',
-      email: 'dr.bautista@mediqueue.ph',
+      email: 'dr.bautista@dlsl.edu.ph',
       role: 'DOCTOR',
       is_active: true,
       password_hash: doctorPass.hash,
@@ -103,7 +103,7 @@ export function getInitialSeedData(): DatabaseState {
     },
     {
       id: 'usr_doc_004',
-      email: 'dr.dizon@mediqueue.ph',
+      email: 'dr.dizon@dlsl.edu.ph',
       role: 'DOCTOR',
       is_active: true,
       password_hash: doctorPass.hash,
@@ -113,7 +113,7 @@ export function getInitialSeedData(): DatabaseState {
     },
     {
       id: 'usr_doc_005',
-      email: 'dr.cruz@mediqueue.ph',
+      email: 'dr.cruz@dlsl.edu.ph',
       role: 'DOCTOR',
       is_active: true,
       password_hash: doctorPass.hash,
@@ -124,7 +124,7 @@ export function getInitialSeedData(): DatabaseState {
     // Sample Patients
     {
       id: 'usr_pat_001',
-      email: 'juan.delacruz@example.ph',
+      email: 'juan.delacruz@dlsl.edu.ph',
       role: 'PATIENT',
       is_active: true,
       password_hash: patientPass.hash,
@@ -1026,7 +1026,7 @@ export function getInitialSeedData(): DatabaseState {
       action: 'System Initialized',
       module: 'Settings',
       record_id: 'cli_001',
-      details: 'MediQueue Clinic Management System configured with operating hours 08:00 - 17:00.',
+      details: 'MediQueue Clinical Clinic Management System configured with operating hours 08:00 - 17:00.',
       timestamp: '2026-09-01T08:00:00Z',
     },
     {
@@ -1133,17 +1133,17 @@ export function getInitialSeedData(): DatabaseState {
   // Clinic Settings
   const clinic_settings: ClinicSettings = {
     id: 'cli_001',
-    clinic_name: 'Makati Medical Center',
-    tagline: 'Trusted healthcare at the heart of Makati',
-    contact_number: '+63 2 8888 8999',
-    email: 'info@makatimed.ph',
-    address: '2 Amorsolo Street, Legaspi Village, Makati City, Metro Manila 1229',
-    operating_days: 'Monday to Sunday',
-    opening_time: '00:00',
-    closing_time: '23:59',
-    daily_queue_prefix: 'M',
-    avg_consultation_time_minutes: 30,
-    emergency_contact: 'MMC Emergency Hotline: (02) 8888-8911',
+    clinic_name: 'MediQueue Clinical',
+    tagline: 'Trusted healthcare for the MediQueue community',
+    contact_number: '+63 43 723 1234',
+    email: 'info@mediqueue.health',
+    address: 'MediQueue Healthcare, 1962 J.P. Laurel Highway, Lipa City, Batangas',
+    operating_days: 'Monday to Saturday',
+    opening_time: '08:00',
+    closing_time: '17:00',
+    daily_queue_prefix: 'A',
+    avg_consultation_time_minutes: 15,
+    emergency_contact: 'MediQueue Clinic: (043) 723-1234 local 123',
     updated_at: '2026-09-01T08:00:00Z',
   };
 
@@ -1743,7 +1743,7 @@ export function getInitialSeedData(): DatabaseState {
       id: 'sms_001',
       recipient_phone: '+63 917 123 4567',
       recipient_name: 'Juan Dela Cruz',
-      message: 'MediQueue: Your appointment with Dr. Santos is today at 9:00 AM (Ref: APT-2026-0001). Please arrive 15 mins before.',
+      message: 'MediQueue Clinical: Your appointment with Dr. Santos is today at 9:00 AM (Ref: APT-2026-0001). Please arrive 15 mins before.',
       type: 'appointment_reminder',
       status: 'delivered',
       sent_at: `${today}T06:30:00Z`,
@@ -1752,7 +1752,7 @@ export function getInitialSeedData(): DatabaseState {
       id: 'sms_002',
       recipient_phone: '+63 917 123 4567',
       recipient_name: 'Juan Dela Cruz',
-      message: 'MediQueue ALERT: You are next in line! Ticket #A001. Please proceed to Consultation Room 101.',
+      message: 'MediQueue Clinical ALERT: You are next in line! Ticket #A001. Please proceed to Consultation Room 101.',
       type: 'queue_proximity',
       status: 'delivered',
       sent_at: `${today}T08:58:00Z`,
@@ -1777,7 +1777,7 @@ export function getInitialSeedData(): DatabaseState {
     {
       id: 'brn_001',
       branch_code: 'MNL-CENTRAL',
-      name: 'MediQueue Central Medical Center',
+      name: 'MediQueue Clinical Central Medical Center',
       address: 'Suite 401, MediTower, Taft Ave, Ermita',
       city: 'Manila',
       contact_number: '+63 (02) 8524-1000',
@@ -1788,7 +1788,7 @@ export function getInitialSeedData(): DatabaseState {
     {
       id: 'brn_002',
       branch_code: 'BGC-HUB',
-      name: 'MediQueue BGC Health & Diagnostic Hub',
+      name: 'MediQueue Clinical BGC Health & Diagnostic Hub',
       address: 'Level 2, Bonifacio One, 28th St, BGC',
       city: 'Taguig',
       contact_number: '+63 (02) 8888-2424',
@@ -1799,7 +1799,7 @@ export function getInitialSeedData(): DatabaseState {
     {
       id: 'brn_003',
       branch_code: 'ALB-SAT',
-      name: 'MediQueue Alabang Outpatient Clinic',
+      name: 'MediQueue Clinical Alabang Outpatient Clinic',
       address: 'Commerce Ave corner Spectrum Midway, Filinvest',
       city: 'Muntinlupa',
       contact_number: '+63 (02) 8771-3300',
@@ -1909,7 +1909,7 @@ export function getInitialSeedData(): DatabaseState {
       referring_doctor_id: 'doc_003', // Dr. Bautista (General Medicine)
       receiving_specialty: 'Cardiology',
       receiving_doctor_name: 'Dr. Maria Lourdes Santos / Adult Cardiology',
-      receiving_clinic_branch: 'MediQueue Main Flagship Center',
+      receiving_clinic_branch: 'MediQueue Clinical Main Flagship Center',
       priority: 'Routine',
       reason_for_referral: 'Evaluation of recurrent exertional chest tightness, borderline elevated resting BP (145/92 mmHg), and family history of premature coronary artery disease.',
       clinical_summary: '52-year-old male with 2-month history of retrosternal discomfort during brisk walking. Resting 12-lead ECG shows non-specific ST-T wave changes in inferior leads. Endorsed for comprehensive 2D-Echocardiogram with Doppler and Treadmill Exercise Stress Test.',
@@ -1927,7 +1927,7 @@ export function getInitialSeedData(): DatabaseState {
       referring_doctor_id: 'doc_001', // Dr. Santos (Internal Medicine)
       receiving_specialty: 'Pulmonology',
       receiving_doctor_name: 'Pulmonary Diagnostic Unit',
-      receiving_clinic_branch: 'MediQueue BGC Health & Diagnostic Hub',
+      receiving_clinic_branch: 'MediQueue Clinical BGC Health & Diagnostic Hub',
       priority: 'Urgent',
       reason_for_referral: 'Recurrent bronchospastic attacks unresponsive to short-acting beta-agonists. Requesting formal Spirometry with pre/post bronchodilator evaluation.',
       clinical_summary: '28-year-old female with persistent nocturnal cough and episodic expiratory wheezing over past 4 weeks despite oral corticosteroids and inhaled therapy. For specialist pulmonology management and allergy testing.',

@@ -21,9 +21,9 @@ export const AdminSettingsView: React.FC = () => {
   const { showToast } = useNotifications();
 
   const [settings, setSettings] = useState<any>({
-    clinic_name: 'Makati Medical Center',
-    tagline: 'Trusted healthcare at the heart of Makati',
-    address: '2 Amorsolo Street, Legaspi Village, Makati City, Metro Manila 1229',
+    clinic_name: 'MediQueue Clinical',
+    tagline: 'Trusted healthcare at the heart of Clinical',
+    address: '2 Amorsolo Street, Legaspi Village, Clinical City, Metro Manila 1229',
     contact_phone: '+63 2 8888 8999',
     emergency_phone: '+63 2 8888 8911',
     operating_hours: 'Monday to Sunday, 24/7 Operations',
@@ -288,7 +288,7 @@ export const AdminSettingsView: React.FC = () => {
           <div className="flex items-center gap-2">
             <MapPin className="w-5 h-5 text-blue-600" />
             <div>
-              <h3 className="text-sm font-bold text-slate-900">Makati Med Health Network</h3>
+              <h3 className="text-sm font-bold text-slate-900">MediQueue Clinical Health Network</h3>
               <p className="text-xs text-slate-500">Multi-location satellite clinics and specialized medical centers</p>
             </div>
           </div>
@@ -356,7 +356,7 @@ export const AdminSettingsView: React.FC = () => {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Makati Med Satellite Pasay"
+                  placeholder="e.g. MediQueue Clinical Satellite Pasay"
                   value={newBranch.name}
                   onChange={(e) => setNewBranch({ ...newBranch, name: e.target.value })}
                   className="w-full p-2 border border-slate-300 rounded bg-white"
@@ -367,7 +367,7 @@ export const AdminSettingsView: React.FC = () => {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. MMC-PASAY"
+                  placeholder="e.g. MediQueue-PASAY"
                   value={newBranch.code}
                   onChange={(e) => setNewBranch({ ...newBranch, code: e.target.value })}
                   className="w-full p-2 border border-slate-300 rounded bg-white font-mono"

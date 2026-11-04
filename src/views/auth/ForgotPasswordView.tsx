@@ -25,8 +25,8 @@ export const ForgotPasswordView: React.FC<ForgotPasswordViewProps> = ({ onNaviga
     setIsLoading(true);
     try {
       const res = await api.forgotPassword(email);
-      setHint(res.reset_hint || 'Use reset code: MMC-RESET-2026');
-      setResetCode('MMC-RESET-2026');
+      setHint(res.reset_hint || 'Use reset code: MediQueue-RESET-2026');
+      setResetCode('MediQueue-RESET-2026');
       setStep('reset');
       showToast('info', 'Reset Dispatched', 'Reset code has been generated for demo purposes.');
     } catch (err: any) {
@@ -71,8 +71,8 @@ export const ForgotPasswordView: React.FC<ForgotPasswordViewProps> = ({ onNaviga
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <div className="mx-auto w-16 h-16 rounded-2xl bg-white flex items-center justify-center overflow-hidden shadow-lg shadow-blue-600/10 mb-3 ring-1 ring-slate-100">
           <img 
-            src="/assets/images/mmc_logo.jpg" 
-            alt="Makati Medical Center Logo" 
+            src="/assets/images/mediqueue_logo.jpg" 
+            alt="MediQueue Clinical Logo" 
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"
           />
@@ -81,7 +81,7 @@ export const ForgotPasswordView: React.FC<ForgotPasswordViewProps> = ({ onNaviga
           Reset Password
         </h2>
         <p className="mt-1 text-sm text-slate-600">
-          Recover access to your Makati Medical Center patient or clinic account
+          Recover access to your MediQueue Clinical patient or clinic account
         </p>
       </div>
 
@@ -139,7 +139,7 @@ export const ForgotPasswordView: React.FC<ForgotPasswordViewProps> = ({ onNaviga
                     type="text"
                     value={resetCode}
                     onChange={(e) => setResetCode(e.target.value)}
-                    placeholder="MMC-RESET-2026"
+                    placeholder="MediQueue-RESET-2026"
                     required
                     className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono"
                   />

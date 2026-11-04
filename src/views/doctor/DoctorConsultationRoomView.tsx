@@ -579,7 +579,7 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
                 <p className="text-[10px] text-slate-500">
                   PRC License No: {doctor?.license_number || '0098412'} • PTR No: 8819201A
                 </p>
-                <p className="text-[10px] text-slate-400">Makati Medical Center • Room #{doctor?.room_number || '101'}</p>
+                <p className="text-[10px] text-slate-400">MediQueue Clinical • Room #{doctor?.room_number || '101'}</p>
               </div>
 
               {/* Patient Info */}

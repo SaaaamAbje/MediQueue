@@ -68,9 +68,9 @@ export const PatientQueueView: React.FC<PatientQueueViewProps> = ({ onNavigate }
         <div className="w-16 h-16 rounded-full bg-blue-50 text-blue-700 flex items-center justify-center mx-auto mb-4">
           <Clock className="w-8 h-8" />
         </div>
-        <h2 className="text-xl font-bold text-slate-900">No Active MMC Queue Ticket</h2>
+        <h2 className="text-xl font-bold text-slate-900">No Active MediQueue Queue Ticket</h2>
         <p className="text-xs text-slate-500 mt-2 max-w-md mx-auto">
-          You are not currently in today's Makati Medical Center clinic queue. If you have an appointment scheduled for today, head over to your appointments to self-check-in.
+          You are not currently in today's MediQueue Clinical clinic queue. If you have an appointment scheduled for today, head over to your appointments to self-check-in.
         </p>
         <div className="mt-6 flex items-center justify-center gap-3">
           <button
@@ -150,7 +150,7 @@ export const PatientQueueView: React.FC<PatientQueueViewProps> = ({ onNavigate }
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
         <div className="bg-slate-900 text-white p-6 text-center">
           <span className="text-xs uppercase tracking-widest text-blue-400 font-semibold">
-            MMC Digital Queue Pass
+            MediQueue Digital Queue Pass
           </span>
           <div className="text-5xl sm:text-6xl font-black font-mono tracking-tight my-2 text-white">
             {ticket.queue_number}
@@ -204,7 +204,7 @@ export const PatientQueueView: React.FC<PatientQueueViewProps> = ({ onNavigate }
             </div>
             <div className="flex items-center gap-1.5 text-slate-600">
               <MapPin className="w-3.5 h-3.5 text-slate-400" />
-              Makati Med Room: {ticket.doctor?.room_number || '101'}
+              MediQueue Clinical Room: {ticket.doctor?.room_number || '101'}
             </div>
           </div>
 
@@ -222,9 +222,9 @@ export const PatientQueueView: React.FC<PatientQueueViewProps> = ({ onNavigate }
       <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl flex items-start gap-3 text-xs text-blue-950">
         <Info className="w-5 h-5 text-blue-700 shrink-0 mt-0.5" />
         <div className="space-y-1">
-          <p className="font-semibold text-blue-900">MMC Queue Etiquette &amp; Waiting Advisory</p>
+          <p className="font-semibold text-blue-900">MediQueue Queue Etiquette &amp; Waiting Advisory</p>
           <p className="text-blue-800 leading-relaxed">
-            Please remain in or near the Makati Medical Center waiting lounge. When your ticket number is called, a chime will sound and your status will change. If you step away, kindly notify the clinic desk nurse.
+            Please remain in or near the MediQueue Clinical waiting lounge. When your ticket number is called, a chime will sound and your status will change. If you step away, kindly notify the clinic desk nurse.
           </p>
         </div>
       </div>

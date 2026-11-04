@@ -69,15 +69,15 @@ export const LoginView: React.FC<LoginViewProps> = ({
         {/* Hospital Logo Asset */}
         <div className="mx-auto w-20 h-20 rounded-3xl bg-white p-3 shadow-xl mb-6 ring-1 ring-slate-100 overflow-hidden">
           <img 
-            src="/assets/images/mmc_logo.jpg" 
-            alt="Makati Medical Center Logo" 
+            src="/assets/images/mediqueue_logo.jpg" 
+            alt="MediQueue Clinical Logo" 
             className="w-full h-full object-contain"
             referrerPolicy="no-referrer"
           />
         </div>
         
         <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
-          Makati Medical Center
+          MediQueue Clinical
         </h2>
         <p className="mt-2 text-sm text-slate-600 font-medium">
           {isPatient && 'Patient Self-Service Portal'}
@@ -119,7 +119,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="user@makatimed.ph"
+                  placeholder="user@mediqueue.health"
                   required
                   className="block w-full pl-9 pr-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white font-medium"
                 />
@@ -177,7 +177,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
           {isPatient && (
             <div className="mt-6 pt-4 border-t border-slate-100 text-center">
               <p className="text-xs text-slate-600">
-                New patient at Makati Med?{' '}
+                New patient at MediQueue Clinical?{' '}
                 <button
                   type="button"
                   onClick={() => onNavigate('register')}

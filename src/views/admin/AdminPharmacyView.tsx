@@ -422,7 +422,7 @@ export const AdminPharmacyView: React.FC = () => {
               <div className="border-b border-slate-300 pb-2 flex items-center justify-between">
                 <div>
                   <h3 className="font-bold text-xs uppercase tracking-wider text-blue-800">
-                    MAKATI MEDICAL CENTER PHARMACY
+                    MediQueue Healthcare PHARMACY
                   </h3>
                   <p className="text-[10px] text-slate-500">Licensed Outpatient Dispensing Station</p>
                 </div>

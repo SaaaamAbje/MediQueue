@@ -505,7 +505,7 @@ export const PatientConsultationsView: React.FC = () => {
               {/* Header Letterhead */}
               <div className="text-center pb-4 border-b-2 border-blue-900 mb-6 font-sans">
                 <h3 className="text-lg font-black tracking-wide text-blue-950 uppercase">
-                  Makati Medical Center
+                  MediQueue Clinical
                 </h3>
                 <p className="text-xs text-slate-600">Department of Clinical Medicine &amp; Diagnostic Services</p>
                 <p className="text-[11px] text-slate-500">Republic of the Philippines • PRC Regulated Practice</p>

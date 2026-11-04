@@ -73,6 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         { id: 'doctor-telemed', label: 'Teleconsult Room', icon: Video },
         { id: 'doctor-appointments', label: 'Appointments', icon: Calendar },
         { id: 'doctor-patients', label: 'Patient Records', icon: Users },
+        { id: 'doctor-research', label: 'Clinical Research', icon: FlaskConical },
         { id: 'doctor-profile', label: 'Profile', icon: User },
       ];
     }
@@ -122,23 +123,23 @@ export const Navbar: React.FC<NavbarProps> = ({
           {isPatient && (
             <>
               <Heart className="w-3.5 h-3.5 text-blue-300" />
-              <span className="font-semibold text-blue-100">MMC PATIENT SELF-SERVICE SYSTEM</span>
+              <span className="font-semibold text-blue-100">MediQueue PATIENT SELF-SERVICE SYSTEM</span>
               <span className="hidden sm:inline text-blue-200/70">• Online Appointments &amp; Live Queue</span>
             </>
           )}
           {isDoctor && (
             <>
               <Stethoscope className="w-3.5 h-3.5 text-sky-400" />
-              <span className="font-semibold text-sky-100">MMC PHYSICIAN CLINICAL WORKSTATION</span>
+              <span className="font-semibold text-sky-100">MediQueue PHYSICIAN CLINICAL WORKSTATION</span>
               <span className="hidden sm:inline text-sky-300/70">
-                • {doctor ? `Room ${doctor.room_number}` : 'Room 102'} • MMC Outpatient Terminal
+                • {doctor ? `Room ${doctor.room_number}` : 'Room 102'} • MediQueue Outpatient Terminal
               </span>
             </>
           )}
           {isAdmin && (
             <>
               <Shield className="w-3.5 h-3.5 text-purple-400" />
-              <span className="font-semibold text-purple-100">MMC HOSPITAL OPERATIONS &amp; ADMIN CONSOLE</span>
+              <span className="font-semibold text-purple-100">MediQueue HOSPITAL OPERATIONS &amp; ADMIN CONSOLE</span>
               <span className="hidden sm:inline text-purple-300/70">• Central Reception &amp; Management</span>
             </>
           )}
@@ -160,15 +161,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden bg-white shadow-sm ring-1 ring-slate-200">
                 <img 
-                  src="/assets/images/mmc_logo.jpg" 
-                  alt="Makati Medical Center Logo" 
+                  src="/assets/images/mediqueue_logo.jpg" 
+                  alt="MediQueue Clinical Logo" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />
               </div>
               <div>
                 <span className="text-lg font-bold tracking-tight text-slate-900 block leading-tight">
-                  Makati Medical Center
+                  MediQueue Clinical
                 </span>
                 <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider block">
                   Hospital Systems

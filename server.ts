@@ -39,6 +39,7 @@ import { labtechRouter } from './server/routes/labtech';
 import { smsRouter } from './server/routes/sms';
 import { telemedRouter } from './server/routes/telemed';
 import { branchesRouter } from './server/routes/branches';
+import { scienceRouter } from './server/routes/science';
 import { db } from './server/db/store';
 import { getInitialSeedData } from './server/db/seed';
 
@@ -48,15 +49,15 @@ export async function createExpressApp() {
   // Auto-seed check for Firestore
   try {
     const users = await db.getUsers();
-    console.log(`[MediQueue] Current users count: ${users.length}`);
+    console.log(`[MediQueue Clinical] Current users count: ${users.length}`);
     if (users.length === 0) {
-      console.log('[MediQueue] Firestore empty. Seeding initial data...');
+      console.log('[MediQueue Clinical] Firestore empty. Seeding initial data...');
       const seed = getInitialSeedData();
       await db.seedDatabase(seed);
-      console.log('[MediQueue] Firestore seeded successfully.');
+      console.log('[MediQueue Clinical] Firestore seeded successfully.');
     }
   } catch (err) {
-    console.error('[MediQueue] Firestore auto-seed check failed:', err);
+    console.error('[MediQueue Clinical] Firestore auto-seed check failed:', err);
   }
 
   // Middleware
@@ -74,7 +75,7 @@ export async function createExpressApp() {
     }
     res.json({ 
       status: 'ok', 
-      app: 'Makati Medical Center', 
+      app: 'MediQueue Clinical', 
       database: dbStatus,
       env: process.env.NODE_ENV,
       vercel: !!process.env.VERCEL,
@@ -85,12 +86,12 @@ export async function createExpressApp() {
   // Admin & Debug Routes
   app.post('/api/admin/force-seed', async (_req, res) => {
     try {
-      console.log('[MediQueue] Manual force-seed triggered...');
+      console.log('[MediQueue Clinical] Manual force-seed triggered...');
       const seed = getInitialSeedData();
       await db.seedDatabase(seed);
       res.json({ message: 'Database seeded successfully.' });
     } catch (err: any) {
-      console.error('[MediQueue] Force-seed failed:', err);
+      console.error('[MediQueue Clinical] Force-seed failed:', err);
       res.status(500).json({ error: `Seeding failed: ${err.message}` });
     }
   });
@@ -113,6 +114,7 @@ export async function createExpressApp() {
   app.use('/api/sms', smsRouter);
   app.use('/api/telemed', telemedRouter);
   app.use('/api/branches', branchesRouter);
+  app.use('/api/science', scienceRouter);
 
   // Vite integration
   if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
@@ -140,20 +142,20 @@ async function startServer() {
   const PORT = 3000;
 
   const server = app.listen(PORT, '0.0.0.0', () => {
-    console.log(`[MediQueue] Server running at http://0.0.0.0:${PORT}`);
+    console.log(`[MediQueue Clinical] Server running at http://0.0.0.0:${PORT}`);
   });
 
   server.on('error', (err: any) => {
     if (err.code === 'EADDRINUSE') {
-      console.error(`[MediQueue] Port ${PORT} is already in use. Please wait or kill the process.`);
+      console.error(`[MediQueue Clinical] Port ${PORT} is already in use. Please wait or kill the process.`);
     } else {
-      console.error('[MediQueue] Server error:', err);
+      console.error('[MediQueue Clinical] Server error:', err);
     }
   });
 }
 
 if (import.meta.url === `file://${process.argv[1]}` || !process.env.VERCEL) {
   startServer().catch((err) => {
-    console.error('[MediQueue] Failed to start server:', err);
+    console.error('[MediQueue Clinical] Failed to start server:', err);
   });
 }

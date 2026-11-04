@@ -25,6 +25,7 @@ import { DoctorConsultationRoomView } from './views/doctor/DoctorConsultationRoo
 import { DoctorAppointmentsView } from './views/doctor/DoctorAppointmentsView';
 import { DoctorPatientsView } from './views/doctor/DoctorPatientsView';
 import { DoctorProfileView } from './views/doctor/DoctorProfileView';
+import { DoctorResearchView } from './views/doctor/DoctorResearchView';
 
 // Admin Views
 import { AdminDashboardView } from './views/admin/AdminDashboardView';
@@ -154,10 +155,10 @@ const AppContent: React.FC = () => {
     return (
       <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center text-white p-4">
         <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center font-bold text-2xl animate-bounce mb-4 shadow-lg shadow-blue-500/30">
-          MMC
+          MediQueue
         </div>
         <p className="text-sm font-semibold tracking-wide text-slate-300">
-          Initializing Makati Medical Center Systems...
+          Initializing MediQueue Clinical Systems...
         </p>
       </div>
     );
@@ -176,7 +177,7 @@ const AppContent: React.FC = () => {
         {/* Full Screen Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="/assets/images/mmc_bg.jpg" 
+            src="/assets/images/hospital_login_bg_1789109420944.jpg" 
             alt="Hospital Background" 
             className="w-full h-full object-cover opacity-60"
             referrerPolicy="no-referrer"
@@ -192,14 +193,14 @@ const AppContent: React.FC = () => {
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center overflow-hidden bg-white shadow-sm ring-1 ring-slate-200">
                 <img 
-                  src="/assets/images/mmc_logo.jpg" 
-                  alt="Makati Medical Center Logo" 
+                  src="/assets/images/mediqueue_logo.jpg" 
+                  alt="MediQueue Clinical Logo" 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />
               </div>
               <div>
-                <span className="font-bold text-base text-slate-900 tracking-tight">Makati Medical Center</span>
+                <span className="font-bold text-base text-slate-900 tracking-tight">MediQueue Clinical</span>
                 <span className="text-[10px] text-slate-500 font-semibold block -mt-1 uppercase">
                   Hospital Management System
                 </span>
@@ -329,6 +330,9 @@ const AppContent: React.FC = () => {
             {currentView === 'doctor-profile' && (
               <DoctorProfileView />
             )}
+            {currentView === 'doctor-research' && (
+              <DoctorResearchView />
+            )}
           </>
         )}
 
@@ -391,9 +395,9 @@ const AppContent: React.FC = () => {
               }`}
             />
             <span className="font-semibold text-slate-700">
-              {activeSystem === 'patient' && 'Makati Med Patient Portal Active'}
-              {activeSystem === 'doctor' && 'Makati Med Physician Clinical Workstation Active'}
-              {activeSystem === 'admin' && 'Makati Med Hospital Administration Console Active'}
+              {activeSystem === 'patient' && 'MediQueue Clinical Patient Portal Active'}
+              {activeSystem === 'doctor' && 'MediQueue Clinical Physician Clinical Workstation Active'}
+              {activeSystem === 'admin' && 'MediQueue Clinical Hospital Administration Console Active'}
             </span>
           </div>
           <div className="flex items-center gap-3 text-[11px] text-slate-500">

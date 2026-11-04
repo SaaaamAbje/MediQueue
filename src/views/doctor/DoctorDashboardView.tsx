@@ -83,7 +83,7 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/20 text-white">
-              MMC Physician Workstation
+              MediQueue Physician Workstation
             </span>
             <span className="text-xs text-indigo-200">
               Room {doctor?.room_number || '101'} • {doctor?.specialization_name}
@@ -93,7 +93,7 @@ export const DoctorDashboardView: React.FC<DoctorDashboardViewProps> = ({
             Dr. {doctor?.first_name} {doctor?.last_name}
           </h1>
           <p className="text-xs text-indigo-100 mt-1">
-            Manage your Makati Medical Center daily appointments and live patient consultation queue.
+            Manage your MediQueue Clinical daily appointments and live patient consultation queue.
           </p>
         </div>
 
