@@ -23,6 +23,8 @@ import {
   ChevronUp,
   FileCheck,
   Send,
+  RefreshCw,
+  Zap,
 } from 'lucide-react';
 import { VitalsTracker } from '../../components/VitalsTracker';
 import { LabOrdersModal } from '../../components/LabOrdersModal';
@@ -102,6 +104,41 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
         .catch(console.error);
     }
   }, [activeQueueItem]);
+
+  const [isSynthesizing, setIsSynthesizing] = useState(false);
+
+  const handleAiSynthesize = async () => {
+    if (!chiefComplaint.trim()) {
+      showToast('warning', 'Data Missing', 'Please enter a Chief Complaint to use AI synthesis.');
+      return;
+    }
+
+    setIsSynthesizing(true);
+    try {
+      const response = await fetch('/api/ai/synthesize-notes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          chief_complaint: chiefComplaint,
+          subjective: subjective || triage?.chief_complaint || '',
+          objective: objective || ''
+        }),
+      });
+      
+      if (!response.ok) throw new Error('AI synthesis failed');
+      
+      const data = await response.json();
+      setAssessment(data.assessment);
+      setPlan(data.plan);
+      if (!diagnosis) setDiagnosis(data.diagnosis_suggestion);
+      
+      showToast('success', 'AI Synthesis Complete', 'Professional Assessment and Plan have been drafted.');
+    } catch (err) {
+      showToast('error', 'AI Error', 'Could not synthesize clinical notes.');
+    } finally {
+      setIsSynthesizing(false);
+    }
+  };
 
   const handleComplete = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -406,7 +443,18 @@ export const DoctorConsultationRoomView: React.FC<DoctorConsultationRoomViewProp
 
         {/* SOAP Section */}
         <div className="bg-slate-50/50 p-4 rounded-2xl border border-slate-200 space-y-4">
-          <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Professional SOAP Notes</h4>
+          <div className="flex items-center justify-between">
+            <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Professional SOAP Notes</h4>
+            <button
+              type="button"
+              onClick={handleAiSynthesize}
+              disabled={isSynthesizing}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 text-white text-[10px] font-bold uppercase tracking-wider rounded-lg hover:bg-blue-700 shadow-sm transition-all disabled:opacity-50"
+            >
+              {isSynthesizing ? <RefreshCw className="w-3 h-3 animate-spin" /> : <Zap className="w-3 h-3" />}
+              {isSynthesizing ? 'Synthesizing...' : 'Smart Draft with Gemini'}
+            </button>
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>

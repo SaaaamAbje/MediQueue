@@ -115,6 +115,7 @@ export async function createExpressApp() {
   app.use('/api/telemed', telemedRouter);
   app.use('/api/branches', branchesRouter);
   app.use('/api/science', scienceRouter);
+  app.use('/api/ai', (await import('./server/routes/ai')).default);
 
   // Vite integration
   if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {

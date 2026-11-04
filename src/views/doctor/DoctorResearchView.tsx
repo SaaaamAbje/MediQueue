@@ -230,6 +230,32 @@ export const DoctorResearchView: React.FC = () => {
     { label: 'BRCA1', id: 'P38398', type: 'uniprot' }
   ];
 
+  const [isSynthesizing, setIsSynthesizing] = useState(false);
+  const [metaSummary, setMetaSummary] = useState<{ executive_summary: string; consensus_points: string[]; clinical_implications: string[]; gaps_in_research: string[] } | null>(null);
+
+  const handleMetaSynthesis = async () => {
+    if (!articles.length) return;
+
+    setIsSynthesizing(true);
+    try {
+      const response = await fetch('/api/ai/literature-meta-synthesis', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          papers: articles.map(a => ({ title: a.title, abstract: a.abstract || 'No abstract available' })) 
+        }),
+      });
+      
+      if (!response.ok) throw new Error('Meta-synthesis failed');
+      const data = await response.json();
+      setMetaSummary(data);
+    } catch (err) {
+      console.error('Meta-synthesis Error:', err);
+    } finally {
+      setIsSynthesizing(false);
+    }
+  };
+
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
@@ -406,6 +432,55 @@ export const DoctorResearchView: React.FC = () => {
 
           {activeTab === 'literature' && (
             <div className="space-y-4">
+              {articles.length > 0 && (
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest">Found {articles.length} Research Papers</h3>
+                  <button
+                    onClick={handleMetaSynthesis}
+                    disabled={isSynthesizing}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 text-white text-[10px] font-bold uppercase tracking-wider rounded-lg hover:bg-indigo-700 shadow-sm transition-all disabled:opacity-50"
+                  >
+                    {isSynthesizing ? <RefreshCw className="w-3 h-3 animate-spin" /> : <Zap className="w-3 h-3" />}
+                    {isSynthesizing ? 'Synthesizing...' : 'Meta-Synthesize Results'}
+                  </button>
+                </div>
+              )}
+
+              {/* Meta Summary Display */}
+              {metaSummary && (
+                <div className="bg-slate-900 rounded-2xl p-6 border border-slate-800 shadow-2xl space-y-4 mb-6">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+                    <span className="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Gemini Literature Synthesis</span>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="text-xs font-bold text-white mb-1 uppercase tracking-tight">Executive Summary</h4>
+                      <p className="text-xs text-slate-300 leading-relaxed">{metaSummary.executive_summary}</p>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <h4 className="text-[10px] font-bold text-indigo-300 mb-2 uppercase tracking-tight">Key Consensus Points</h4>
+                        <ul className="space-y-1.5">
+                          {metaSummary.consensus_points.map((p, i) => (
+                            <li key={i} className="flex items-start gap-2 text-[11px] text-slate-400 leading-tight">
+                              <span className="w-1 h-1 rounded-full bg-indigo-500 mt-1.5 shrink-0" />
+                              {p}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="text-[10px] font-bold text-emerald-300 mb-2 uppercase tracking-tight">Clinical Implications</h4>
+                        <p className="text-[11px] text-slate-400 leading-tight">{metaSummary.clinical_implications}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {articles.length > 0 ? (
                 articles.map((article) => (
                   <div key={article.id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all group">

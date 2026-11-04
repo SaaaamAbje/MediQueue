@@ -13,6 +13,7 @@ import {
   Activity,
   ShieldCheck,
   Database,
+  Zap,
 } from 'lucide-react';
 import { api } from '../../services/api';
 import { LabOrder, LabTestResult, LabResultParam } from '../../types';
@@ -97,6 +98,40 @@ export const AdminLabWorkbenchView: React.FC = () => {
     const updated = [...parameters];
     updated[index] = { ...updated[index], [field]: val };
     setParameters(updated);
+  };
+
+  const [isInterpreting, setIsInterpreting] = useState(false);
+
+  const handleAiInterpretation = async () => {
+    if (!parameters.length || !parameters[0].value) {
+      alert('Please enter at least one test parameter value.');
+      return;
+    }
+
+    setIsInterpreting(true);
+    try {
+      const response = await fetch('/api/ai/interpret-labs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          test_name: selectedTestName,
+          parameters: parameters
+        }),
+      });
+      
+      if (!response.ok) throw new Error('AI interpretation failed');
+      const data = await response.json();
+      
+      let remark = data.interpretation;
+      if (data.critical_findings?.length) {
+        remark += ` \nCRITICAL: ${data.critical_findings.join(', ')}`;
+      }
+      setClinicalNotes(remark);
+    } catch (err) {
+      console.error('AI Lab Error:', err);
+    } finally {
+      setIsInterpreting(false);
+    }
   };
 
   const handleSubmitResult = async (e: React.FormEvent) => {
@@ -457,9 +492,20 @@ export const AdminLabWorkbenchView: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-slate-700 font-semibold mb-1">
-                  Clinical Remarks / Interpretation
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-slate-700 font-semibold">
+                    Clinical Remarks / Interpretation
+                  </label>
+                  <button
+                    type="button"
+                    onClick={handleAiInterpretation}
+                    disabled={isInterpreting}
+                    className="inline-flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 text-[10px] font-bold uppercase rounded border border-blue-200 hover:bg-blue-100 disabled:opacity-50"
+                  >
+                    {isInterpreting ? <Activity className="w-3 h-3 animate-pulse" /> : <Zap className="w-3 h-3" />}
+                    {isInterpreting ? 'Analyzing...' : 'Gemini Lab Insight'}
+                  </button>
+                </div>
                 <textarea
                   rows={2}
                   value={clinicalNotes}

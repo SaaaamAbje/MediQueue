@@ -9,6 +9,7 @@ import {
   CheckCircle2,
   Heart,
   Pill,
+  Zap,
 } from 'lucide-react';
 import { PreConsultationTriage } from '../types/index';
 import { api } from '../services/api';
@@ -44,6 +45,38 @@ export const TriageModal: React.FC<TriageModalProps> = ({
     if (val <= 6) return { label: `${val} - Moderate Pain`, color: 'text-amber-600', icon: Meh };
     if (val <= 8) return { label: `${val} - Severe Pain`, color: 'text-orange-600', icon: Frown };
     return { label: `${val} - Extreme / Agonizing`, color: 'text-rose-600', icon: AlertOctagon };
+  };
+
+  const [isAssessing, setIsAssessing] = useState(false);
+  const [aiUrgency, setAiUrgency] = useState<{ priority: string; urgency_score: number; reasoning: string; red_flags?: string[] } | null>(null);
+
+  const handleAiAssessment = async () => {
+    if (!chiefComplaint.trim()) {
+      alert('Please describe your symptoms first.');
+      return;
+    }
+
+    setIsAssessing(true);
+    try {
+      const response = await fetch('/api/ai/smart-triage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chief_complaint: chiefComplaint,
+          pain_scale: painScale,
+          symptoms_duration: duration,
+          medical_history: medicalHistory
+        }),
+      });
+      
+      if (!response.ok) throw new Error('AI triage failed');
+      const data = await response.json();
+      setAiUrgency(data);
+    } catch (err) {
+      console.error('AI Triage Error:', err);
+    } finally {
+      setIsAssessing(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -110,9 +143,20 @@ export const TriageModal: React.FC<TriageModalProps> = ({
 
           {/* Chief Complaint */}
           <div>
-            <label className="block text-xs font-bold text-slate-800 mb-1">
-              Primary Symptoms / Chief Complaint *
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="block text-xs font-bold text-slate-800">
+                Primary Symptoms / Chief Complaint *
+              </label>
+              <button
+                type="button"
+                onClick={handleAiAssessment}
+                disabled={isAssessing || !chiefComplaint.trim()}
+                className="inline-flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 text-[10px] font-bold uppercase rounded border border-blue-200 hover:bg-blue-100 disabled:opacity-50"
+              >
+                {isAssessing ? <Heart className="w-3 h-3 animate-pulse" /> : <Zap className="w-3 h-3" />}
+                {isAssessing ? 'Assessing...' : 'AI Urgency Check'}
+              </button>
+            </div>
             <textarea
               required
               rows={2}
@@ -122,6 +166,40 @@ export const TriageModal: React.FC<TriageModalProps> = ({
               className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs text-slate-900 focus:ring-2 focus:ring-teal-500"
             />
           </div>
+
+          {/* AI Assessment Display */}
+          {aiUrgency && (
+            <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800 shadow-xl space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+                  <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest">Gemini Clinical Insight</span>
+                </div>
+                <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase ${
+                  aiUrgency.priority === 'stat' ? 'bg-rose-600 text-white' : 
+                  aiUrgency.priority === 'high' ? 'bg-amber-500 text-white' : 
+                  'bg-emerald-600 text-white'
+                }`}>
+                  {aiUrgency.priority} Priority
+                </span>
+              </div>
+              
+              <div className="space-y-1">
+                <p className="text-[11px] text-slate-300 font-medium leading-relaxed">
+                  <span className="text-blue-400 font-bold">Analysis:</span> {aiUrgency.reasoning}
+                </p>
+                {aiUrgency.red_flags && aiUrgency.red_flags.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mt-2">
+                    {aiUrgency.red_flags.map((flag, idx) => (
+                      <span key={idx} className="bg-rose-500/10 text-rose-400 text-[9px] font-bold px-1.5 py-0.5 rounded border border-rose-500/20">
+                        RED FLAG: {flag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Symptoms Duration */}
           <div>
